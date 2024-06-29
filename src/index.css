@@ -1,13 +1,69 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  /* HEADER */
+  --header-height: 60px;
+
+  /* BACKGROUNDS */
+  --primary-surface: #292929;
+  --secondary-surface: #121212;
+  --tertiary-surface: #1A1A1A;
+
+  /* TEXT */
+  --primary-text: rgba(255,255,255,.87);
+  --secondary-text: rgba(255,255,255,.67);
+  --tertiary-text: rgba(255,255,255,.3);
+
+  /* interactive */
+  --primary-accent: #ffc815;
+  --darkened-accent: #e6b115;
+  --darkened-accent-hover: rgba(255,200,21, 1);
+  --darkened-accent-background: rgba(255, 200, 21, 0.8);
+
+  /* data values */
+  --positive-change:  #689f38;
+  --negative-change: #d32f2f;
+  
+  --neutral-data: #9E9E9E;
+  --primary-data: rgba(255,255,255,1);
+
+  /* dividers */
+  --light-divider: rgba(255,255,255,.12);
+
+  --one-cell-width: 30px;
+  --one-cell-height: 30px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background: var(--primary-surface);
+  color: var(--primary-text);
+  font-size: 12px;
+  box-sizing: border-box !important;
+  line-height: 1.4;
+  letter-spacing: .1rem;
+  min-height: 100vh;
+  height: 100%;
+  scrollbar-color: var(--primary-surface) var(--tertiary-surface);
+  scrollbar-width: thin;
+}
+
+body *, *:before, *:after {
+  box-sizing: border-box !important;
+}
+
+body {
+  font-family: 'Roboto';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 1450px;
+  min-width: 335px;
+  margin: 0 auto;
+}
+
+body * {
+  font-family: 'Roboto';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
