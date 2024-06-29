@@ -6,7 +6,7 @@ const setInitialStateWithStorage = () => {
   };
 
   // try to get data from local storage first and set it
-  const initialData = localStorage.getItem();
+  const initialData = localStorage.getItem('');
 
   if (initialData) {  
     const parsedData = JSON.parse(initialData);

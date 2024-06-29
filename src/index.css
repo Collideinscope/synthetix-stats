@@ -1,69 +1,101 @@
-:root {
-  /* HEADER */
-  --header-height: 60px;
+@import 'theme.css';
 
-  /* BACKGROUNDS */
-  --primary-surface: #292929;
-  --secondary-surface: #121212;
-  --tertiary-surface: #1A1A1A;
-
-  /* TEXT */
-  --primary-text: rgba(255,255,255,.87);
-  --secondary-text: rgba(255,255,255,.67);
-  --tertiary-text: rgba(255,255,255,.3);
-
-  /* interactive */
-  --primary-accent: #ffc815;
-  --darkened-accent: #e6b115;
-  --darkened-accent-hover: rgba(255,200,21, 1);
-  --darkened-accent-background: rgba(255, 200, 21, 0.8);
-
-  /* data values */
-  --positive-change:  #689f38;
-  --negative-change: #d32f2f;
-  
-  --neutral-data: #9E9E9E;
-  --primary-data: rgba(255,255,255,1);
-
-  /* dividers */
-  --light-divider: rgba(255,255,255,.12);
-
-  --one-cell-width: 30px;
-  --one-cell-height: 30px;
+@font-face {
+  font-family: 'GT America Extended Bold';
+  src: url('../public/fonts/GT America/GT-America-Extended-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@font-face {
+  font-family: 'Inter';
+  src: url('../public/fonts/Inter/Inter-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter Bold';
+  src: url('../public/fonts/Inter/Inter-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
 
 html, body {
   padding: 0;
   margin: 0;
-  background: var(--primary-surface);
-  color: var(--primary-text);
-  font-size: 12px;
   box-sizing: border-box !important;
-  line-height: 1.4;
-  letter-spacing: .1rem;
   min-height: 100vh;
   height: 100%;
-  scrollbar-color: var(--primary-surface) var(--tertiary-surface);
-  scrollbar-width: thin;
+}
+
+body {
+  background: var(--navy-900);
+  color: var(--grey-50);
+  font-family: var(--font-family-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0 auto;
 }
 
 body *, *:before, *:after {
   box-sizing: border-box !important;
 }
 
-body {
-  font-family: 'Roboto';
+body * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 1450px;
-  min-width: 335px;
-  margin: 0 auto;
 }
 
-body * {
-  font-family: 'Roboto';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+button {
+  border: 0;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+a, Link {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button-primary {
+  background-color: var(--cyan-500);
+  color: var(--white);
+  padding: var(--space-2);
+  border-radius: var(--border-radius-sm);
+}
+
+.button-primary:hover {
+  background: var(--gradient-primary);
+}
+
+/* Responsive gutters and padding */
+/* For extra large screens (2xl) */
+@media (min-width: 1536px) {
+
+}
+
+/* For large screens (xl) */
+@media (min-width: 1280px) and (max-width: 1535px) {
+
+}
+
+/* For medium screens (lg) */
+@media (min-width: 992px) and (max-width: 1279px) {
+
+}
+
+/* For small screens (md) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* For extra small screens (sm) */
+@media (min-width: 480) and (max-width: 991px) {
+
 }

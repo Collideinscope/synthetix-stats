@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-import React, { useState, useEffect, useRef, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { 
   BrowserRouter as Router, 
   Route, 
@@ -8,16 +8,16 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { globalReducer, globalInitialState } from '../reducers/globalReducer';
-import { GlobalContext } from '../context/GlobalContext';
+import { globalReducer, globalInitialState } from '../../reducers/globalReducer';
+import { GlobalContext } from '../../context/GlobalContext';
 
-import Header from './Header';
+import Header from '../Header';
+import HighlightsContainer from '../HighlightsContainer';
+import PrimaryViewContainer from '../PrimaryViewContainer';
 
 const App = () => {
 
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
-
-  const topRef = useRef(null);
 
   useEffect(() => {
 
@@ -29,10 +29,11 @@ const App = () => {
         <div 
           className={styles['app-container']}
         >
-          <Header ref={topRef} />
+          <Header />
           <main>
+            <HighlightsContainer />
             <Routes>
-              <Route exact path="/" element={< />} />
+              <Route exact path="/" element={<PrimaryViewContainer />} />
             </Routes>
           </main>
         </div>

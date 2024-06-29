@@ -1,0 +1,5 @@
+.container {
+  border: 1px solid white;
+  margin-bottom: var(--block-margin-between);
+  padding: var(--block-padding-internal);
+}

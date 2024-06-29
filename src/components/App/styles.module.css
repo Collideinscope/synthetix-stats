@@ -1,20 +1,52 @@
 .app-container {
-
+  border: 1px dashed red;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 main {
-
+  border: 1px dashed red;
+  padding: 0px 24px !important;
+  text-align: center;
+  width: 100%;
+  padding: 0;
+  margin-top: var(--primary-container-margin-top);
 }
 
-ul {
-  list-style-type: none; 
-  padding: 0; 
+/* For large screens (xl) */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  main {
+    padding: 0 16px;
+  }
 }
 
-button, input, a, select {
-  cursor: pointer;
+/* For medium screens (lg) */
+@media (min-width: 992px) and (max-width: 1279px) {
+  main {
+    padding: 0 16px;
+  }
 }
 
-a {
-  text-decoration: none;
+/* For small screens (md) */
+@media (min-width: 768px) and (max-width: 991px) {
+  main {
+    padding: 0 8px;
+  }
+}
+
+/* For extra small screens (sm) */
+@media (min-width: 480) and (max-width: 767px) {
+  main {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  main {
+    padding: 0 8px;
+  }
 }

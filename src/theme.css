@@ -1,0 +1,124 @@
+/* Synthetix V3 branding from Figma doc */
+
+:root {
+  /*         COLOURS         */
+
+  /* Core Colour Palette */
+  --cyan-50: #E5FAFF;
+  --cyan-100: #B7F2FF;
+  --cyan-200: #8AEAFF;
+  --cyan-300: #5CE1FF;
+  --cyan-400: #2ED9FF;
+  --cyan-500: #00D1FF;  /* Used for main CTAs, links, buttons */
+  --cyan-600: #00B0D6;
+  --cyan-700: #008EAD;
+  --cyan-800: #006D85;
+  --cyan-900: #004B5C;
+
+  /* Navy Shades */
+  --navy-800: #0A0A25;  /* secondary backgrounds */
+  --navy-900: #06061B;  /* primary backgrounds */
+
+  /* Grey Shades */
+  --grey-50: #F7FAFC;   /* For titles */
+  --grey-500: #718096;  /* For supporting text */
+  --grey-900: #303037;  /* Borders and lines */
+
+  /* Additional Colours from New Palette */
+  --purple-500: #402FC8;
+  --pink-400: #EB46FF; /* This color might be an older version and could be updated or removed if not in the new palette */
+  --pink-500: #EE2EFF;
+  --green-500: #34EDB3;
+  --yellow-500: #FAE527;
+  --orange-500: #FC8738;
+  --red-500: #E4364B;
+  --white: #FFFFFF;
+
+  /* Gradients from New Palette */
+  --gradient-pink-cyan: linear-gradient(to right, #EE2EFF, #00D1FF);
+  --gradient-pink-purple: linear-gradient(135deg, #EE2EFF 0%, #402FC8 100%);
+  --gradient-green-cyan: linear-gradient(135deg, #34EDB3 0%, #00D1FF 100%);
+
+  /* Background Gradients */
+  --gradient-navy-purple: linear-gradient(to bottom, #06061B, #1D1084);
+  --gradient-navy-navy: linear-gradient(to bottom, #0A0A25, #150942);
+
+  /*         FONT & STYLING         */
+
+  /* Typography */
+  --font-family-heading: 'GT America Extended Bold', sans-serif;  /* For headings */
+  --font-family-body: 'Inter', sans-serif;  /* For body text */
+
+  /* Font Sizes */
+  --font-size-h1: 36px;  /* Main screen headings */
+  --font-size-sub-heading: 24px;  /* Subheadings, container headers */
+  --font-size-copy: 16px;  /* Body copy, adjust between 14px-16px */
+  --font-size-supporting: 12px;  /* Axis labels, supporting content */
+  --font-size-small-details: 10px;  /* Supporting content, smallest details */
+
+  /* Spacing - System based on multiples of 8px */
+  --space-block: 8px;
+
+  /* Borders and Radii */
+  --border-radius-sm: 6px;  /* Common for elements like cards, buttons */
+  --border-width-normal: 1px;  /* Most borders */
+  --border-colour-default: var(--grey-900);  /* Default border colour */
+
+  /*         LAYOUT         */
+
+  /* Primary Containers - main */
+  --primary-container-margin-top: 48px;
+  --primary-container-margin-bottom: 64px;
+
+  /* Secondary Containers */
+  --secondary-container-margin-between: 24px;
+
+  /* Blocks */
+  --block-margin-between: 24px;
+  --block-margin-internal: 16px;
+  --block-group-margin-internal: 12px;
+  --block-group-margin-minimum: 8px;
+
+  --block-padding-between: 24px;
+  --block-padding-internal: 16px;
+  --block-group-padding-internal: 12px;
+  --block-group-padding-minimum: 8px;
+
+  /* Breakpoints */
+  --2xl: 1536px;
+  --xl: 1280px;
+  --lg: 992px;
+  --md: 768px;
+  --sm: 480px;
+
+  /* APPLIED COLOURS */
+  
+  --title-colour: var(--grey-50);
+  --supporting-text-colour: var(--grey-500);
+  --main-cta-colour: var(--gradient-green-cyan);
+  --link-and-button-colour: var(--cyan-500);
+  --border-and-line-colour: var(--grey-900);
+  --container-colour: var(--navy-700);
+
+  /* CHARTS */
+
+  /* spacing */
+  --charts-margin-between-groups: 40px;
+  --charts-margin-between-blocks: 16px;
+  --charts-padding-inside-containers: 24px;
+
+  /* colours */
+  --charts-title-colour: var(--grey-50);
+  --charts-supporting-colour: var(--grey-500);
+  --charts-border-and-line-colour: var(--grey-900);
+  --charts-background-colour: var(--navy-800);
+  --charts-container-colour: var(--navy-700);
+  --charts-main-cta-colour: var(--gradient-green-cyan);
+  --charts-link-and-button-colour: var(--grey-50);
+
+  /* sizes */
+  --charts-title-primary: 36px;
+  --charts-title-secondary: 14px;
+  --charts-figure-amount: 24px;
+
+}
