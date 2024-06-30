@@ -1,5 +1,21 @@
 .container {
+  margin-bottom: calc(2 * var(--block-margin-between));
+  padding: 0 var(--block-padding-internal);
+}
+
+.chartList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartItem {
   border: 1px solid white;
-  margin-bottom: var(--block-margin-between);
-  padding: var(--block-padding-internal);
+  margin: 0 var(--block-margin-between);
+  width: calc(50% - var(--block-margin-between));
+  max-width: 500px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

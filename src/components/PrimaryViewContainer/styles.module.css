@@ -1,4 +1,7 @@
 .container {
-  border: 1px solid white;
-  padding: var(--block-padding-internal);
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }

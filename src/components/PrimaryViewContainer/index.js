@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
+import ViewOptionsContainer from '../ViewOptionsContainer';
+import TableContainer from '../TableContainer';
 
 const PrimaryViewContainer = () => {
   
   return (
     <div className={styles['container']}>
-      Primary View Container
+      <ViewOptionsContainer />
+      <TableContainer />
     </div>
   );
 };

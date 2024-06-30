@@ -1,0 +1,4 @@
+.container {
+  padding: var(--block-group-padding-internal);
+  width: 100%;
+}
