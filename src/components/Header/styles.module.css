@@ -1,5 +1,4 @@
 header {
-  border: 1px solid red;
   width: 100%;
   padding: 16px 24px;
   display: flex;
@@ -12,7 +11,6 @@ h1 {
   align-items: center;
   padding: 0;
   margin: 0;
-  border: 1px solid white;
 }
 
 .logo {
@@ -20,13 +18,76 @@ h1 {
   justify-content: flex-start;
   width: 29px; 
   height: 20px; 
-  border: 1px solid white;
 }
 
 nav {
-  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
-.search-container {
-  border: 1px solid white;
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.navItem {
+  margin: 0 calc(var(--block-padding-internal));
+  position: relative;
+}
+
+.navItem span:hover {
+  color: var(--cyan-500);
+}
+
+.activeNav {
+  color: var(--cyan-500);
+}
+
+.subNav {
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: absolute;
+  background: var(--navy-800);
+  top: 100%;
+  z-index: 1;
+  padding: var(--block-padding-internal);
+  margin-left: calc(var(--block-group-padding-internal) * -1);
+}
+
+.subNavItem {
+  padding-bottom: var(--block-group-padding-internal);
+}
+
+.subNavItem:last-child {
+  padding-bottom: 0;
+}
+
+.subNavItem a span {
+  color: var(--grey-50);
+}
+
+.subNavItem Link:hover span {
+  color: var(--cyan-500);
+}
+
+.searchContainer .fa-magnifying-glass {
+  cursor: pointer;
+  color: var(--grey-50);
+}
+
+.searchContainer .fa-magnifying-glass:hover {
+  color: var(--cyan-500);
 }

@@ -63,6 +63,10 @@ a, Link {
   text-decoration: none;
 }
 
+FontAwesomeIcon {
+  cursor: pointer;
+}
+
 .button-primary {
   background-color: var(--cyan-500);
   color: var(--white);
