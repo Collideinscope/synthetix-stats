@@ -31,9 +31,8 @@ const App = () => {
         >
           <Header />
           <main>
-            <HighlightsContainer />
             <Routes>
-              <Route exact path="/" element={<PrimaryViewContainer />} />
+              <Route exact path="/" element={<HighlightsContainer />} />
             </Routes>
           </main>
         </div>

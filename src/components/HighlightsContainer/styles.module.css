@@ -1,6 +1,37 @@
 .container {
-  margin-bottom: calc(2 * var(--block-margin-between));
+  margin: var(--block-margin-between) 0;
   padding: 0 var(--block-padding-internal);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.highlightBox {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: calc(2 * var(--block-margin-between));
+}
+
+.highlightBoxHeader {
+  padding: 0 var(--block-padding-between);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.highlightTitle {
+  color: var(--link-and-button-colour);
+  cursor: pointer;
+}
+
+.fa-cog {
+  color: var(--supporting-text-colour);
+  cursor: pointer;
+}
+
+.fa-cog:hover {
+  color: var(--title-colour);
 }
 
 .chartList {
@@ -10,7 +41,7 @@
 }
 
 .chartItem {
-  border: 1px solid white;
+  border: 1px solid var(--border-and-line-colour);
   margin: 0 var(--block-margin-between);
   width: calc(50% - var(--block-margin-between));
   max-width: 500px;

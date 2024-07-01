@@ -10,25 +10,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
-  const [activeMenu, setActiveMenu] = useState(null);
+  const initialMenuActive = Object.keys(NAV_MENU).reduce((acc, menu) => {
+    acc[menu] = false;
 
-  const handleMouseEnter = (menu) => {
-    setActiveMenu(menu);
-  };
+    return acc;
+  }, {})
 
-  const handleMouseLeave = () => {
-    setActiveMenu(null);
-  };
+  const [activeMenu, setActiveMenu] = useState(initialMenuActive);
+
+  const handleSetActiveMenu = (menu) => {
+    setActiveMenu({
+      ...activeMenu,
+      [menu]: !activeMenu[menu]
+    });
+
+    console.log(activeMenu)
+  }
 
   const generateLogo = () => {
     return (
-      <h1>
-        <img 
-          src={logoSymbol}
-          alt="Synthetix Logo" 
-          className={styles.logo} 
-        />
-      </h1>
+      <div className={styles.logoSection}>
+        <h1>
+          <img 
+            src={logoSymbol}
+            alt="Synthetix Symbol" 
+            className={styles.logo} 
+          />
+          <span>stats</span>
+        </h1>
+      </div>
     );
   };
 
@@ -44,13 +54,13 @@ const Header = () => {
           >
             {Object.keys(NAV_MENU[menu]).map((subMenu) => {
               return (
-                <li className={styles.subNavItem}>
+                <li key={subMenu} className={styles.subNavItem}>
                   <Link 
                     key={subMenu} 
                     to={NAV_MENU[menu][subMenu].route} 
                     className={styles.subNavItem}
                   >
-                    <span>{subMenu}</span>
+                    <p>{subMenu}</p>
                   </Link>
                 </li>
               )
@@ -58,11 +68,11 @@ const Header = () => {
           </ul>
         )
 
-        const renderSubNavItem = activeMenu === menu
+        const renderSubNavItem = activeMenu[menu]
           ? subNavItem 
           : '';
 
-        const activeNavItemClass = activeMenu === menu 
+        const activeNavItemClass = activeMenu[menu] 
           ? 'activeNav'
           : '';
 
@@ -70,10 +80,9 @@ const Header = () => {
           <li
             key={menu} 
             className={`${styles.navItem} ${activeNavItemClass}`}
-            onMouseEnter={() => handleMouseEnter(menu)}
-            onMouseLeave={handleMouseLeave}
+            onClick={() => handleSetActiveMenu(menu)}
           >
-            <span>{menu}</span>
+            <p>{menu}</p>
             {renderSubNavItem}
           </li>
         )
@@ -97,10 +106,10 @@ const Header = () => {
   }
 
   return (
-    <header className={styles.header}>
+    <header>
       {generateLogo()}
-      {generateNav()}
       {generateSearch()}
+      {generateNav()}
     </header>
   );
 };
