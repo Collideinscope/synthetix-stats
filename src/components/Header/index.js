@@ -23,21 +23,23 @@ const Header = () => {
       ...activeMenu,
       [menu]: !activeMenu[menu]
     });
-
-    console.log(activeMenu)
   }
 
   const generateLogo = () => {
     return (
       <div className={styles.logoSection}>
-        <h1>
-          <img 
-            src={logoSymbol}
-            alt="Synthetix Symbol" 
-            className={styles.logo} 
-          />
-          <span>stats</span>
-        </h1>
+        <Link 
+          to={'/'} 
+        >
+          <h1>
+            <img 
+              src={logoSymbol}
+              alt="Synthetix Symbol" 
+              className={styles.logo} 
+            />
+            <span>stats</span>
+          </h1>
+        </Link>
       </div>
     );
   };

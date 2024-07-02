@@ -82,7 +82,7 @@ nav {
 .navItem p {
   padding: var(--block-group-padding-internal) 0;
   margin: 0;
-  border: 1px solid var(--border-and-line-colour);
+  border-bottom: 1px solid var(--border-and-line-colour);
   border-right: 0;
 }
 
@@ -94,10 +94,15 @@ nav {
   background: var(--navy-800);
   width: 100%;
   padding: var(--block-group-padding-internal);
+  border-bottom: 1px solid var(--border-and-line-colour);
 }
 
 .subNavItem {
-  padding-bottom: var(--block-group-padding-internal);
+  margin-bottom: var(--block-group-margin-internal);
+}
+
+.subNavItem:last-child {
+  margin-bottom: 0;
 }
 
 .subNavItem p {
@@ -109,10 +114,6 @@ nav {
 
 .subNavItem:hover p {
   color: var(--title-colour);
-}
-
-.subNavItem:last-child {
-  padding-bottom: 0;
 }
 
 .searchContainer .fa-magnifying-glass {
