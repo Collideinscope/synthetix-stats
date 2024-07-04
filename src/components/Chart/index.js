@@ -57,7 +57,10 @@ const Chart = ({
         <p className={styles.latestValue}>{latestValue}%</p>
       </div>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <LineChart 
+          data={data} 
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
           <CartesianGrid strokeDasharray="3 3" stroke="var(--charts-border-and-line-colour)" />
           <XAxis 
             dataKey="timestamp" 
@@ -73,7 +76,7 @@ const Chart = ({
           <Line 
             type="monotone" 
             dataKey="APY_7d" 
-            stroke="var(--charts-main-cta-colour)" 
+            stroke="var(--green-500)" 
             strokeWidth={2}
             dot={false}
           />

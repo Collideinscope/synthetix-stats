@@ -60,7 +60,7 @@
 }
 
 .latestValue {
-  color: var(--charts-main-cta-colour);
+  color: var(--green-500);
   font-size: var(--charts-title-primary);
   margin: var(--block-margin-minimum) 0 0 0;
   border: 1px solid blue;
