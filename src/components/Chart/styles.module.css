@@ -1,0 +1,77 @@
+.container {
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm); 
+  margin: var(--block-margin-internal) var(--block-margin-between);
+  min-width: 350px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 2px 20px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease;  
+  background-color: var(--charts-container-colour);
+}
+
+.container:hover {
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.15), 0 4px 24px rgba(255, 255, 255, 0.15);
+}
+
+.chartHeader {
+  width: 100%;
+  border: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--block-margin-internal);
+}
+
+.titleContainer {
+  padding: var(--charts-padding-inside-containers);
+  border: 1px solid white;
+  display: flex;
+}
+
+.chartTitle {
+  color: var(--charts-title-colour);
+  font-size: var(--charts-figure-amount);
+  margin: 0;
+  margin-right: var(--charts-margin-between-blocks);
+  border: 1px solid red;
+}
+
+.titleMeta {
+  border: 1px solid red;
+  display: flex;
+}
+
+.chartSubtitle {
+  color: var(--charts-supporting-colour);
+  font-size: var(--charts-title-secondary);
+  margin: 0;
+  border: 1px solid green;
+  display: flex;
+  align-items: center;
+}
+
+.chartSubtitle:nth-child(2) {
+  margin: 0 var(--block-group-margin-internal);
+}
+
+.latestValue {
+  color: var(--charts-main-cta-colour);
+  font-size: var(--charts-title-primary);
+  margin: var(--block-margin-minimum) 0 0 0;
+  border: 1px solid blue;
+  display: flex;
+  align-items: center;
+}
+
+.tooltip {
+  background-color: var(--charts-background-colour);
+  border: 1px solid var(--charts-border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: var(--block-group-padding-minimum);
+  color: var(--charts-supporting-colour);
+}

@@ -3,14 +3,17 @@ import styles from './styles.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
+import Chart from '../Chart';
 
 const HIGHLIGHTS_CONTAINER_META = {
-  'Core Highlights': {
-    title: 'Core Highlights',
+  'CORE HIGHLIGHTS': {
+    title: 'CORE HIGHLIGHTS',
     settings: [],
   },
-  'Perps Highlights': {
-    title: 'Perps Highlights',
+  'PERPS HIGHLIGHTS': {
+    title: 'PERPS HIGHLIGHTS',
     settings: [],
   }
 }
@@ -19,9 +22,12 @@ const HighlightsContainer = () => {
 
   const generateChart = (item) => {
     return (
-      <li key={item} className={styles.chartItem}>
-        chart
-      </li>
+      <Chart 
+        metric={'allAPY'} 
+        chain={'base'} 
+        pool={1}
+        collateral_type={'USDC'}
+      />
     )
   }
 
@@ -41,12 +47,19 @@ const HighlightsContainer = () => {
 
   // highlight bar and accompanied charts
   const generateHightlightBox = (meta) => {
+    const titleParts = meta.title.split(' ');
+
     return (
       <div key={meta.title} className={styles.highlightBox}>
         <section className={styles.highlightBoxHeader}>
-          <p className={styles.highlightTitle}>
-            > {meta.title}
-          </p>
+          <div className={styles.highlightTitle}>
+            <Link
+              to={'/'}
+            >
+              <p className={styles.titleLink}>{titleParts[0]}</p>
+            </Link>
+            <p className={styles.titleSecondary}>{titleParts[1]}</p>
+          </div>
           <div className={styles.settings}>
             <FontAwesomeIcon className={styles['fa-cog']} icon={faCog} />
           </div>

@@ -1,28 +1,39 @@
 .container {
-  margin: var(--block-margin-between) 0;
-  padding: 0 var(--block-padding-internal);
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  border: 1px dashed white;
+  width: 100%;
 }
 
 .highlightBox {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1280px;
   margin-bottom: calc(2 * var(--block-margin-between));
 }
 
 .highlightBoxHeader {
-  padding: 0 var(--block-padding-between);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .highlightTitle {
+  color: var(--title-colour);
+  font-family: var(--font-family-heading);
+  display: flex;
+  height: 100%;
+}
+
+.titleLink {
   color: var(--link-and-button-colour);
-  cursor: pointer;
+  margin-right: var(--block-group-margin-minimum);
+}
+
+.titleSecondary {
+  color: var(--title-colour);
 }
 
 .fa-cog {
@@ -38,15 +49,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.chartItem {
-  border: 1px solid var(--border-and-line-colour);
-  margin: 0 var(--block-margin-between);
-  width: calc(50% - var(--block-margin-between));
-  max-width: 500px;
-  height: 250px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

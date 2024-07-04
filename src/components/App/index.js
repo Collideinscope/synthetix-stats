@@ -13,14 +13,37 @@ import { GlobalContext } from '../../context/GlobalContext';
 
 import Header from '../Header';
 import HighlightsContainer from '../HighlightsContainer';
-import PrimaryViewContainer from '../PrimaryViewContainer';
+
+import API from '../../fetch_functions';
 
 const App = () => {
 
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [
+          latestAPY,
+          allAPY,
+        ] = await Promise.all([
+          API.fetchLatestAPY(),
+          API.fetchAllAPY(),
+        ]);
 
+        appDispatch({
+          type: 'SET_INITIAL_DATA',
+          payload: {
+            latestAPY,
+            allAPY,
+          },
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
