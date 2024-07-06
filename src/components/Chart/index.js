@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
-import { Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
 
 import { GlobalContext } from '../../context/GlobalContext';
@@ -119,14 +119,16 @@ const Chart = ({
         <p className={styles.latestValue}>{highlightValue}{chartYValueSymbol}</p>
       </div>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart 
+        <AreaChart 
           data={smoothedData} 
           margin={{ top: 0, right: 30, left: 15, bottom: 20 }}
         >
-          <CartesianGrid 
-            strokeDasharray="3 3" 
-            stroke="var(--charts-border-and-line-colour)" 
-          />
+          <defs>
+            <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="var(--green-500)" stopOpacity={0.4}/>
+              <stop offset="95%" stopColor="var(--green-500)" stopOpacity={0.1}/>
+            </linearGradient>
+          </defs>
           <XAxis 
             dataKey="timestamp" 
             tickFormatter={formatXAxis} 
@@ -145,30 +147,29 @@ const Chart = ({
             tick={{fontSize: 'var(--charts-title-secondary)'}}
           />
           <Tooltip 
-            content={<CustomTooltip />} 
+            content={<CustomTooltip />}
+            cursor={{
+              stroke: 'var(--charts-border-and-line-colour)',
+              strokeDasharray: '3 3',
+              strokeWidth: 2,
+              fill: 'transparent'
+            }}
           />
-          <defs>
-            <linearGradient id="colorAPY" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="var(--green-500)" stopOpacity={0.8}/>
-              <stop offset="50%" stopColor="var(--green-500)" stopOpacity={0.3}/>
-              <stop offset="100%" stopColor="var(--green-500)" stopOpacity={0}/>
-            </linearGradient>
-          </defs>
           <Area 
-            type="monotone"
-            dataKey={chartYAxisDataKey}
-            stroke="var(--green-500)"
-            fill="url(#colorAPY)"
-            fillOpacity={1}
-          />
-          <Line 
             type="monotone" 
             dataKey={chartYAxisDataKey}
             stroke="var(--green-500)" 
-            strokeWidth={3}
-            dot={false}
+            strokeWidth={2}
+            fillOpacity={1}
+            fill="url(#colorAPY)"
+            activeDot={{
+              r: 6,
+              stroke: "var(--green-500)",
+              strokeWidth: 2,
+              fill: "var(--charts-background-colour)"
+            }}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </li>
   );
