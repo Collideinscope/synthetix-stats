@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { format, parseISO, startOfMonth } from 'date-fns';
+import { format, parseISO, startOfMonth, startOfWeek } from 'date-fns';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -24,15 +24,16 @@ const Chart = ({
     chartYValueSymbol,
     dataStartDate,
     chartYAxisDataKey,
+    getYAxisDataPoint
   } = metricMetadata;
 
-  const APYStartDate = new Date(dataStartDate);
+  const startDate = new Date(dataStartDate);
 
   const data = state[metric]
-    .filter(item => item.chain === chain && new Date(item.ts) >= APYStartDate) 
+    .filter(item => item.chain === chain && new Date(item.ts) >= startDate) 
     .map(item => ({
       timestamp: parseISO(item.ts),
-      [chartYAxisDataKey]: item.apys.apy_7d.year * 100,
+      [chartYAxisDataKey]: getYAxisDataPoint(item) * 100,
     }));
 
   const latestValue = data.length > 0
@@ -66,26 +67,47 @@ const Chart = ({
     
   const smoothedData = smoothData(data);
 
-  const maxAPY = Math.max(...data.map(d => d[chartYAxisDataKey]));
-  const yAxisUpperLimit = Math.ceil(maxAPY * 1.1);
+  const maxYAxis = Math.max(...data.map(d => d[chartYAxisDataKey]));
+  const yAxisUpperLimit = Math.ceil(maxYAxis * 1.1);
 
   const formatXAxis = (tickItem) => {
     const date = new Date(tickItem);
-    if (date.getMonth() === 0) {
+    if (date.getMonth() === 0 && date.getDate() === 1) {
       return format(date, 'yyyy');
     }
-    
-    return format(date, 'MMM');
-  };
-
-  const ticksXAxis = data.reduce((acc, item) => {
-    const monthStart = startOfMonth(item.timestamp);
-    if (!acc.some(date => date.getTime() === monthStart.getTime())) {
-      acc.push(monthStart);
+    if (date.getDate() === 1) {
+      return format(date, 'MMM');
     }
-
+    return format(date, 'd');
+  }
+  
+  const ticksXAxis = data.reduce((acc, item, index, array) => {
+    const currentDate = new Date(item.timestamp);
+    const day = currentDate.getDate();
+    
+    // Always include the first data point
+    if (index === 0) {
+      acc.push(currentDate);
+      return acc;
+    }
+    
+    // Add first day of month, 8th, 16th, and 24th
+    if (day === 1 || day === 8 || day === 16 || day === 24) {
+      if (!acc.some(date => date.getTime() === currentDate.getTime())) {
+        acc.push(currentDate);
+      }
+    }
+    
     return acc;
   }, []);
+  
+  // Ensure first tick is shown as MMM if it's not already
+  if (ticksXAxis.length > 0 && ticksXAxis[0].getDate() !== 1) {
+    ticksXAxis[0] = startOfMonth(ticksXAxis[0]);
+  }
+  
+  // Sort the ticks chronologically
+  ticksXAxis.sort((a, b) => a.getTime() - b.getTime());
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -123,6 +145,28 @@ const Chart = ({
     );
   };
 
+  const CustomTick = ({ x, y, payload }) => {
+    const date = new Date(payload.value);
+    const isMonthOrYear = date.getDate() === 1;
+    const text = formatXAxis(payload.value);
+    
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text 
+          x={0} 
+          y={0} 
+          dy={16} 
+          textAnchor="middle"
+          fill="var(--charts-supporting-colour)"
+          transform="rotate(0)"
+          className={isMonthOrYear ? styles.largeTick : styles.smallTick}
+        >
+          {text}
+        </text>
+      </g>
+    );
+  };
+
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
@@ -134,7 +178,7 @@ const Chart = ({
             <p className={styles.chartSubtitle}>{collateral_type}</p>
           </div>
         </div>
-        <p className={styles.latestValue}>{highlightValue}{chartYValueSymbol}</p>
+        <p className={styles.latestValue}>{highlightValue}<span className={styles.symbol}>{chartYValueSymbol}</span></p>
       </div>
       <div className={styles.chartWrapper}>
         <ResponsiveContainer 
@@ -146,7 +190,7 @@ const Chart = ({
             margin={{ top: 0, right: 30, left: 15, bottom: 0 }}
           >
             <defs>
-              <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="gradientColor" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="var(--green-500)" stopOpacity={0.4}/>
                 <stop offset="95%" stopColor="var(--green-500)" stopOpacity={0.1}/>
               </linearGradient>
@@ -155,10 +199,9 @@ const Chart = ({
               dataKey="timestamp" 
               tickFormatter={formatXAxis} 
               stroke="var(--charts-supporting-colour)"
-              angle={-45}
-              textAnchor="end"
+              textAnchor="middle"
               height={60}
-              tick={{fontSize: 'var(--charts-title-secondary)'}}
+              tick={<CustomTick />}
               ticks={ticksXAxis}
               padding={{ bottom: 10 }}
             />
@@ -166,7 +209,7 @@ const Chart = ({
               domain={[0, yAxisUpperLimit]}
               tickFormatter={(value) => `${value.toFixed(0)}%`}
               stroke="var(--charts-supporting-colour)"
-              tick={{fontSize: 'var(--charts-title-secondary)'}}
+              tick={{fontSize: '14px'}}
             />
             <Tooltip 
               content={<CustomTooltip />}
@@ -178,7 +221,7 @@ const Chart = ({
               stroke="var(--green-500)" 
               strokeWidth={2}
               fillOpacity={0.6}
-              fill="url(#colorAPY)"
+              fill="url(#gradientColor)"
               activeDot={{
                 r: 6,
                 stroke: "var(--green-500)",

@@ -18,18 +18,22 @@ header {
   left: 0;
   z-index: 1000;
   background-color: var(--navy-900); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
 }
 
 h1 span {
   color: var(--cyan-500);
   margin-left: var(--block-group-margin-internal);
-  font-size: var(--font-size-copy);
+  font-size: var(--font-size-sub-heading);
 }
 
 .logo {

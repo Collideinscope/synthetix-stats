@@ -52,19 +52,7 @@ const HighlightsContainer = () => {
 
     return (
       <div key={meta.title} className={styles.highlightBox}>
-        <section className={styles.highlightBoxHeader}>
-          <div className={styles.highlightTitle}>
-            <Link
-              to={'/'}
-            >
-              <p className={styles.titleLink}>{titleParts[0]}</p>
-            </Link>
-            <p className={styles.titleSecondary}>{titleParts[1]}</p>
-          </div>
-          <div className={styles.settings}>
-            <FontAwesomeIcon className={styles['fa-cog']} icon={faCog} />
-          </div>
-        </section>
+
         {generateChartList()}
       </div>
     )

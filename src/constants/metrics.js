@@ -6,6 +6,9 @@ const METRIC_METADATA = {
     chartYValueSymbol: '%',
     dataStartDate: '2024-05-01',
     chartYAxisDataKey: 'apy_7d',
+    getYAxisDataPoint: (item) => {
+      return item.apys.apy_7d.year;
+    }
   }
 }
 

@@ -3,6 +3,7 @@
   border-radius: var(--border-radius-sm); 
   margin: var(--block-margin-internal) var(--block-margin-between);
   min-width: 350px;
+  max-width: 768px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -11,7 +12,7 @@
   align-items: stretch;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 2px 20px rgba(255, 255, 255, 0.1);
-  transition: box-shadow 0.3s ease;  
+  transition: box-shadow 0.1s ease;  
   background-color: var(--navy-900);
 }
 
@@ -43,12 +44,24 @@
   display: flex;
 }
 
+.symbol {
+  font-size: var(--charts-figure-amount);
+  margin-left: 2px;
+}
+
 .chartSubtitle {
-  color: var(--charts-supporting-colour);
+  color: var(--title-colour);
   font-size: var(--charts-title-secondary);
   margin: 0;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--border-and-line-colour);
+  background: var(--navy-900);
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
 }
 
 .chartSubtitle:nth-child(2) {
@@ -71,4 +84,14 @@
   padding: 0 var(--block-group-padding-minimum);
   color: var(--charts-main-cta-colour);
   font-size: var(--charts-title-secondary);
+}
+
+.largeTick {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.smallTick {
+  font-size: 14px;
+  font-weight: 300;
 }
