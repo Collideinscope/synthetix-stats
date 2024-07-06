@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 
 import logoSymbol from '../../assets/blue-x.svg'; 
-import { NAV_MENU } from '../../constants';
+import { NAV_MENU } from '../../constants/nav';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';

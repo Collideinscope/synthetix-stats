@@ -21,7 +21,6 @@
 
 .chartHeader {
   width: 100%;
-  border: 1px solid white;
   display: flex;
   justify-content: space-between;
   margin-bottom: var(--block-margin-internal);
@@ -29,7 +28,6 @@
 
 .titleContainer {
   padding: var(--charts-padding-inside-containers);
-  border: 1px solid white;
   display: flex;
 }
 
@@ -38,11 +36,10 @@
   font-size: var(--charts-figure-amount);
   margin: 0;
   margin-right: var(--charts-margin-between-blocks);
-  border: 1px solid red;
+  background-color: var(-charts-background-colour);
 }
 
 .titleMeta {
-  border: 1px solid red;
   display: flex;
 }
 
@@ -50,7 +47,6 @@
   color: var(--charts-supporting-colour);
   font-size: var(--charts-title-secondary);
   margin: 0;
-  border: 1px solid green;
   display: flex;
   align-items: center;
 }
@@ -63,7 +59,7 @@
   color: var(--green-500);
   font-size: var(--charts-title-primary);
   margin: var(--block-margin-minimum) 0 0 0;
-  border: 1px solid blue;
+  margin-right: var(--charts-padding-inside-containers);
   display: flex;
   align-items: center;
 }
@@ -74,4 +70,5 @@
   border-radius: var(--border-radius-sm);
   padding: var(--block-group-padding-minimum);
   color: var(--charts-supporting-colour);
+  font-size: var(--charts-title-secondary);
 }

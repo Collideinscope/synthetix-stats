@@ -23,6 +23,7 @@ const HighlightsContainer = () => {
   const generateChart = (item) => {
     return (
       <Chart 
+        key={item}
         metric={'allAPY'} 
         chain={'base'} 
         pool={1}
