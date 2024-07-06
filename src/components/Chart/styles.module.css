@@ -12,7 +12,7 @@
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 2px 20px rgba(255, 255, 255, 0.1);
   transition: box-shadow 0.3s ease;  
-  background-color: var(--charts-container-colour);
+  background-color: var(--navy-900);
 }
 
 .container:hover {
@@ -24,6 +24,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: var(--block-margin-internal);
+  position: relative;
 }
 
 .titleContainer {
@@ -36,7 +37,6 @@
   font-size: var(--charts-figure-amount);
   margin: 0;
   margin-right: var(--charts-margin-between-blocks);
-  background-color: var(-charts-background-colour);
 }
 
 .titleMeta {
@@ -68,7 +68,7 @@
   background-color: var(--charts-background-colour);
   border: 1px solid var(--charts-border-and-line-colour);
   border-radius: var(--border-radius-sm);
-  padding: var(--block-group-padding-minimum);
-  color: var(--charts-supporting-colour);
+  padding: 0 var(--block-group-padding-minimum);
+  color: var(--charts-main-cta-colour);
   font-size: var(--charts-title-secondary);
 }

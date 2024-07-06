@@ -67,7 +67,7 @@ const Chart = ({
   const smoothedData = smoothData(data);
 
   const maxAPY = Math.max(...data.map(d => d[chartYAxisDataKey]));
-  const yAxisUpperLimit = Math.ceil(maxAPY * 1.2);
+  const yAxisUpperLimit = Math.ceil(maxAPY * 1.1);
 
   const formatXAxis = (tickItem) => {
     const date = new Date(tickItem);
@@ -95,7 +95,6 @@ const Chart = ({
       return (
         <div className={styles.tooltip}>
           <p>{format(new Date(label), 'MMM dd, yyyy')}</p>
-          <p>{`APY: ${payload[0].value.toFixed(2)}%`}</p>
         </div>
       );
     }
@@ -103,6 +102,25 @@ const Chart = ({
     onHighlightValueChange(latestValue);
 
     return null;
+  };
+
+  const CustomCursor = ({ points, width, height, payload }) => {
+    if (!points || points.length === 0 || !payload || payload.length === 0) return null;
+    const { x, y } = points[0];
+    const dataY = payload[0].payload[payload[0].dataKey];
+    const yScale = height / (yAxisUpperLimit || 1); 
+    const scaledY = height - (dataY * yScale);
+  
+    return (
+      <line 
+        x1={x} 
+        y1={scaledY} 
+        x2={x} 
+        y2={height} 
+        stroke="var(--charts-border-and-line-colour)" 
+        strokeDasharray="3 3" 
+      />
+    );
   };
 
   return (
@@ -118,59 +136,59 @@ const Chart = ({
         </div>
         <p className={styles.latestValue}>{highlightValue}{chartYValueSymbol}</p>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
-        <AreaChart 
-          data={smoothedData} 
-          margin={{ top: 0, right: 30, left: 15, bottom: 20 }}
+      <div className={styles.chartWrapper}>
+        <ResponsiveContainer 
+          width="100%" 
+          height={300}
         >
-          <defs>
-            <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="var(--green-500)" stopOpacity={0.4}/>
-              <stop offset="95%" stopColor="var(--green-500)" stopOpacity={0.1}/>
-            </linearGradient>
-          </defs>
-          <XAxis 
-            dataKey="timestamp" 
-            tickFormatter={formatXAxis} 
-            stroke="var(--charts-supporting-colour)"
-            angle={-45}
-            textAnchor="end"
-            height={60}
-            tick={{fontSize: 'var(--charts-title-secondary)'}}
-            ticks={ticksXAxis}
-            padding={{ bottom: 10 }}
-          />
-          <YAxis 
-            domain={[0, yAxisUpperLimit]}
-            tickFormatter={(value) => `${value.toFixed(0)}%`}
-            stroke="var(--charts-supporting-colour)"
-            tick={{fontSize: 'var(--charts-title-secondary)'}}
-          />
-          <Tooltip 
-            content={<CustomTooltip />}
-            cursor={{
-              stroke: 'var(--charts-border-and-line-colour)',
-              strokeDasharray: '3 3',
-              strokeWidth: 2,
-              fill: 'transparent'
-            }}
-          />
-          <Area 
-            type="monotone" 
-            dataKey={chartYAxisDataKey}
-            stroke="var(--green-500)" 
-            strokeWidth={2}
-            fillOpacity={1}
-            fill="url(#colorAPY)"
-            activeDot={{
-              r: 6,
-              stroke: "var(--green-500)",
-              strokeWidth: 2,
-              fill: "var(--charts-background-colour)"
-            }}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+          <AreaChart 
+            data={smoothedData} 
+            margin={{ top: 0, right: 30, left: 15, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--green-500)" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="var(--green-500)" stopOpacity={0.1}/>
+              </linearGradient>
+            </defs>
+            <XAxis 
+              dataKey="timestamp" 
+              tickFormatter={formatXAxis} 
+              stroke="var(--charts-supporting-colour)"
+              angle={-45}
+              textAnchor="end"
+              height={60}
+              tick={{fontSize: 'var(--charts-title-secondary)'}}
+              ticks={ticksXAxis}
+              padding={{ bottom: 10 }}
+            />
+            <YAxis 
+              domain={[0, yAxisUpperLimit]}
+              tickFormatter={(value) => `${value.toFixed(0)}%`}
+              stroke="var(--charts-supporting-colour)"
+              tick={{fontSize: 'var(--charts-title-secondary)'}}
+            />
+            <Tooltip 
+              content={<CustomTooltip />}
+              cursor={<CustomCursor />}
+            />
+            <Area 
+              type="monotone" 
+              dataKey={chartYAxisDataKey}
+              stroke="var(--green-500)" 
+              strokeWidth={2}
+              fillOpacity={0.6}
+              fill="url(#colorAPY)"
+              activeDot={{
+                r: 6,
+                stroke: "var(--green-500)",
+                strokeWidth: 2,
+                fill: "var(--charts-background-colour)"
+              }}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
     </li>
   );
 };
