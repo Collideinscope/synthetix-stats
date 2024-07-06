@@ -9,6 +9,16 @@ const METRIC_METADATA = {
     getYAxisDataPoint: (item) => {
       return item.apys.apy_7d.year;
     }
+  },
+  'allTVL': {
+    key: 'allTVL',
+    chartTitle: 'TVL',
+    chartYValueSymbol: '$',
+    dataStartDate: null,
+    chartYAxisDataKey: 'collateral_value',
+    getYAxisDataPoint: (item) => {
+      return item.collateral_value;
+    }
   }
 }
 

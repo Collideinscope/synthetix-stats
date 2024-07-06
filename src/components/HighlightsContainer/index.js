@@ -24,7 +24,7 @@ const HighlightsContainer = () => {
     return (
       <Chart 
         key={item}
-        metric={'allAPY'} 
+        metric={item} 
         chain={'base'} 
         pool={1}
         collateral_type={'USDC'}
@@ -35,7 +35,7 @@ const HighlightsContainer = () => {
   // list of charts for a highlight box
   const generateChartList = () => {
 
-    const chartItems = ['1','2'].map(item => {
+    const chartItems = ['allAPY','allTVL'].map(item => {
       return generateChart(item);
     })
 

@@ -27,10 +27,19 @@ const Chart = ({
     getYAxisDataPoint
   } = metricMetadata;
 
-  const startDate = new Date(dataStartDate);
+  const dataChainFiltered = state[metric]
+    .filter(item => item.chain === chain)
+
+  const startDate = new Date(
+    dataStartDate
+      ? dataStartDate 
+      : state[metric].length > 0 
+        ? dataChainFiltered[0].ts
+        : '2024-01-01'
+  );
 
   const data = state[metric]
-    .filter(item => item.chain === chain && new Date(item.ts) >= startDate) 
+    .filter(item => new Date(item.ts) >= startDate) 
     .map(item => ({
       timestamp: parseISO(item.ts),
       [chartYAxisDataKey]: getYAxisDataPoint(item) * 100,
@@ -167,6 +176,10 @@ const Chart = ({
     );
   };
 
+  if (metric === 'allTVL') {
+    console.log(ticksXAxis[0])
+  }
+
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
@@ -207,7 +220,7 @@ const Chart = ({
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}
-              tickFormatter={(value) => `${value.toFixed(0)}%`}
+              tickFormatter={(value) => `${value.toFixed(0)}${chartYValueSymbol}`}
               stroke="var(--charts-supporting-colour)"
               tick={{fontSize: '14px'}}
             />

@@ -24,18 +24,18 @@ const App = () => {
     const fetchData = async () => {
       try {
         const [
-          latestAPY,
           allAPY,
+          allTVL,
         ] = await Promise.all([
-          API.fetchLatestAPY(),
           API.fetchAllAPY(),
+          API.fetchAllTVL(),
         ]);
 
         appDispatch({
           type: 'SET_INITIAL_DATA',
           payload: {
-            latestAPY,
             allAPY,
+            allTVL,
           },
         });
       } catch (error) {
