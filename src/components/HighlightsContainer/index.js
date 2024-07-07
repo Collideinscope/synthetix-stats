@@ -35,7 +35,7 @@ const HighlightsContainer = () => {
   // list of charts for a highlight box
   const generateChartList = () => {
 
-    const chartItems = ['allAPY','allTVL'].map(item => {
+    const chartItems = ['allAPY'].map(item => {
       return generateChart(item);
     })
 
@@ -48,18 +48,16 @@ const HighlightsContainer = () => {
 
   // highlight bar and accompanied charts
   const generateHightlightBox = (meta) => {
-    const titleParts = meta.title.split(' ');
-
     return (
-      <div key={meta.title} className={styles.highlightBox}>
-
+      <div key={meta} className={styles.highlightBox}>
         {generateChartList()}
       </div>
     )
   }
 
   const generateHighlightBoxList = () => {
-    return Object.values(HIGHLIGHTS_CONTAINER_META).map(meta => {
+    // change to metrics list, remove highlight box list requirement later
+    return [1].map(meta => {
       return generateHightlightBox(meta);
     })
   }

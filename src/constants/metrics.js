@@ -1,3 +1,5 @@
+import { abbreviateNumber } from "../helpers";
+
 // [state metric key]: { ...metadata }
 const METRIC_METADATA = {
   'allAPY': {
@@ -7,8 +9,8 @@ const METRIC_METADATA = {
     dataStartDate: '2024-05-01',
     chartYAxisDataKey: 'apy_7d',
     getYAxisDataPoint: (item) => {
-      return item.apys.apy_7d.year;
-    }
+      return item.apys.apy_7d.year * 100;
+    },
   },
   'allTVL': {
     key: 'allTVL',
@@ -18,6 +20,9 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'collateral_value',
     getYAxisDataPoint: (item) => {
       return item.collateral_value;
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
     }
   }
 }

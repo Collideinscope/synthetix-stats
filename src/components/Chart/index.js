@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { format, parseISO, startOfMonth, startOfWeek } from 'date-fns';
+import { format, parseISO, startOfMonth } from 'date-fns';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -24,7 +24,7 @@ const Chart = ({
     chartYValueSymbol,
     dataStartDate,
     chartYAxisDataKey,
-    getYAxisDataPoint
+    getYAxisDataPoint,
   } = metricMetadata;
 
   const dataChainFiltered = state[metric]
@@ -38,11 +38,11 @@ const Chart = ({
         : '2024-01-01'
   );
 
-  const data = state[metric]
+  const data = dataChainFiltered
     .filter(item => new Date(item.ts) >= startDate) 
     .map(item => ({
       timestamp: parseISO(item.ts),
-      [chartYAxisDataKey]: getYAxisDataPoint(item) * 100,
+      [chartYAxisDataKey]: getYAxisDataPoint(item),
     }));
 
   const latestValue = data.length > 0
@@ -76,17 +76,20 @@ const Chart = ({
     
   const smoothedData = smoothData(data);
 
-  const maxYAxis = Math.max(...data.map(d => d[chartYAxisDataKey]));
-  const yAxisUpperLimit = Math.ceil(maxYAxis * 1.1);
+  const maxAPY = Math.max(...data.map(d => d[chartYAxisDataKey]));
+  const yAxisUpperLimit = Math.ceil(maxAPY * 1.1);
 
   const formatXAxis = (tickItem) => {
     const date = new Date(tickItem);
+
     if (date.getMonth() === 0 && date.getDate() === 1) {
       return format(date, 'yyyy');
     }
+
     if (date.getDate() === 1) {
       return format(date, 'MMM');
     }
+    
     return format(date, 'd');
   }
   
@@ -176,10 +179,6 @@ const Chart = ({
     );
   };
 
-  if (metric === 'allTVL') {
-    console.log(ticksXAxis[0])
-  }
-
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
@@ -191,7 +190,7 @@ const Chart = ({
             <p className={styles.chartSubtitle}>{collateral_type}</p>
           </div>
         </div>
-        <p className={styles.latestValue}>{highlightValue}<span className={styles.symbol}>{chartYValueSymbol}</span></p>
+        <p className={styles.latestValue}>{highlightValue}{chartYValueSymbol}</p>
       </div>
       <div className={styles.chartWrapper}>
         <ResponsiveContainer 
@@ -203,7 +202,7 @@ const Chart = ({
             margin={{ top: 0, right: 30, left: 15, bottom: 0 }}
           >
             <defs>
-              <linearGradient id="gradientColor" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="var(--green-500)" stopOpacity={0.4}/>
                 <stop offset="95%" stopColor="var(--green-500)" stopOpacity={0.1}/>
               </linearGradient>
@@ -212,7 +211,8 @@ const Chart = ({
               dataKey="timestamp" 
               tickFormatter={formatXAxis} 
               stroke="var(--charts-supporting-colour)"
-              textAnchor="middle"
+              angle={-45}
+              textAnchor="end"
               height={60}
               tick={<CustomTick />}
               ticks={ticksXAxis}
@@ -220,9 +220,9 @@ const Chart = ({
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}
-              tickFormatter={(value) => `${value.toFixed(0)}${chartYValueSymbol}`}
+              tickFormatter={(value) => `${value.toFixed(0)}%`}
               stroke="var(--charts-supporting-colour)"
-              tick={{fontSize: '14px'}}
+              tick={{fontSize: 'var(--charts-title-secondary)'}}
             />
             <Tooltip 
               content={<CustomTooltip />}
@@ -234,7 +234,7 @@ const Chart = ({
               stroke="var(--green-500)" 
               strokeWidth={2}
               fillOpacity={0.6}
-              fill="url(#gradientColor)"
+              fill="url(#colorAPY)"
               activeDot={{
                 r: 6,
                 stroke: "var(--green-500)",
