@@ -1,6 +1,6 @@
 function abbreviateNumber(number) {
   const num = Number(number);
-  console.log(num, number)
+
   if (isNaN(num)) {
     return 'Invalid';
   }
@@ -8,6 +8,7 @@ function abbreviateNumber(number) {
   const abbreviations = [
     { value: 1e9, symbol: 'B' },
     { value: 1e6, symbol: 'M' },
+    { value: 1e3, symbol: 'K' },
   ];
 
   const abbreviation = abbreviations.find(abbr => Math.abs(num) >= abbr.value);

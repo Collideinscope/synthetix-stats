@@ -8,9 +8,13 @@ const METRIC_METADATA = {
     chartYValueSymbol: '%',
     dataStartDate: '2024-05-01',
     chartYAxisDataKey: 'apy_7d',
+    symbolLocation: 'right',
     getYAxisDataPoint: (item) => {
       return item.apys.apy_7d.year * 100;
     },
+    yValueFormatter: (val) => {
+      return val;
+    }
   },
   'allTVL': {
     key: 'allTVL',
@@ -18,8 +22,9 @@ const METRIC_METADATA = {
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'collateral_value',
+    symbolLocation: 'left',
     getYAxisDataPoint: (item) => {
-      return item.collateral_value;
+      return parseFloat(item.collateral_value);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);

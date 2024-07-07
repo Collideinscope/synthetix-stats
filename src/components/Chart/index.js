@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
+import { abbreviateNumber } from "../../helpers";
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -25,6 +26,8 @@ const Chart = ({
     dataStartDate,
     chartYAxisDataKey,
     getYAxisDataPoint,
+    yValueFormatter,
+    symbolLocation,
   } = metricMetadata;
 
   const dataChainFiltered = state[metric]
@@ -89,7 +92,7 @@ const Chart = ({
     if (date.getDate() === 1) {
       return format(date, 'MMM');
     }
-    
+
     return format(date, 'd');
   }
   
@@ -120,6 +123,13 @@ const Chart = ({
   
   // Sort the ticks chronologically
   ticksXAxis.sort((a, b) => a.getTime() - b.getTime());
+
+  const formatYAxis = (tickItem) => {
+    const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';
+    const symbolRight = symbolLocation === 'right' ? chartYValueSymbol : '';
+
+    return symbolLeft + yValueFormatter(tickItem) + symbolRight;
+  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -179,6 +189,14 @@ const Chart = ({
     );
   };
 
+  // location of symbol dependant on metric
+  const valueAndSymbol = (val) => {
+    const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
+    const symbolRight = symbolLocation === 'right' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
+
+    return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
+  }
+
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
@@ -190,7 +208,9 @@ const Chart = ({
             <p className={styles.chartSubtitle}>{collateral_type}</p>
           </div>
         </div>
-        <p className={styles.latestValue}>{highlightValue}{chartYValueSymbol}</p>
+        <p className={styles.latestValue}>
+          {valueAndSymbol(highlightValue)}
+        </p>
       </div>
       <div className={styles.chartWrapper}>
         <ResponsiveContainer 
@@ -220,9 +240,10 @@ const Chart = ({
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}
-              tickFormatter={(value) => `${value.toFixed(0)}%`}
+              tickFormatter={formatYAxis}
               stroke="var(--charts-supporting-colour)"
               tick={{fontSize: 'var(--charts-title-secondary)'}}
+              style={{ fontSize: '12px' }}
             />
             <Tooltip 
               content={<CustomTooltip />}
