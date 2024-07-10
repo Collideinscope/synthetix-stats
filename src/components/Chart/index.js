@@ -3,7 +3,6 @@ import styles from './styles.module.css';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
-import { abbreviateNumber } from "../../helpers";
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -38,15 +37,17 @@ const Chart = ({
       ? dataStartDate 
       : state[metric].length > 0 
         ? dataChainFiltered[0].ts
-        : '2024-01-01'
+        : '2024-01-01' // default start date
   );
 
   const data = dataChainFiltered
     .filter(item => new Date(item.ts) >= startDate) 
-    .map(item => ({
-      timestamp: parseISO(item.ts),
-      [chartYAxisDataKey]: getYAxisDataPoint(item),
-    }));
+    .map(item => {
+      return {
+        timestamp: parseISO(item.ts),
+        [chartYAxisDataKey]: getYAxisDataPoint(item),
+      }
+    });
 
   const latestValue = data.length > 0
     ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
@@ -96,23 +97,22 @@ const Chart = ({
     return format(date, 'd');
   }
   
-  const ticksXAxis = data.reduce((acc, item, index, array) => {
+  const ticksXAxis = data.reduce((acc, item, index) => {
     const currentDate = new Date(item.timestamp);
     const day = currentDate.getDate();
-    
     // Always include the first data point
     if (index === 0) {
       acc.push(currentDate);
       return acc;
     }
-    
+
     // Add first day of month, 8th, 16th, and 24th
     if (day === 1 || day === 8 || day === 16 || day === 24) {
       if (!acc.some(date => date.getTime() === currentDate.getTime())) {
         acc.push(currentDate);
       }
     }
-    
+
     return acc;
   }, []);
   
@@ -248,6 +248,11 @@ const Chart = ({
             <Tooltip 
               content={<CustomTooltip />}
               cursor={<CustomCursor />}
+              onMouseMove = {(e) => {
+                if (e.activePayload && e.activePayload.length > 0) {
+                  onHighlightValueChange(e.activePayload[0].value);
+                }
+              }}
             />
             <Area 
               type="monotone" 

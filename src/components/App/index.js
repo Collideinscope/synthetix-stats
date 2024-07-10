@@ -26,9 +26,13 @@ const App = () => {
         const [
           allAPY,
           allTVL,
+          allPoolRewards,
+          allCoreDelegations,
         ] = await Promise.all([
           API.fetchAllAPY(),
           API.fetchAllTVL(),
+          API.fetchAllPoolRewards(),
+          API.fetchAllCoreDelegations(),
         ]);
 
         appDispatch({
@@ -36,6 +40,8 @@ const App = () => {
           payload: {
             allAPY,
             allTVL,
+            allPoolRewards,
+            allCoreDelegations,
           },
         });
       } catch (error) {

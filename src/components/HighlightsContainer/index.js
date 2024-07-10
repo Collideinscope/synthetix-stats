@@ -35,9 +35,10 @@ const HighlightsContainer = () => {
   // list of charts for a highlight box
   const generateChartList = () => {
 
-    const chartItems = ['allAPY', 'allTVL'].map(item => {
-      return generateChart(item);
-    })
+    const chartItems = ['allAPY', 'allTVL', 'allPoolRewards', 'allCoreDelegations']
+      .map(item => {
+        return generateChart(item);
+      })
 
     return (
       <ul className={styles.chartList}>

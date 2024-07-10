@@ -29,6 +29,36 @@ const METRIC_METADATA = {
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
     }
+  },
+  'allPoolRewards': {
+    key: 'allPoolRewards',
+    chartTitle: 'Pool Rewards',
+    chartYValueSymbol: '$',
+    dataStartDate: null,
+    chartYAxisDataKey: 'cumulative_rewards_usd',
+    symbolLocation: 'left',
+    getYAxisDataPoint: (item) => {
+      console.log(item)
+      return parseFloat(item.cumulative_rewards_usd);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    }
+  },
+  'allCoreDelegations': {
+    key: 'allCoreDelegations',
+    chartTitle: 'Core Delegations',
+    chartYValueSymbol: '$',
+    dataStartDate: null,
+    chartYAxisDataKey: 'amount_delegated',
+    symbolLocation: 'left',
+    getYAxisDataPoint: (item) => {
+      console.log(item)
+      return parseFloat(item.amount_delegated);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    }
   }
 }
 

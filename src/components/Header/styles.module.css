@@ -12,7 +12,6 @@ header {
   margin: 0;
   height: 64px;
   width: 184px;
-  border-right: 1px solid var(--border-and-line-colour);
   position: fixed;
   top: 0;
   left: 0;
@@ -49,13 +48,14 @@ nav {
   align-items: flex-start;
   position: fixed;
   left: 0;
-  top: 64px; 
+  top: 72px; 
   border: 1px solid var(--border-and-line-colour);
   border-bottom: 0;
+  border-left: 0;
   width: 184px;
   height: calc(100% - 64px);
   overflow-y: auto; 
-  padding-top: var(--block-group-padding-between);
+  border-top-right-radius: var(--border-radius-sm);
 }
 
 .searchContainer {
@@ -80,13 +80,16 @@ nav {
 .navItem {
   width: 100%;
   text-align: center; 
-  padding: 0;
+  padding: var(--block-group-padding-internal) 0;
 }
 
-.navItem p {
+.navItem:hover .navItemTitle {
+  color: var(--link-and-button-colour);
+}
+
+.navItemTitle {
   padding: var(--block-group-padding-internal) 0;
   margin: 0;
-  border-bottom: 1px solid var(--border-and-line-colour);
   border-right: 0;
 }
 
@@ -97,27 +100,36 @@ nav {
   align-items: center;
   background: var(--navy-800);
   width: 100%;
-  padding: var(--block-group-padding-internal);
-  border-bottom: 1px solid var(--border-and-line-colour);
+}
+
+.suvNav Link {
+  border: 1px solid blue;
 }
 
 .subNavItem {
-  margin-bottom: var(--block-group-margin-internal);
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: var(--block-group-padding-internal);
 }
 
 .subNavItem:last-child {
   margin-bottom: 0;
 }
 
-.subNavItem p {
+.subNavItemTitle {
   color: var(--supporting-text-colour);
   border: 0;
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
 }
 
 .subNavItem:hover p {
   color: var(--title-colour);
+}
+
+.activeNav{
+  color: var(--link-and-button-colour);
 }
 
 .searchContainer .fa-magnifying-glass {

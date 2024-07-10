@@ -60,9 +60,8 @@ const Header = () => {
                   <Link 
                     key={subMenu} 
                     to={NAV_MENU[menu][subMenu].route} 
-                    className={styles.subNavItem}
                   >
-                    <p>{subMenu}</p>
+                    <p className={styles.subNavItemTitle}>{subMenu}</p>
                   </Link>
                 </li>
               )
@@ -81,10 +80,10 @@ const Header = () => {
         return (
           <li
             key={menu} 
-            className={`${styles.navItem} ${activeNavItemClass}`}
+            className={`${styles.navItem}`}
             onClick={() => handleSetActiveMenu(menu)}
           >
-            <p>{menu}</p>
+            <p className={`${styles.navItemTitle} ${styles[activeNavItemClass]}`}>{menu}</p>
             {renderSubNavItem}
           </li>
         )

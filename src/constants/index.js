@@ -1,9 +1,21 @@
 const NAV_MENU = {
   Core: {
-    coreA: {
+    'Aggregated': {
       route: '',
     },
-    coreB: {
+    'APY': {
+      route: '',
+    },
+    'TVL': {
+
+    },
+    'Core Delegations': {
+      route: '',
+    },
+    'Pool Rewards': {
+      route: '',
+    },
+    'Unique Stakers': {
       route: '',
     }
   },
