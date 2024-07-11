@@ -13,6 +13,7 @@ import { GlobalContext } from '../../context/GlobalContext';
 
 import Header from '../Header';
 import HighlightsContainer from '../HighlightsContainer';
+import AggregatedDataContainer from '../AggregatedDataContainer';
 
 import API from '../../fetch_functions';
 
@@ -62,6 +63,11 @@ const App = () => {
           <main>
             <Routes>
               <Route exact path="/" element={<HighlightsContainer />} />
+              <Route exact path="/core/overview" element={
+                <AggregatedDataContainer 
+                  dataType={'core'}
+                />} 
+              />
             </Routes>
           </main>
         </div>

@@ -7,17 +7,6 @@ import { Link } from 'react-router-dom';
 
 import Chart from '../Chart';
 
-const HIGHLIGHTS_CONTAINER_META = {
-  'CORE HIGHLIGHTS': {
-    title: 'CORE HIGHLIGHTS',
-    settings: [],
-  },
-  'PERPS HIGHLIGHTS': {
-    title: 'PERPS HIGHLIGHTS',
-    settings: [],
-  }
-}
-
 const HighlightsContainer = () => {
 
   const generateChart = (item) => {

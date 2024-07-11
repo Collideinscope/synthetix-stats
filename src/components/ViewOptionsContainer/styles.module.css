@@ -1,4 +1,74 @@
 .container {
-  padding: var(--block-group-padding-internal);
+  background: var(--navy-900);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--block-margin-between);
+  border: 1px solid red;
   width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.filterPanel {
+  display: flex;
+  justify-content: flex-start;
+  min-width: 350px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--block-group-margin-internal);
+}
+
+.filterItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--block-group-margin-minimum);
+}
+
+.filterItem label {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-supporting);
+  color: var(--supporting-text-colour);
+}
+
+.filterItem select {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-copy);
+  color: var(--supporting-text-colour);
+  background-color: var(--navy-800);
+  border: 0;
+  border-radius: var(--border-radius-sm);
+  padding: 8px 12px;
+  width: 100px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.filterItem select:hover {
+  border-color: var(--cyan-500);
+  color: var(--title-colour);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F7FAFC' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
+}
+
+.filterItem select:focus {
+  outline: none;
+  color: var(--title-colour);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F7FAFC' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
+}
+
+.option {
+  background-color: var(--navy-800) !important;
+  color: var(--supporting-text-colour);
+}
+
+.filterItem select::-ms-expand {
+  display: none;
+}
+
+.filterItem select option:checked,
+.filterItem select option:hover {
+  background-color: var(--navy-700);
+  color: var(--title-colour);
 }
