@@ -13,6 +13,7 @@ const Chart = ({
     chain,
     pool,
     collateral_type,
+    showFilters,
   }) => {
   const [highlightValue, setHighlightValue] = useState(null);
 
@@ -197,16 +198,24 @@ const Chart = ({
     return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
+  const renderFilters = () => {
+    if (!showFilters) return null;
+
+    return (
+      <div className={styles.titleMeta}>
+        <p className={styles.chartSubtitle}>{chain}</p>
+        <p className={styles.chartSubtitle}>{pool}</p>
+        <p className={styles.chartSubtitle}>{collateral_type}</p>
+      </div>
+    );
+  }
+
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
         <div className={styles.titleContainer}>
           <h3 className={styles.chartTitle}>{chartTitle}</h3>
-          <div className={styles.titleMeta}>
-            <p className={styles.chartSubtitle}>{chain}</p>
-            <p className={styles.chartSubtitle}>{pool}</p>
-            <p className={styles.chartSubtitle}>{collateral_type}</p>
-          </div>
+          {renderFilters()}
         </div>
         <p className={styles.latestValue}>
           {valueAndSymbol(highlightValue)}

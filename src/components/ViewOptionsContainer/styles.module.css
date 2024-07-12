@@ -2,14 +2,27 @@
   background: var(--navy-900);
   border-radius: var(--border-radius-sm);
   margin-bottom: var(--block-margin-between);
-  border: 1px solid red;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 2px 20px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.1s ease;  
+  background-color: var(--navy-900);
 }
 
 .filterPanel {
+  display: flex;
+  justify-content: flex-start;
+  min-width: 350px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--block-group-margin-internal);
+  padding: var(--block-padding-internal);
+}
+
+.filters {
   display: flex;
   justify-content: flex-start;
   min-width: 350px;
@@ -22,18 +35,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--block-group-margin-minimum);
+  position: relative;
 }
 
-.filterItem label {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-supporting);
+.filterSelect {
   color: var(--supporting-text-colour);
-}
-
-.filterItem select {
   font-family: var(--font-family-body);
   font-size: var(--font-size-copy);
-  color: var(--supporting-text-colour);
   background-color: var(--navy-800);
   border: 0;
   border-radius: var(--border-radius-sm);
@@ -46,29 +54,39 @@
   background-position: right 12px center;
 }
 
-.filterItem select:hover {
+.activeSelect {
+  color: var(--title-colour);
+}
+
+.filterItem .filterSelect:hover {
   border-color: var(--cyan-500);
   color: var(--title-colour);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F7FAFC' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
 }
 
-.filterItem select:focus {
+.filterItem .filterSelect:focus {
   outline: none;
   color: var(--title-colour);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F7FAFC' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
 }
 
+.options {
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background: var(--navy-800);
+  cursor: pointer;
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+}
+
 .option {
-  background-color: var(--navy-800) !important;
+  background: var(--navy-900);
   color: var(--supporting-text-colour);
+  padding:  var(--block-group-padding-internal);
 }
 
-.filterItem select::-ms-expand {
-  display: none;
-}
-
-.filterItem select option:checked,
-.filterItem select option:hover {
-  background-color: var(--navy-700);
+.option:hover {
   color: var(--title-colour);
 }

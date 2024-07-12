@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 
 import Chart from '../Chart';
 
+import { METRIC_METADATA } from '../../constants/metrics';
+
+
 const HighlightsContainer = () => {
 
   const generateChart = (item) => {
@@ -17,6 +20,7 @@ const HighlightsContainer = () => {
         chain={'base'} 
         pool={1}
         collateral_type={'USDC'}
+        showFilters={true}
       />
     )
   }
@@ -24,7 +28,7 @@ const HighlightsContainer = () => {
   // list of charts for a highlight box
   const generateChartList = () => {
 
-    const chartItems = ['allAPY', 'allTVL', 'allPoolRewards', 'allCoreDelegations']
+    const chartItems = Object.keys(METRIC_METADATA)
       .map(item => {
         return generateChart(item);
       })
@@ -37,24 +41,17 @@ const HighlightsContainer = () => {
   }
 
   // highlight bar and accompanied charts
-  const generateHightlightBox = (meta) => {
+  const generateHightlightBox = () => {
     return (
-      <div key={meta} className={styles.highlightBox}>
+      <div className={styles.highlightBox}>
         {generateChartList()}
       </div>
     )
   }
-
-  const generateHighlightBoxList = () => {
-    // change to metrics list, remove highlight box list requirement later
-    return [1].map(meta => {
-      return generateHightlightBox(meta);
-    })
-  }
   
   return (
     <div className={styles['container']}>
-      {generateHighlightBoxList()}
+      {generateHightlightBox()}
     </div>
   );
 };

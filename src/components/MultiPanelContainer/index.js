@@ -1,16 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
+import Chart from '../Chart';
+import { METRIC_METADATA } from '../../constants/metrics';
 
+const MultiPanel = ({ filters }) => {
 
-const MultiPanelContainer = ({
-  
-}) => {
-  
+  const generateChart = (item) => {
+    return (
+      <Chart 
+        key={item}
+        metric={item} 
+        chain={'base'} 
+        pool={1}
+        collateral_type={'USDC'}
+        showFilters={false}
+      />
+    )
+  }
+
+  const generateChartList = () => {
+    const chartItems = Object.keys(METRIC_METADATA)
+      .map(item => {
+        return generateChart(item);
+      })
+
+    return (
+      <ul className={styles.chartList}>
+        {chartItems}
+      </ul>
+    )
+  }
+
   return (
-    <div className={styles.container}>
-      MultiPanelContainer
+    <div className={styles.multiPanel}>
+      {generateChartList()}
     </div>
   );
 };
 
-export default MultiPanelContainer;
+export default MultiPanel;

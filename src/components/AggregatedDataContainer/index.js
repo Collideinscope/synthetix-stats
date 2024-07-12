@@ -6,13 +6,13 @@ import ViewOptionsContainer from '../ViewOptionsContainer';
 import MultiPanelContainer from '../MultiPanelContainer';
 
 const AggregatedDataContainer = ({
-  dataType,
+  dataType, // 'core', 'perps', etc - nav
 }) => {
 
   const [filters, setFilters] = useState({
     chain: 'base',
     pool: '1',
-    collateralType: '0xc74ea762cf06c9151ce074e6a569a5945b6302e7',
+    collateralType: 'USDC',
   });
 
   const handleFilterChange = (filter, value) => {
@@ -30,7 +30,7 @@ const AggregatedDataContainer = ({
         filters={filters}
         handleFilterChange={handleFilterChange} 
       />
-      <MultiPanelContainer />
+      <MultiPanelContainer filters={filters} />
     </section>
   )
 }

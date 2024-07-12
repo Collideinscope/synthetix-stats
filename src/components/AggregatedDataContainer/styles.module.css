@@ -5,6 +5,5 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  border: 1px solid blue;
   padding: var(--block-group-padding-internal);
 }
