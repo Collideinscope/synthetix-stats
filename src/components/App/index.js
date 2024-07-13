@@ -26,11 +26,13 @@ const App = () => {
       try {
         const [
           allAPY,
+          summaryDataAPY,
           allTVL,
           allPoolRewards,
           allCoreDelegations,
         ] = await Promise.all([
           API.fetchAllAPY(),
+          API.fetchSummaryDataAPY('base'),
           API.fetchAllTVL(),
           API.fetchAllPoolRewards(),
           API.fetchAllCoreDelegations(),
@@ -40,6 +42,7 @@ const App = () => {
           type: 'SET_INITIAL_DATA',
           payload: {
             allAPY,
+            summaryDataAPY,
             allTVL,
             allPoolRewards,
             allCoreDelegations,

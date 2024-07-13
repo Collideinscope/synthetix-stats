@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-
-import Chart from '../Chart';
+import ChartContainer from '../ChartContainer';
 
 import { METRIC_METADATA } from '../../constants/metrics';
-
 
 const HighlightsContainer = () => {
 
   const generateChart = (item) => {
     return (
-      <Chart 
+      <ChartContainer
         key={item}
         metric={item} 
         chain={'base'} 

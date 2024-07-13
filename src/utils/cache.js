@@ -4,6 +4,7 @@ const setInitialStateWithStorage = () => {
   const defaultState = {
       latestAPY: [],
       allAPY: [],
+      summaryDataAPY: {},
       latestTVL: [],
       allTVL: [],
       latestCoreDelegations: [],

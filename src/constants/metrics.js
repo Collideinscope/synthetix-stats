@@ -9,6 +9,7 @@ const METRIC_METADATA = {
     dataStartDate: '2024-05-01',
     chartYAxisDataKey: 'apy_7d',
     symbolLocation: 'right',
+    summaryDataKey: 'summaryDataAPY',
     getYAxisDataPoint: (item) => {
       return item.apys.apy_7d.year * 100;
     },
@@ -23,6 +24,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'collateral_value',
     symbolLocation: 'left',
+    summaryDataKey: 'summaryDataAPY',
     getYAxisDataPoint: (item) => {
       return parseFloat(item.collateral_value);
     },
@@ -37,6 +39,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_rewards_usd',
     symbolLocation: 'left',
+    summaryDataKey: 'summaryDataAPY',
     getYAxisDataPoint: (item) => {
       console.log(item)
       return parseFloat(item.cumulative_rewards_usd);
@@ -52,6 +55,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'amount_delegated',
     symbolLocation: 'left',
+    summaryDataKey: 'summaryDataAPY',
     getYAxisDataPoint: (item) => {
       console.log(item)
       return parseFloat(item.amount_delegated);

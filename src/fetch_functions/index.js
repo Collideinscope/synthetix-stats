@@ -45,6 +45,18 @@ const API = {
     }
   },
 
+  fetchSummaryDataAPY: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/apy/summary/${chainParam}`;
+      console.log(URL)
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary APY:', error);
+      throw error;
+    }
+  },
+
   /*
     TVL
   */
