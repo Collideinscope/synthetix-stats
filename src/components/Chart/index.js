@@ -28,10 +28,10 @@ const Chart = ({
     getYAxisDataPoint,
     yValueFormatter,
     symbolLocation,
+    dataChainFilter,
   } = metricMetadata;
 
-  const dataChainFiltered = state[metric]
-    .filter(item => item.chain === chain)
+  const dataChainFiltered = dataChainFilter(state[metric], chain);
 
   const startDate = new Date(
     dataStartDate
@@ -232,8 +232,8 @@ const Chart = ({
           >
             <defs>
               <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--green-500)" stopOpacity={0.4}/>
-                <stop offset="95%" stopColor="var(--green-500)" stopOpacity={0.1}/>
+                <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <XAxis 
@@ -266,13 +266,13 @@ const Chart = ({
             <Area 
               type="monotone" 
               dataKey={chartYAxisDataKey}
-              stroke="var(--green-500)" 
+              stroke="var(--cyan-300)" 
               strokeWidth={2}
               fillOpacity={0.6}
               fill="url(#colorAPY)"
               activeDot={{
                 r: 6,
-                stroke: "var(--green-500)",
+                stroke: "var(--cyan-300)",
                 strokeWidth: 2,
                 fill: "var(--charts-background-colour)"
               }}

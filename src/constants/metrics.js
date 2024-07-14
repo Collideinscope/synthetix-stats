@@ -10,6 +10,9 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'apy_7d',
     symbolLocation: 'right',
     summaryDataKey: 'summaryDataAPY',
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
     getYAxisDataPoint: (item) => {
       return item.apys.apy_7d.year * 100;
     },
@@ -25,6 +28,9 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'collateral_value',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataAPY',
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.collateral_value);
     },
@@ -40,8 +46,10 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'cumulative_rewards_usd',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataAPY',
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
     getYAxisDataPoint: (item) => {
-      console.log(item)
       return parseFloat(item.cumulative_rewards_usd);
     },
     yValueFormatter: (val) => {
@@ -56,12 +64,34 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'amount_delegated',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataAPY',
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
     getYAxisDataPoint: (item) => {
-      console.log(item)
       return parseFloat(item.amount_delegated);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
+    }
+  },
+  'cumulativeUniqueStakers': {
+    key: 'cumulativeUniqueStakers',
+    chartTitle: 'Unique Stakers',
+    chartYValueSymbol: '',
+    dataStartDate: null,
+    chartYAxisDataKey: 'cumulative_staker_count',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataAPY',
+    dataChainFilter: (data, chain) => {
+      return data[chain]
+        ? data[chain]
+        : [];
+    },
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.cumulative_staker_count);
+    },
+    yValueFormatter: (val) => {
+      return parseFloat(val).toFixed(0);
     }
   }
 }

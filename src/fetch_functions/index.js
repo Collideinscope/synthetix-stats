@@ -146,6 +146,18 @@ const API = {
     }
   },
 
+  fetchCumulativeUniqueStakers: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/core-account-delegations/cumulative-unique-stakers/${chainParam}`;
+      
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching cumulative unique stakers:', error);
+      throw error;
+    }
+  },
+
   fetchAllCoreAccountDelegations: async (chain) => {
     try {
       const chainParam = chain ? chain : '';

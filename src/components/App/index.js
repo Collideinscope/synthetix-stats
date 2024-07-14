@@ -30,12 +30,14 @@ const App = () => {
           allTVL,
           allPoolRewards,
           allCoreDelegations,
+          cumulativeUniqueStakers,
         ] = await Promise.all([
           API.fetchAllAPY(),
           API.fetchSummaryDataAPY('base'),
           API.fetchAllTVL(),
           API.fetchAllPoolRewards(),
           API.fetchAllCoreDelegations(),
+          API.fetchCumulativeUniqueStakers(),
         ]);
 
         appDispatch({
@@ -46,6 +48,7 @@ const App = () => {
             allTVL,
             allPoolRewards,
             allCoreDelegations,
+            cumulativeUniqueStakers,
           },
         });
       } catch (error) {

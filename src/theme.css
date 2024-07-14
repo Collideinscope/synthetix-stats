@@ -1,5 +1,3 @@
-/* Synthetix V3 branding from Figma doc */
-
 :root {
   /*         COLOURS         */
 
@@ -33,6 +31,20 @@
   --orange-500: #FC8738;
   --red-500: #E4364B;
   --white: #FFFFFF;
+
+  /* Proposed New Color */
+  --magenta-500: #FF00A0;
+
+  --blue-500: #457B9D;
+  --blue-600: #1D3557;
+  --teal-500: #2A9D8F;
+  --teal-600: #264653;
+  --gray-500: #A8A8A8;
+  --gray-600: #6D6D6D;
+  --pastel-blue: #A8DADC;
+  --pastel-green: #A1C181;
+  --earth-brown: #8D7A5B;
+  --earth-beige: #D6BFA3;
 
   /* Gradients from New Palette */
   --gradient-pink-cyan: linear-gradient(to right, #EE2EFF, #00D1FF);

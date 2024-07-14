@@ -1,8 +1,8 @@
 .container {
   background: var(--navy-900);
   border-radius: var(--border-radius-sm);
-  margin-bottom: var(--block-margin-between);
-  width: 100%;
+  margin: var(--block-margin-between) 0;
+  width: calc(100% - (2 * var(--block-margin-between)));
   display: flex;
   justify-content: flex-start;
   align-items: center;

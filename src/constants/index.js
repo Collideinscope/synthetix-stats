@@ -1,13 +1,13 @@
 const NAV_MENU = {
   Core: {
     'Aggregated': {
-      route: '',
+      route: '/core/overview',
     },
     'APY': {
       route: '',
     },
     'TVL': {
-
+      route: '',
     },
     'Core Delegations': {
       route: '',

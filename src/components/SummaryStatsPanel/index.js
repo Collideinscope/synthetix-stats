@@ -11,7 +11,7 @@ const SummaryStatsPanel = ({ data, metric }) => {
   const formatPercentage = (value) => `${value.toFixed(2)}%`;
 
   const renderDelta = (value, label) => {
-    const isPositive = value > 0;
+    const isPositive = value >= 0;
     const icon = isPositive ? faArrowUp : faArrowDown;
     const colorClass = isPositive ? styles.positive : styles.negative;
 
@@ -23,8 +23,8 @@ const SummaryStatsPanel = ({ data, metric }) => {
       <div className={`${styles.statItem} ${colorClass}`}>
         {renderLabel}
         <span className={styles.statValue}>
-          <FontAwesomeIcon icon={icon} />
-          {' ' + formatPercentage(Math.abs(value))}
+          <FontAwesomeIcon icon={icon} className={styles.icon} />
+          {formatPercentage(Math.abs(value))}
         </span>
       </div>
     );

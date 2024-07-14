@@ -20,9 +20,7 @@ const HighlightsContainer = () => {
     )
   }
 
-  // list of charts for a highlight box
   const generateChartList = () => {
-
     const chartItems = Object.keys(METRIC_METADATA)
       .map(item => {
         return generateChart(item);

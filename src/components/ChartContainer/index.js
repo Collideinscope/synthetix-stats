@@ -10,6 +10,7 @@ const ChartContainer = ({
   chain,
   pool,
   collateral_type,
+  showFilters,
 }) => {
   const { state } = useContext(GlobalContext);
   const summaryDataKey = METRIC_METADATA[metric].summaryDataKey;
@@ -23,7 +24,7 @@ const ChartContainer = ({
         chain={chain}
         pool={pool}
         collateral_type={collateral_type}
-        showFilters={true}
+        showFilters={showFilters}
       />
     </div>
   );

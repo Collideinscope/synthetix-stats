@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './styles.module.css';
-import Chart from '../Chart';
+
+import ChartContainer from '../ChartContainer';
+
 import { METRIC_METADATA } from '../../constants/metrics';
 
 const MultiPanel = ({ filters }) => {
 
   const generateChart = (item) => {
     return (
-      <Chart 
+      <ChartContainer
         key={item}
         metric={item} 
         chain={'base'} 

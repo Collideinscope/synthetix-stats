@@ -47,7 +47,7 @@
 }
 
 .latestValue {
-  color: var(--green-500);
+  color: var(--cyan-300);
   font-size: var(--charts-title-primary);
   margin: var(--block-margin-minimum) 0 0 0;
   margin-right: var(--charts-padding-inside-containers);

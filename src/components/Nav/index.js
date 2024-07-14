@@ -21,7 +21,6 @@ const Nav = () => {
     });
   }
 
-
   const generateNav = () => {
 
     const navMenuItems = Object
@@ -59,9 +58,13 @@ const Nav = () => {
           <li
             key={menu} 
             className={`${styles.navItem}`}
-            onClick={() => handleSetActiveMenu(menu)}
           >
-            <p className={`${styles.navItemTitle} ${styles[activeNavItemClass]}`}>{menu}</p>
+            <p 
+              className={`${styles.navItemTitle} ${styles[activeNavItemClass]}`}
+              onClick={() => handleSetActiveMenu(menu)}
+            >
+              {menu}
+            </p>
             {renderSubNavItem}
           </li>
         )

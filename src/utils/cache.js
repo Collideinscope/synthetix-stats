@@ -11,7 +11,7 @@ const setInitialStateWithStorage = () => {
       allCoreDelegations: [],
       latestPoolRewards: [],
       allPoolRewards: [],
-      stakerCount: [],
+      cumulativeUniqueStakers: {},
       allCoreAccountDelegations: [],
       coreAccountDelegationsByAccount: [],
       coreAccountDelegationsOrderedByAccount: [],
