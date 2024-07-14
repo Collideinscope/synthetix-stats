@@ -82,6 +82,17 @@ const API = {
     }
   },
 
+  fetchSummaryDataTVL: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/tvl/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary TVL:', error);
+      throw error;
+    }
+  },
+
   /*
     Core Delegations
   */
@@ -150,7 +161,7 @@ const API = {
     try {
       const chainParam = chain ? chain : '';
       const URL = `${BASE_URL}/core-account-delegations/cumulative-unique-stakers/${chainParam}`;
-      
+
       return fetchData(URL);
     } catch (error) {
       console.error('Error fetching cumulative unique stakers:', error);

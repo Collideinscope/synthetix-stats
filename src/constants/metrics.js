@@ -27,7 +27,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'collateral_value',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataAPY',
+    summaryDataKey: 'summaryDataTVL',
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
