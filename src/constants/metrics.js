@@ -10,6 +10,7 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'apy_7d',
     symbolLocation: 'right',
     summaryDataKey: 'summaryDataAPY',
+    summaryDataType: '%',
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
@@ -18,7 +19,7 @@ const METRIC_METADATA = {
     },
     yValueFormatter: (val) => {
       return val;
-    }
+    },
   },
   'allTVL': {
     key: 'allTVL',
@@ -28,6 +29,7 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'collateral_value',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataTVL',
+    summaryDataType: 'num',
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
@@ -36,7 +38,7 @@ const METRIC_METADATA = {
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
-    }
+    },
   },
   'allPoolRewards': {
     key: 'allPoolRewards',

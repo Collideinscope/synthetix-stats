@@ -1,6 +1,6 @@
 const NAV_MENU = {
   Core: {
-    'Aggregated': {
+    'Overview': {
       route: '/core/overview',
     },
     'APY': {
@@ -20,10 +20,19 @@ const NAV_MENU = {
     }
   },
   Perps: {
-    perpsA: {
+    'Overview': {
+      route: '/perps/overview',
+    },
+    'Volume': {
       route: '',
     },
-    perpsB: {
+    'Fees': {
+      route: '',
+    },
+    'Unique Traders': {
+      route: '',
+    },
+    'OI': {
       route: '',
     }
   },
