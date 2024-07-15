@@ -51,9 +51,9 @@ const Chart = ({
     });
 
   const latestValue = data.length > 0
-    ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
-    : '';
-
+  ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
+  : '';
+    
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);

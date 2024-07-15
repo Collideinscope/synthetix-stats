@@ -143,6 +143,17 @@ const API = {
     }
   },
 
+  fetchSummaryDataPoolRewards: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/pool-rewards/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary Pool Rwards:', error);
+      throw error;
+    }
+  },
+
   /*
     Core Account Delegations
   */

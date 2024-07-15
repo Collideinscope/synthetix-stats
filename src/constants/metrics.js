@@ -47,9 +47,10 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_rewards_usd',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataAPY',
+    summaryDataKey: 'summaryDataPoolRewards',
     dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
+      return data
+        .filter(item => item.chain === chain)
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_rewards_usd);
