@@ -8,6 +8,7 @@ const setInitialStateWithStorage = () => {
       summaryDataTVL: {},
       summaryDataPoolRewards: {},
       summaryDataCoreDelegations: {},
+      summaryDataUniqueStakers: {},
       latestTVL: [],
       allTVL: [],
       latestCoreDelegations: [],

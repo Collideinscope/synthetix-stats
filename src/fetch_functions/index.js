@@ -1,5 +1,5 @@
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-console.log(BASE_URL)
+
 const handleFetchResponse = async (response) => {
   if (!response.ok) {
     const errorText = await response.text();
@@ -122,7 +122,7 @@ const API = {
     try {
       const chainParam = chain ? chain : '';
       const URL = `${BASE_URL}/core-delegations/summary/${chainParam}`;
-      
+
       return fetchData(URL);
     } catch (error) {
       console.error('Error fetching summary Pool Rwards:', error);
@@ -220,6 +220,17 @@ const API = {
       return fetchData(URL);
     } catch (error) {
       console.error('Error fetching core account delegations ordered by account:', error);
+      throw error;
+    }
+  },
+
+  fetchSummaryDataUniqueStakers: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/core-account-delegations/cumulative-unique-stakers/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary TVL:', error);
       throw error;
     }
   },

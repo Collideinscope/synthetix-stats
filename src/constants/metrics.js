@@ -84,7 +84,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_staker_count',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataAPY',
+    summaryDataKey: 'summaryDataUniqueStakers',
     dataChainFilter: (data, chain) => {
       return data[chain]
         ? data[chain]

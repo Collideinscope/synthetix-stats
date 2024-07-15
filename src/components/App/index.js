@@ -34,6 +34,7 @@ const App = () => {
           allCoreDelegations,
           summaryDataCoreDelegations,
           cumulativeUniqueStakers,
+          summaryDataUniqueStakers,
         ] = await Promise.all([
           API.fetchAllAPY(),
           API.fetchSummaryDataAPY('base'),
@@ -44,6 +45,7 @@ const App = () => {
           API.fetchAllCoreDelegations(),
           API.fetchSummaryDataCoreDelegations('base'),
           API.fetchCumulativeUniqueStakers(),
+          API.fetchSummaryDataUniqueStakers('base'),
         ]);
 
         appDispatch({
@@ -58,6 +60,7 @@ const App = () => {
             allCoreDelegations,
             summaryDataCoreDelegations,
             cumulativeUniqueStakers,
+            summaryDataUniqueStakers,
           },
         });
       } catch (error) {
