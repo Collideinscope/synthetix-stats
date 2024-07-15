@@ -32,6 +32,7 @@ const App = () => {
           allPoolRewards,
           summaryDataPoolRewards,
           allCoreDelegations,
+          summaryDataCoreDelegations,
           cumulativeUniqueStakers,
         ] = await Promise.all([
           API.fetchAllAPY(),
@@ -41,6 +42,7 @@ const App = () => {
           API.fetchAllPoolRewards('base'),
           API.fetchSummaryDataPoolRewards('base'),
           API.fetchAllCoreDelegations(),
+          API.fetchSummaryDataCoreDelegations('base'),
           API.fetchCumulativeUniqueStakers(),
         ]);
 
@@ -54,6 +56,7 @@ const App = () => {
             allPoolRewards,
             summaryDataPoolRewards,
             allCoreDelegations,
+            summaryDataCoreDelegations,
             cumulativeUniqueStakers,
           },
         });

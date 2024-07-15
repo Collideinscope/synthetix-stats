@@ -66,7 +66,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'amount_delegated',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataAPY',
+    summaryDataKey: 'summaryDataCoreDelegations',
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
