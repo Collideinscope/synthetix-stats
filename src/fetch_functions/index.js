@@ -234,6 +234,42 @@ const API = {
       throw error;
     }
   },
+
+  /* 
+    Perp Stats 
+  */
+  fetchLatestPerpStats: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-stats/latest/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching latest Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  fetchAllPerpStats: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-stats/all/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching all Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  fetchSummaryDataPerpStats: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-stats/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary Perp Stats:', error);
+      throw error;
+    }
+  },
 };
 
 export default API;

@@ -2,23 +2,21 @@
 const setInitialStateWithStorage = () => {
   // set default initial state values
   const defaultState = {
-      latestAPY: [],
       allAPY: [],
-      summaryDataAPY: {},
-      summaryDataTVL: {},
-      summaryDataPoolRewards: {},
-      summaryDataCoreDelegations: {},
-      summaryDataUniqueStakers: {},
-      latestTVL: [],
       allTVL: [],
-      latestCoreDelegations: [],
       allCoreDelegations: [],
-      latestPoolRewards: [],
       allPoolRewards: [],
       cumulativeUniqueStakers: {},
       allCoreAccountDelegations: [],
       coreAccountDelegationsByAccount: [],
       coreAccountDelegationsOrderedByAccount: [],
+      allPerpStats: [],
+      summaryDataAPY: {},
+      summaryDataTVL: {},
+      summaryDataPoolRewards: {},
+      summaryDataCoreDelegations: {},
+      summaryDataUniqueStakers: {},
+      summaryDataPerpStats: {},
   };
 
   // try to get data from local storage first and set it

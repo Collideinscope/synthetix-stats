@@ -35,6 +35,8 @@ const App = () => {
           summaryDataCoreDelegations,
           cumulativeUniqueStakers,
           summaryDataUniqueStakers,
+          allPerpStats,
+          summaryDataPerpStats,
         ] = await Promise.all([
           API.fetchAllAPY(),
           API.fetchSummaryDataAPY('base'),
@@ -46,6 +48,8 @@ const App = () => {
           API.fetchSummaryDataCoreDelegations('base'),
           API.fetchCumulativeUniqueStakers(),
           API.fetchSummaryDataUniqueStakers('base'),
+          API.fetchAllPerpStats('base'),
+          API.fetchSummaryDataPerpStats('base'),
         ]);
 
         appDispatch({
@@ -61,6 +65,8 @@ const App = () => {
             summaryDataCoreDelegations,
             cumulativeUniqueStakers,
             summaryDataUniqueStakers,
+            allPerpStats,
+            summaryDataPerpStats,
           },
         });
       } catch (error) {
@@ -83,7 +89,12 @@ const App = () => {
               <Route exact path="/" element={<HighlightsContainer />} />
               <Route exact path="/core/overview" element={
                 <AggregatedDataContainer 
-                  dataType={'core'}
+                  category={'core'}
+                />} 
+              />
+              <Route exact path="/perp-stats/overview" element={
+                <AggregatedDataContainer 
+                  category={'perps'}
                 />} 
               />
             </Routes>

@@ -96,6 +96,24 @@ const METRIC_METADATA = {
     yValueFormatter: (val) => {
       return parseFloat(val).toFixed(0);
     }
+  },
+  'allPerpStats': {
+    key: 'allPerpStats',
+    chartTitle: 'Perps Volume',
+    chartYValueSymbol: '',
+    dataStartDate: null,
+    chartYAxisDataKey: 'cumulative_volume',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataPerpStats',
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.cumulative_volume);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    }
   }
 }
 

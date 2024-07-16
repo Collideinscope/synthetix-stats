@@ -6,7 +6,7 @@ import ViewOptionsContainer from '../ViewOptionsContainer';
 import MultiPanelContainer from '../MultiPanelContainer';
 
 const AggregatedDataContainer = ({
-  dataType, // 'core', 'perps', etc - nav
+  category, // 'core', 'perps', etc - nav
 }) => {
 
   const [filters, setFilters] = useState({
@@ -30,7 +30,7 @@ const AggregatedDataContainer = ({
         filters={filters}
         handleFilterChange={handleFilterChange} 
       />
-      <MultiPanelContainer filters={filters} />
+      <MultiPanelContainer category={category} filters={filters} />
     </section>
   )
 }

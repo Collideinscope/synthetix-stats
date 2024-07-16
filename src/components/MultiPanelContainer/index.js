@@ -5,7 +5,7 @@ import ChartContainer from '../ChartContainer';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 
-const MultiPanel = ({ filters }) => {
+const MultiPanel = ({ category, filters }) => {
 
   const generateChart = (item) => {
     return (
