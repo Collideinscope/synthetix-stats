@@ -102,23 +102,88 @@ const METRIC_METADATA = {
       return parseFloat(val).toFixed(0);
     }
   },
-  'allPerpStats': {
-    key: 'allPerpStats',
+  'cumulativePerpsVolume': {
+    key: 'cumulativePerpsVolume',
     chartTitle: 'Perps Volume',
     chartYValueSymbol: '',
     dataStartDate: null,
-    chartYAxisDataKey: 'cumulative_volume',
+    chartYAxisDataKey: 'cumulative_perps_volume',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataPerpStats',
+    summaryDataKey: 'summaryDataPerpsVolume',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
+      return data[chain]
+        ? data[chain]
+        : [];
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_volume);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
+    }
+  },
+  'cumulativeUniqueTraders': {
+    key: 'cumulativeUniqueTraders',
+    chartTitle: 'Unique Traders',
+    chartYValueSymbol: '',
+    dataStartDate: null,
+    chartYAxisDataKey: 'cumulative_unique_traders',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataUniqueTraders',
+    smoothData: false,
+    dataChainFilter: (data, chain) => {
+      return data[chain]
+        ? data[chain]
+        : [];
+    },
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.cumulative_volume);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    }
+  },
+  'cumulativeCollectedFees': {
+    key: 'cumulativeCollectedFees',
+    chartTitle: 'Collected Fees',
+    chartYValueSymbol: '',
+    dataStartDate: null,
+    chartYAxisDataKey: 'cumulative_collected_fees',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataCollectedFees',
+    smoothData: false,
+    dataChainFilter: (data, chain) => {
+      return data[chain]
+        ? data[chain]
+        : [];
+    },
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.cumulative_volume);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    },
+    'cumulativeExchangeFees': {
+      key: 'cumulativeExchangeFees',
+      chartTitle: 'Exchange Fees',
+      chartYValueSymbol: '',
+      dataStartDate: null,
+      chartYAxisDataKey: 'cumulative_exchange_fees',
+      symbolLocation: 'left',
+      summaryDataKey: 'summaryDataExchangeFees',
+      smoothData: false,
+      dataChainFilter: (data, chain) => {
+        return data[chain]
+        ? data[chain]
+        : [];
+      },
+      getYAxisDataPoint: (item) => {
+        return parseFloat(item.cumulative_volume);
+      },
+      yValueFormatter: (val) => {
+        return abbreviateNumber(val);
+      }
     }
   }
 }

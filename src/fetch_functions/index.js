@@ -16,316 +16,80 @@ const fetchData = async (URL) => {
       'Accept': 'application/json',
     },
   });
+
   return handleFetchResponse(res);
 };
 
 const API = {
   /*
+    Generalized Fetcher
+  */
+  fetchGeneralData: async (endpoint, chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/${endpoint}/${chainParam}`;
+
+      return fetchData(URL);
+    } catch (error) {
+      console.error(`Error fetching ${endpoint}:`, error);
+      throw error;
+    }
+  },
+
+  /*
     APY
   */
-  fetchLatestAPY: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/apy/latest/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching latest APY:', error);
-      throw error;
-    }
-  },
-
-  fetchAllAPY: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/apy/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all APY:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataAPY: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/apy/summary/${chainParam}`;
-      console.log(URL)
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary APY:', error);
-      throw error;
-    }
-  },
+  fetchLatestAPY: async (chain) => API.fetchGeneralData('apy/latest', chain),
+  fetchAllAPY: async (chain) => API.fetchGeneralData('apy/all', chain),
+  fetchSummaryDataAPY: async (chain) => API.fetchGeneralData('apy/summary', chain),
 
   /*
     TVL
   */
-  fetchLatestTVL: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/tvl/latest/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching latest TVL:', error);
-      throw error;
-    }
-  },
-
-  fetchAllTVL: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/tvl/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all TVL:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataTVL: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/tvl/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary TVL:', error);
-      throw error;
-    }
-  },
+  fetchLatestTVL: async (chain) => API.fetchGeneralData('tvl/latest', chain),
+  fetchAllTVL: async (chain) => API.fetchGeneralData('tvl/all', chain),
+  fetchSummaryDataTVL: async (chain) => API.fetchGeneralData('tvl/summary', chain),
 
   /*
     Core Delegations
   */
-  fetchLatestCoreDelegations: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-delegations/latest/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching latest core delegations:', error);
-      throw error;
-    }
-  },
-
-  fetchAllCoreDelegations: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-delegations/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all core delegations:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataCoreDelegations: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-delegations/summary/${chainParam}`;
-
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Pool Rwards:', error);
-      throw error;
-    }
-  },
+  fetchLatestCoreDelegations: async (chain) => API.fetchGeneralData('core-delegations/latest', chain),
+  fetchAllCoreDelegations: async (chain) => API.fetchGeneralData('core-delegations/all', chain),
+  fetchSummaryDataCoreDelegations: async (chain) => API.fetchGeneralData('core-delegations/summary', chain),
 
   /*
     Pool Rewards
   */
-  fetchLatestPoolRewards: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/pool-rewards/latest/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching latest pool rewards:', error);
-      throw error;
-    }
-  },
-
-  fetchAllPoolRewards: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/pool-rewards/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all pool rewards:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataPoolRewards: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/pool-rewards/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Pool Rwards:', error);
-      throw error;
-    }
-  },
+  fetchLatestPoolRewards: async (chain) => API.fetchGeneralData('pool-rewards/latest', chain),
+  fetchAllPoolRewards: async (chain) => API.fetchGeneralData('pool-rewards/all', chain),
+  fetchSummaryDataPoolRewards: async (chain) => API.fetchGeneralData('pool-rewards/summary', chain),
 
   /*
     Core Account Delegations
   */
-  fetchStakerCount: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-account-delegations/staker-count/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching staker count:', error);
-      throw error;
-    }
-  },
-
-  fetchCumulativeUniqueStakers: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-account-delegations/cumulative-unique-stakers/${chainParam}`;
-
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching cumulative unique stakers:', error);
-      throw error;
-    }
-  },
-
-  fetchAllCoreAccountDelegations: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-account-delegations/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all core account delegations:', error);
-      throw error;
-    }
-  },
-
-  fetchCoreAccountDelegationsByAccount: async (accountId) => {
-    try {
-      const URL = `${BASE_URL}/core-account-delegations/account/${accountId}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching core account delegations by account:', error);
-      throw error;
-    }
-  },
-
-  fetchCoreAccountDelegationsOrderedByAccount: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-account-delegations/ordered-by-account/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching core account delegations ordered by account:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataUniqueStakers: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/core-account-delegations/cumulative-unique-stakers/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary TVL:', error);
-      throw error;
-    }
-  },
+  fetchStakerCount: async (chain) => API.fetchGeneralData('core-account-delegations/staker-count', chain),
+  fetchCumulativeUniqueStakers: async (chain) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers', chain),
+  fetchAllCoreAccountDelegations: async (chain) => API.fetchGeneralData('core-account-delegations/all', chain),
+  fetchCoreAccountDelegationsByAccount: async (accountId) => API.fetchGeneralData(`core-account-delegations/account/${accountId}`),
+  fetchCoreAccountDelegationsOrderedByAccount: async (chain) => API.fetchGeneralData('core-account-delegations/ordered-by-account', chain),
+  fetchSummaryDataUniqueStakers: async (chain) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers/summary', chain),
 
   /* 
     Perp Stats 
   */
-  fetchLatestPerpStats: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-stats/latest/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching latest Perp Stats:', error);
-      throw error;
-    }
-  },
-
-  fetchAllPerpStats: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-stats/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all Perp Stats:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataCumulativeVolume: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-stats/cumulative-volume/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Perp Stats:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataCumulativeExchangeFees: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-stats/cumulative-exchange-fees/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Perp Stats:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataCumulativeCollectedFees: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-stats/cumulative-collected-fees/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Perp Stats:', error);
-      throw error;
-    }
-  },
+  fetchLatestPerpStats: async (chain) => API.fetchGeneralData('perp-stats/latest', chain),
+  fetchAllPerpStats: async (chain) => API.fetchGeneralData('perp-stats/all', chain),
+  fetchCumulativeVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume', chain),
+  fetchSummaryDataCumulativeVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume/summary', chain),
+  fetchCumulativeExchangeFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees', chain),
+  fetchSummaryDataCumulativeExchangeFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees/summary', chain),
+  fetchCumulativeCollectedFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-collected-fees', chain),
+  fetchSummaryDataCumulativeCollectedFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-collected-fees/summary', chain),
 
   /* Perp Account Stats */
-  fetchAllPerpAccountStats: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-account-stats/all/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching all Perp Stats:', error);
-      throw error;
-    }
-  },
-
-  fetchCumulativeUniqueTraders: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-account-stats/cumulative-unique-traders/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Perp Stats:', error);
-      throw error;
-    }
-  },
-
-  fetchSummaryDataCumulativeUniqueTraders: async (chain) => {
-    try {
-      const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-account-stats/cumulative-unique-traders/summary/${chainParam}`;
-      return fetchData(URL);
-    } catch (error) {
-      console.error('Error fetching summary Perp Stats:', error);
-      throw error;
-    }
-  },
+  fetchAllPerpAccountStats: async (chain) => API.fetchGeneralData('perp-account-stats/all', chain),
+  fetchCumulativeUniqueTraders: async (chain) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders', chain),
+  fetchSummaryDataCumulativeUniqueTraders: async (chain) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders/summary', chain),
 };
 
 export default API;

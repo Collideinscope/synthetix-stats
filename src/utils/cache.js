@@ -1,4 +1,3 @@
-// caching in localStorage
 const setInitialStateWithStorage = () => {
   // set default initial state values
   const defaultState = {
@@ -10,24 +9,27 @@ const setInitialStateWithStorage = () => {
       allPerpStats: [],
       allPerpAccountStats: [],
       cumulativeUniqueStakers: {},
+      cumulativePerpsVolume: {},
       cumulativeUniqueTraders: {},
+      cumulativeExchangeFees: {},
+      cumulativeCollectedFees: {},
       summaryDataAPY: {},
       summaryDataTVL: {},
       summaryDataPoolRewards: {},
       summaryDataCoreDelegations: {},
       summaryDataUniqueStakers: {},
-      summaryDataPerpStats: {},
+      summaryDataPerpsVolume: {},
       summaryDataUniqueTraders: {},
-      summaryDataCumulativeExchangeFees: {},
-      summaryDataCumulativeCollectedFees: {},
+      summaryDataExchangeFees: {},
+      summaryDataCollectedFees: {},
   };
 
   // try to get data from local storage first and set it
-  const initialData = localStorage.getItem('');
+  const initialData = localStorage.getItem('appState');
 
   if (initialData) {  
     const parsedData = JSON.parse(initialData);
-      return { ...defaultState, ...parsedData };
+    return { ...defaultState, ...parsedData };
   };
 
   return defaultState;

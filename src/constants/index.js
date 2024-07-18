@@ -26,10 +26,13 @@ const NAV_MENU = {
     'Volume': {
       route: '',
     },
-    'Fees': {
+    'Unique Traders': {
       route: '',
     },
-    'Unique Traders': {
+    'Exchange Fees': {
+      route: '',
+    },
+    'Collected Fees': {
       route: '',
     },
     'OI': {

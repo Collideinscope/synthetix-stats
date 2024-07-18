@@ -1,12 +1,7 @@
 import styles from './styles.module.css';
 
-import React, { useState, useEffect, useReducer } from 'react';
-import { 
-  BrowserRouter as Router, 
-  Route, 
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import React, { useEffect, useReducer } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { globalReducer, globalInitialState } from '../../reducers/globalReducer';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -18,7 +13,6 @@ import AggregatedDataContainer from '../AggregatedDataContainer';
 import API from '../../fetch_functions';
 
 const App = () => {
-
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
 
   useEffect(() => {
@@ -33,13 +27,16 @@ const App = () => {
           allPerpAccountStats,
           cumulativeUniqueStakers,
           cumulativeUniqueTraders,
+          cumulativeVolume,
+          cumulativeExchangeFees,
+          cumulativeCollectedFees,
           summaryDataAPY,
           summaryDataTVL,
           summaryDataPoolRewards,
           summaryDataCoreDelegations,
           summaryDataUniqueStakers,
-          summaryDataPerpStats,
           summaryDataUniqueTraders,
+          summaryDataCumulativeVolume,
           summaryDataCumulativeExchangeFees,
           summaryDataCumulativeCollectedFees,
         ] = await Promise.all([
@@ -49,15 +46,18 @@ const App = () => {
           API.fetchAllCoreDelegations(),
           API.fetchAllPerpStats('base'),
           API.fetchAllPerpAccountStats('base'),
-          API.fetchSummaryDataUniqueStakers('base'),
-          API.fetchSummaryDataUniqueTraders('base'),
+          API.fetchCumulativeUniqueStakers(),
+          API.fetchCumulativeUniqueTraders('base'),
+          API.fetchCumulativeVolume('base'),
+          API.fetchCumulativeExchangeFees('base'),
+          API.fetchCumulativeCollectedFees('base'),
           API.fetchSummaryDataAPY('base'),
           API.fetchSummaryDataTVL('base'),
           API.fetchSummaryDataPoolRewards('base'),
           API.fetchSummaryDataCoreDelegations('base'),
-          API.fetchCumulativeUniqueStakers(),
-          API.fetchSummaryDataPerpStats('base'),
-          API.fetchSummaryDataUniqueTraders('base'),
+          API.fetchSummaryDataUniqueStakers('base'),
+          API.fetchSummaryDataCumulativeUniqueTraders('base'),
+          API.fetchSummaryDataCumulativeVolume('base'),
           API.fetchSummaryDataCumulativeExchangeFees('base'),
           API.fetchSummaryDataCumulativeCollectedFees('base'),
         ]);
@@ -73,13 +73,16 @@ const App = () => {
             allPerpAccountStats,
             cumulativeUniqueStakers,
             cumulativeUniqueTraders,
+            cumulativeVolume,
+            cumulativeExchangeFees,
+            cumulativeCollectedFees,
             summaryDataAPY,
             summaryDataTVL,
             summaryDataPoolRewards,
             summaryDataCoreDelegations,
             summaryDataUniqueStakers,
-            summaryDataPerpStats,
             summaryDataUniqueTraders,
+            summaryDataCumulativeVolume,
             summaryDataCumulativeExchangeFees,
             summaryDataCumulativeCollectedFees,
           },
@@ -95,29 +98,19 @@ const App = () => {
   return (
     <Router>
       <GlobalContext.Provider value={{ state, appDispatch }}>
-        <div 
-          className={styles['app-container']}
-        >
+        <div className={styles['app-container']}>
           <Header />
           <main>
             <Routes>
               <Route exact path="/" element={<HighlightsContainer />} />
-              <Route exact path="/core/overview" element={
-                <AggregatedDataContainer 
-                  category={'core'}
-                />} 
-              />
-              <Route exact path="/perps/overview" element={
-                <AggregatedDataContainer 
-                  category={'perps'}
-                />} 
-              />
+              <Route exact path="/core/overview" element={<AggregatedDataContainer category="core" />} />
+              <Route exact path="/perps/overview" element={<AggregatedDataContainer category="perps" />} />
             </Routes>
           </main>
         </div>
       </GlobalContext.Provider>
     </Router>
   );
-}
+};
 
 export default App;
