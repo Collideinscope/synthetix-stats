@@ -29,6 +29,7 @@ const Chart = ({
     yValueFormatter,
     symbolLocation,
     dataChainFilter,
+    smoothData,
   } = metricMetadata;
 
   const dataChainFiltered = dataChainFilter(state[metric], chain);
@@ -62,8 +63,8 @@ const Chart = ({
     setHighlightValue(value);
   }
 
-  // 7day moving average
-  const smoothData = (data, windowSize = 168) => {
+  // 7day moving average expecting hourly data
+  const smoothenData = (data, windowSize = 168) => {
     return data.map((point, index, array) => {
       if (index < windowSize - 1) {
         // Not enough previous data points, return original
@@ -79,10 +80,12 @@ const Chart = ({
     });
   };
     
-  const smoothedData = smoothData(data);
+  const smoothedData = smoothData
+    ? smoothenData(data)
+    : data;
 
-  const maxAPY = Math.max(...data.map(d => d[chartYAxisDataKey]));
-  const yAxisUpperLimit = Math.ceil(maxAPY * 1.1);
+  const maxYValue = Math.max(...data.map(d => d[chartYAxisDataKey]));
+  const yAxisUpperLimit = Math.ceil(maxYValue * 1.1);
 
   const formatXAxis = (tickItem) => {
     const date = new Date(tickItem);
@@ -97,17 +100,19 @@ const Chart = ({
 
     return format(date, 'd');
   }
-  
+
   const ticksXAxis = data.reduce((acc, item, index) => {
     const currentDate = new Date(item.timestamp);
     const day = currentDate.getDate();
+    
     // Always include the first data point
     if (index === 0) {
       acc.push(currentDate);
       return acc;
     }
-
-    // Add first day of month, 8th, 16th, and 24th
+  
+    // Add first day of month, 8th, 16th, and 24th for hourly data
+    // For daily data, add every 3rd day or week
     if (day === 1 || day === 8 || day === 16 || day === 24) {
       if (!acc.some(date => date.getTime() === currentDate.getTime())) {
         acc.push(currentDate);
@@ -116,7 +121,7 @@ const Chart = ({
 
     return acc;
   }, []);
-  
+
   // Ensure first tick is shown as MMM if it's not already
   if (ticksXAxis.length > 0 && ticksXAxis[0].getDate() !== 1) {
     ticksXAxis[0] = startOfMonth(ticksXAxis[0]);
@@ -172,7 +177,7 @@ const Chart = ({
     const date = new Date(payload.value);
     const isMonthOrYear = date.getDate() === 1;
     const text = formatXAxis(payload.value);
-    
+
     return (
       <g transform={`translate(${x},${y})`}>
         <text 
@@ -246,6 +251,7 @@ const Chart = ({
               tick={<CustomTick />}
               ticks={ticksXAxis}
               padding={{ bottom: 10 }}
+              ticksCount={0}
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}

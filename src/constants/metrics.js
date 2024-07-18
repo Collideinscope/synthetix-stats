@@ -11,6 +11,7 @@ const METRIC_METADATA = {
     symbolLocation: 'right',
     summaryDataKey: 'summaryDataAPY',
     summaryDataType: '%',
+    smoothData: true,
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
@@ -30,6 +31,7 @@ const METRIC_METADATA = {
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataTVL',
     summaryDataType: 'num',
+    smoothData: true,
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
@@ -48,6 +50,7 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'cumulative_rewards_usd',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataPoolRewards',
+    smoothData: true,
     dataChainFilter: (data, chain) => {
       return data
         .filter(item => item.chain === chain)
@@ -67,6 +70,7 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'amount_delegated',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCoreDelegations',
+    smoothData: true,
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
@@ -85,6 +89,7 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'cumulative_staker_count',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueStakers',
+    smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
         ? data[chain]
@@ -105,6 +110,7 @@ const METRIC_METADATA = {
     chartYAxisDataKey: 'cumulative_volume',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataPerpStats',
+    smoothData: false,
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },

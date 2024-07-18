@@ -260,10 +260,66 @@ const API = {
     }
   },
 
-  fetchSummaryDataPerpStats: async (chain) => {
+  fetchSummaryDataCumulativeVolume: async (chain) => {
     try {
       const chainParam = chain ? chain : '';
-      const URL = `${BASE_URL}/perp-stats/summary/${chainParam}`;
+      const URL = `${BASE_URL}/perp-stats/cumulative-volume/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  fetchSummaryDataCumulativeExchangeFees: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-stats/cumulative-exchange-fees/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  fetchSummaryDataCumulativeCollectedFees: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-stats/cumulative-collected-fees/summary/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  /* Perp Account Stats */
+  fetchAllPerpAccountStats: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-account-stats/all/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching all Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  fetchCumulativeUniqueTraders: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-account-stats/cumulative-unique-traders/${chainParam}`;
+      return fetchData(URL);
+    } catch (error) {
+      console.error('Error fetching summary Perp Stats:', error);
+      throw error;
+    }
+  },
+
+  fetchSummaryDataCumulativeUniqueTraders: async (chain) => {
+    try {
+      const chainParam = chain ? chain : '';
+      const URL = `${BASE_URL}/perp-account-stats/cumulative-unique-traders/summary/${chainParam}`;
       return fetchData(URL);
     } catch (error) {
       console.error('Error fetching summary Perp Stats:', error);

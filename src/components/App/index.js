@@ -26,47 +26,62 @@ const App = () => {
       try {
         const [
           allAPY,
-          summaryDataAPY,
           allTVL,
-          summaryDataTVL,
           allPoolRewards,
-          summaryDataPoolRewards,
           allCoreDelegations,
-          summaryDataCoreDelegations,
-          cumulativeUniqueStakers,
-          summaryDataUniqueStakers,
           allPerpStats,
+          allPerpAccountStats,
+          cumulativeUniqueStakers,
+          cumulativeUniqueTraders,
+          summaryDataAPY,
+          summaryDataTVL,
+          summaryDataPoolRewards,
+          summaryDataCoreDelegations,
+          summaryDataUniqueStakers,
           summaryDataPerpStats,
+          summaryDataUniqueTraders,
+          summaryDataCumulativeExchangeFees,
+          summaryDataCumulativeCollectedFees,
         ] = await Promise.all([
           API.fetchAllAPY(),
-          API.fetchSummaryDataAPY('base'),
           API.fetchAllTVL(),
-          API.fetchSummaryDataTVL('base'),
           API.fetchAllPoolRewards('base'),
-          API.fetchSummaryDataPoolRewards('base'),
           API.fetchAllCoreDelegations(),
+          API.fetchAllPerpStats('base'),
+          API.fetchAllPerpAccountStats('base'),
+          API.fetchSummaryDataUniqueStakers('base'),
+          API.fetchSummaryDataUniqueTraders('base'),
+          API.fetchSummaryDataAPY('base'),
+          API.fetchSummaryDataTVL('base'),
+          API.fetchSummaryDataPoolRewards('base'),
           API.fetchSummaryDataCoreDelegations('base'),
           API.fetchCumulativeUniqueStakers(),
-          API.fetchSummaryDataUniqueStakers('base'),
-          API.fetchAllPerpStats('base'),
           API.fetchSummaryDataPerpStats('base'),
+          API.fetchSummaryDataUniqueTraders('base'),
+          API.fetchSummaryDataCumulativeExchangeFees('base'),
+          API.fetchSummaryDataCumulativeCollectedFees('base'),
         ]);
 
         appDispatch({
           type: 'SET_INITIAL_DATA',
           payload: {
             allAPY,
-            summaryDataAPY,
             allTVL,
-            summaryDataTVL,
             allPoolRewards,
-            summaryDataPoolRewards,
             allCoreDelegations,
-            summaryDataCoreDelegations,
-            cumulativeUniqueStakers,
-            summaryDataUniqueStakers,
             allPerpStats,
+            allPerpAccountStats,
+            cumulativeUniqueStakers,
+            cumulativeUniqueTraders,
+            summaryDataAPY,
+            summaryDataTVL,
+            summaryDataPoolRewards,
+            summaryDataCoreDelegations,
+            summaryDataUniqueStakers,
             summaryDataPerpStats,
+            summaryDataUniqueTraders,
+            summaryDataCumulativeExchangeFees,
+            summaryDataCumulativeCollectedFees,
           },
         });
       } catch (error) {
@@ -92,7 +107,7 @@ const App = () => {
                   category={'core'}
                 />} 
               />
-              <Route exact path="/perp-stats/overview" element={
+              <Route exact path="/perps/overview" element={
                 <AggregatedDataContainer 
                   category={'perps'}
                 />} 
