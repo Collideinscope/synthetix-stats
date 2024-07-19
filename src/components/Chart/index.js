@@ -31,7 +31,7 @@ const Chart = ({
     dataChainFilter,
     smoothData,
   } = metricMetadata;
-
+if (metric === 'openInterest') { console.log(state[metric])}
   const dataChainFiltered = dataChainFilter(state[metric], chain);
 
   const startDate = new Date(

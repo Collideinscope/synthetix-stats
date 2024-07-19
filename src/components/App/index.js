@@ -30,6 +30,7 @@ const App = () => {
           cumulativePerpsVolume,
           cumulativeExchangeFees,
           cumulativeCollectedFees,
+          openInterest,
           summaryDataAPY,
           summaryDataTVL,
           summaryDataPoolRewards,
@@ -39,6 +40,7 @@ const App = () => {
           summaryDataCumulativePerpsVolume,
           summaryDataCumulativeExchangeFees,
           summaryDataCumulativeCollectedFees,
+          summaryDataOpenInterest,
         ] = await Promise.all([
           API.fetchAllAPY(),
           API.fetchAllTVL(),
@@ -51,6 +53,7 @@ const App = () => {
           API.fetchCumulativePerpsVolume('base'),
           API.fetchCumulativeExchangeFees('base'),
           API.fetchCumulativeCollectedFees('base'),
+          API.fetchOpenInterest('base'),
           API.fetchSummaryDataAPY('base'),
           API.fetchSummaryDataTVL('base'),
           API.fetchSummaryDataPoolRewards('base'),
@@ -60,6 +63,7 @@ const App = () => {
           API.fetchSummaryDataCumulativePerpsVolume('base'),
           API.fetchSummaryDataCumulativeExchangeFees('base'),
           API.fetchSummaryDataCumulativeCollectedFees('base'),
+          API.fetchSummaryDataOpenInterest('base'),
         ]);
 
         appDispatch({
@@ -76,6 +80,7 @@ const App = () => {
             cumulativePerpsVolume,
             cumulativeExchangeFees,
             cumulativeCollectedFees,
+            openInterest,
             summaryDataAPY,
             summaryDataTVL,
             summaryDataPoolRewards,
@@ -85,6 +90,7 @@ const App = () => {
             summaryDataCumulativePerpsVolume,
             summaryDataCumulativeExchangeFees,
             summaryDataCumulativeCollectedFees,
+            summaryDataOpenInterest,
           },
         });
       } catch (error) {

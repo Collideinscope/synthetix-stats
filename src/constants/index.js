@@ -26,6 +26,9 @@ const NAV_MENU = {
     'Volume': {
       route: '',
     },
+    'Open Interest': {
+      route: '',
+    },
     'Unique Traders': {
       route: '',
     },
@@ -35,9 +38,6 @@ const NAV_MENU = {
     'Collected Fees': {
       route: '',
     },
-    'OI': {
-      route: '',
-    }
   },
   Stakers: {
     stakersA: {

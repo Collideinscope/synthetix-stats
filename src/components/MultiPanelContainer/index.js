@@ -19,7 +19,7 @@ const MultiPanel = ({ category, filters }) => {
       />
     )
   }
-
+console.log(Object.keys(METRIC_METADATA))
   const generateChartList = () => {
     const chartItems = Object.keys(METRIC_METADATA)
       .map(item => {

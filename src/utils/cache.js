@@ -13,6 +13,7 @@ const setInitialStateWithStorage = () => {
       cumulativeUniqueTraders: {},
       cumulativeExchangeFees: {},
       cumulativeCollectedFees: {},
+      openInterest: {},
       summaryDataAPY: {},
       summaryDataTVL: {},
       summaryDataPoolRewards: {},
@@ -22,6 +23,7 @@ const setInitialStateWithStorage = () => {
       summaryDataUniqueTraders: {},
       summaryDataExchangeFees: {},
       summaryDataCollectedFees: {},
+      summaryDataOpenInterest: {},
   };
 
   // try to get data from local storage first and set it

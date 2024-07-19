@@ -184,6 +184,25 @@ const METRIC_METADATA = {
       yValueFormatter: (val) => {
         return abbreviateNumber(val);
       }
+    },
+    'openInterest': {
+      key: 'openInterest',
+      chartTitle: 'Open Interest',
+      chartYValueSymbol: '',
+      dataStartDate: null,
+      chartYAxisDataKey: 'daily_oi',
+      symbolLocation: 'left',
+      summaryDataKey: 'summaryDataOpenInterest',
+      smoothData: false,
+      dataChainFilter: (data, chain) => {
+        return data.filter(item => item.chain === chain);
+      },
+      getYAxisDataPoint: (item) => {
+        return parseFloat(item.daily_oi);
+      },
+      yValueFormatter: (val) => {
+        return abbreviateNumber(val);
+      }
     }
   }
 }

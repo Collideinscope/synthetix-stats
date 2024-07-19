@@ -90,6 +90,10 @@ const API = {
   fetchAllPerpAccountStats: async (chain) => API.fetchGeneralData('perp-account-stats/all', chain),
   fetchCumulativeUniqueTraders: async (chain) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders', chain),
   fetchSummaryDataCumulativeUniqueTraders: async (chain) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders/summary', chain),
+
+  /* Perp Market History */
+  fetchOpenInterest: async (chain) => API.fetchGeneralData('perp-market-history/open-interest', chain),
+  fetchSummaryDataOpenInterest: async (chain) => API.fetchGeneralData('perp-market-history/open-interest/summary', chain),
 };
 
 export default API;
