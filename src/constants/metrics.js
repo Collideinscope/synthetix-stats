@@ -107,9 +107,9 @@ const METRIC_METADATA = {
     chartTitle: 'Perps Volume',
     chartYValueSymbol: '',
     dataStartDate: null,
-    chartYAxisDataKey: 'cumulative_perps_volume',
+    chartYAxisDataKey: 'cumulative_volume',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataPerpsVolume',
+    summaryDataKey: 'summaryDataCumulativePerpsVolume',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -128,7 +128,7 @@ const METRIC_METADATA = {
     chartTitle: 'Unique Traders',
     chartYValueSymbol: '',
     dataStartDate: null,
-    chartYAxisDataKey: 'cumulative_unique_traders',
+    chartYAxisDataKey: 'cumulative_trader_count',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueTraders',
     smoothData: false,
@@ -138,7 +138,7 @@ const METRIC_METADATA = {
         : [];
     },
     getYAxisDataPoint: (item) => {
-      return parseFloat(item.cumulative_volume);
+      return parseFloat(item.cumulative_trader_count);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
@@ -151,7 +151,7 @@ const METRIC_METADATA = {
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_collected_fees',
     symbolLocation: 'left',
-    summaryDataKey: 'summaryDataCollectedFees',
+    summaryDataKey: 'summaryDataCumulativeCollectedFees',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -159,7 +159,7 @@ const METRIC_METADATA = {
         : [];
     },
     getYAxisDataPoint: (item) => {
-      return parseFloat(item.cumulative_volume);
+      return parseFloat(item.cumulative_collected_fees);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
@@ -179,7 +179,7 @@ const METRIC_METADATA = {
         : [];
       },
       getYAxisDataPoint: (item) => {
-        return parseFloat(item.cumulative_volume);
+        return parseFloat(item.cumulative_exchange_fees);
       },
       yValueFormatter: (val) => {
         return abbreviateNumber(val);

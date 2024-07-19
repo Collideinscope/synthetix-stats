@@ -79,8 +79,8 @@ const API = {
   */
   fetchLatestPerpStats: async (chain) => API.fetchGeneralData('perp-stats/latest', chain),
   fetchAllPerpStats: async (chain) => API.fetchGeneralData('perp-stats/all', chain),
-  fetchCumulativeVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume', chain),
-  fetchSummaryDataCumulativeVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume/summary', chain),
+  fetchCumulativePerpsVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume', chain),
+  fetchSummaryDataCumulativePerpsVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume/summary', chain),
   fetchCumulativeExchangeFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees', chain),
   fetchSummaryDataCumulativeExchangeFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees/summary', chain),
   fetchCumulativeCollectedFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-collected-fees', chain),
