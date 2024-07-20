@@ -31,6 +31,7 @@ const Nav = () => {
 
   useEffect(() => {
     const active = parseActiveMenuFromPath(location.pathname);
+
     if (active) {
       setActiveMenu((prevState) => ({
         ...prevState,
@@ -40,6 +41,15 @@ const Nav = () => {
           activeSubNav: active.subMenu,
         }
       }));
+    } else {
+      // Reset all active subnavs
+      setActiveMenu((prev) => {
+        const newState = { ...prev };
+        Object.keys(newState).forEach(menu => {
+          newState[menu].activeSubNav = null;
+        });
+        return newState;
+      });
     }
   }, [location.pathname]);
 

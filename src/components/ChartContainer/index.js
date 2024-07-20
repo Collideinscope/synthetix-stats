@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 import styles from './styles.module.css';
+
 import { GlobalContext } from '../../context/GlobalContext';
+
 import SummaryStatsPanel from '../SummaryStatsPanel';
 import Chart from '../Chart';
+
 import { METRIC_METADATA } from '../../constants/metrics';
 
 const ChartContainer = ({
