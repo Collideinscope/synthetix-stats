@@ -7,7 +7,10 @@ import { NAV_MENU } from '../../constants';
 
 const Nav = () => {
   const initialMenuActive = Object.keys(NAV_MENU).reduce((acc, menu) => {
-    acc[menu] = false;
+    acc[menu] = {
+      active: false,
+      activeSubNav: null,
+    }
 
     return acc;
   }, {})
@@ -17,9 +20,28 @@ const Nav = () => {
   const handleSetActiveMenu = (menu) => {
     setActiveMenu({
       ...activeMenu,
-      [menu]: !activeMenu[menu]
+      [menu]: {
+        ...activeMenu[menu],
+        active: !activeMenu[menu].active,
+      }
     });
   }
+
+  const handleSetActiveSubMenu = (menu, subMenu) => {
+    const newActiveSubNav = Object
+      .entries(activeMenu)
+      .reduce((acc, [key, obj]) => {
+        acc[key] = {
+          ...obj,
+          activeSubNav: menu === key ? subMenu : null,
+        };
+
+        return acc;
+      }, {});
+
+    setActiveMenu(newActiveSubNav);
+  }
+
 
   const generateNav = () => {
 
@@ -32,9 +54,19 @@ const Nav = () => {
             className={styles.subNav}
           >
             {Object.keys(NAV_MENU[menu]).map((subMenu) => {
+              const activeSubNav = 
+                subMenu === activeMenu[menu].activeSubNav
+                ? 'activeSubNav'
+                : '';
+              console.log(subMenu, activeSubNav)
               return (
-                <li key={subMenu} className={styles.subNavItem}>
+                <li 
+                  key={subMenu} 
+                  className={`${styles.subNavItem} ${styles[activeSubNav]}`}
+                  onClick={() => handleSetActiveSubMenu(menu, subMenu)}
+                >
                   <Link 
+                    className={styles.subNavItemLink}
                     key={subMenu} 
                     to={NAV_MENU[menu][subMenu].route} 
                   >
@@ -46,11 +78,11 @@ const Nav = () => {
           </ul>
         )
 
-        const renderSubNavItem = activeMenu[menu]
+        const renderSubNavItem = activeMenu[menu].active
           ? subNavItem 
           : '';
 
-        const activeNavItemClass = activeMenu[menu] 
+        const activeNavItemClass = activeMenu[menu].active 
           ? 'activeNav'
           : '';
 

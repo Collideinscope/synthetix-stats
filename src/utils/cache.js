@@ -13,7 +13,7 @@ const setInitialStateWithStorage = () => {
       cumulativeUniqueTraders: {},
       cumulativeExchangeFees: {},
       cumulativeCollectedFees: {},
-      openInterest: {},
+      openInterest: [],
       summaryDataAPY: {},
       summaryDataTVL: {},
       summaryDataPoolRewards: {},

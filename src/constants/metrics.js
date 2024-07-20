@@ -4,6 +4,7 @@ import { abbreviateNumber } from "../helpers";
 const METRIC_METADATA = {
   'allAPY': {
     key: 'allAPY',
+    category: 'core',
     chartTitle: 'APY',
     chartYValueSymbol: '%',
     dataStartDate: '2024-05-01',
@@ -24,6 +25,7 @@ const METRIC_METADATA = {
   },
   'allTVL': {
     key: 'allTVL',
+    category: 'core',
     chartTitle: 'TVL',
     chartYValueSymbol: '$',
     dataStartDate: null,
@@ -44,6 +46,7 @@ const METRIC_METADATA = {
   },
   'allPoolRewards': {
     key: 'allPoolRewards',
+    category: 'core',
     chartTitle: 'Pool Rewards',
     chartYValueSymbol: '$',
     dataStartDate: null,
@@ -64,6 +67,7 @@ const METRIC_METADATA = {
   },
   'allCoreDelegations': {
     key: 'allCoreDelegations',
+    category: 'core',
     chartTitle: 'Core Delegations',
     chartYValueSymbol: '$',
     dataStartDate: null,
@@ -83,6 +87,7 @@ const METRIC_METADATA = {
   },
   'cumulativeUniqueStakers': {
     key: 'cumulativeUniqueStakers',
+    category: 'core',
     chartTitle: 'Unique Stakers',
     chartYValueSymbol: '',
     dataStartDate: null,
@@ -104,8 +109,9 @@ const METRIC_METADATA = {
   },
   'cumulativePerpsVolume': {
     key: 'cumulativePerpsVolume',
+    category: 'perps',
     chartTitle: 'Perps Volume',
-    chartYValueSymbol: '',
+    chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_volume',
     symbolLocation: 'left',
@@ -125,6 +131,7 @@ const METRIC_METADATA = {
   },
   'cumulativeUniqueTraders': {
     key: 'cumulativeUniqueTraders',
+    category: 'perps',
     chartTitle: 'Unique Traders',
     chartYValueSymbol: '',
     dataStartDate: null,
@@ -146,8 +153,9 @@ const METRIC_METADATA = {
   },
   'cumulativeCollectedFees': {
     key: 'cumulativeCollectedFees',
+    category: 'perps',
     chartTitle: 'Collected Fees',
-    chartYValueSymbol: '',
+    chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_collected_fees',
     symbolLocation: 'left',
@@ -164,45 +172,47 @@ const METRIC_METADATA = {
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
     },
-    'cumulativeExchangeFees': {
-      key: 'cumulativeExchangeFees',
-      chartTitle: 'Exchange Fees',
-      chartYValueSymbol: '',
-      dataStartDate: null,
-      chartYAxisDataKey: 'cumulative_exchange_fees',
-      symbolLocation: 'left',
-      summaryDataKey: 'summaryDataExchangeFees',
-      smoothData: false,
-      dataChainFilter: (data, chain) => {
-        return data[chain]
-        ? data[chain]
-        : [];
-      },
-      getYAxisDataPoint: (item) => {
-        return parseFloat(item.cumulative_exchange_fees);
-      },
-      yValueFormatter: (val) => {
-        return abbreviateNumber(val);
-      }
+  },
+  'cumulativeExchangeFees': {
+    key: 'cumulativeExchangeFees',
+    category: 'perps',
+    chartTitle: 'Exchange Fees',
+    chartYValueSymbol: '$',
+    dataStartDate: null,
+    chartYAxisDataKey: 'cumulative_exchange_fees',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataCumulativeExchangeFees',
+    smoothData: false,
+    dataChainFilter: (data, chain) => {
+      return data[chain]
+      ? data[chain]
+      : [];
     },
-    'openInterest': {
-      key: 'openInterest',
-      chartTitle: 'Open Interest',
-      chartYValueSymbol: '',
-      dataStartDate: null,
-      chartYAxisDataKey: 'daily_oi',
-      symbolLocation: 'left',
-      summaryDataKey: 'summaryDataOpenInterest',
-      smoothData: false,
-      dataChainFilter: (data, chain) => {
-        return data.filter(item => item.chain === chain);
-      },
-      getYAxisDataPoint: (item) => {
-        return parseFloat(item.daily_oi);
-      },
-      yValueFormatter: (val) => {
-        return abbreviateNumber(val);
-      }
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.cumulative_exchange_fees);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    }
+  },
+  'openInterest': {
+    key: 'openInterest',
+    category: 'perps',
+    chartTitle: 'Open Interest',
+    chartYValueSymbol: '$',
+    dataStartDate: null,
+    chartYAxisDataKey: 'daily_oi',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataOpenInterest',
+    smoothData: false,
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_oi);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
     }
   }
 }

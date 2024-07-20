@@ -7,6 +7,12 @@ import { METRIC_METADATA } from '../../constants/metrics';
 
 const MultiPanel = ({ category, filters }) => {
 
+  const categoryMetadata = Object
+    .keys(METRIC_METADATA)
+    .filter(key => {
+      return METRIC_METADATA[key].category === category;
+    })
+
   const generateChart = (item) => {
     return (
       <ChartContainer
@@ -19,9 +25,9 @@ const MultiPanel = ({ category, filters }) => {
       />
     )
   }
-console.log(Object.keys(METRIC_METADATA))
+
   const generateChartList = () => {
-    const chartItems = Object.keys(METRIC_METADATA)
+    const chartItems = categoryMetadata
       .map(item => {
         return generateChart(item);
       })
