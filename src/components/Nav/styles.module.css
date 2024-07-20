@@ -25,7 +25,6 @@ nav {
 .navItem {
   width: 100%;
   text-align: center; 
-  padding: var(--block-group-padding-internal) 0;
 }
 
 .navItem:hover .navItemTitle {
@@ -33,7 +32,7 @@ nav {
 }
 
 .navItemTitle {
-  padding: var(--block-group-padding-internal) 0;
+  padding: var(--block-padding-between) 0;
   margin: 0;
   border-right: 0;
 }
