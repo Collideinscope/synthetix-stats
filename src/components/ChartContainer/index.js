@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 
 import SummaryStatsPanel from '../SummaryStatsPanel';
+import SummaryStatsPanelVertical from '../SummaryStatsPanelVertical';
 import Chart from '../Chart';
 import RadialChart from '../RadialChart';
 
@@ -47,15 +48,19 @@ const ChartContainer = ({
         metric={metric} 
       />
     ) : (
-      <SummaryStatsPanel 
+      <SummaryStatsPanelVertical 
         data={summaryData} 
         metric={metric} 
       />
     );
 
+  const verticalSummaryPanelClass = chartType === 'line'
+    ? ''
+    : 'verticalSummary';
+
   return (
-    <div className={styles.container}>
-      {/*renderSummaryStatsPanel*/}
+    <div className={`${styles.container} ${styles[verticalSummaryPanelClass]}`}>
+      {renderSummaryStatsPanel}
       {renderChart}
     </div>
   );
