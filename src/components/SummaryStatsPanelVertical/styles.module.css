@@ -1,10 +1,10 @@
 .container {
   width: 105px;
-  height: 494px !important;
+  height: 534px !important;
   padding: var(--block-padding-internal) 0;
   background-color: var(--navy-900);
   border-right: 1px solid var(--border-and-line-colour);
-  border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+  border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
   display: flex;
   flex-direction: column;
   align-items: center;

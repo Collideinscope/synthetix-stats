@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie  } from '@fortawesome/free-solid-svg-icons';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import { abbreviateNumber } from "../../helpers";
@@ -16,9 +16,11 @@ const RadialChart = ({
   pool,
   collateral_type,
   showFilters,
+  onChartTypeChange,  
 }) => {
   const { state } = useContext(GlobalContext);
   const metricMetadata = METRIC_METADATA[metric];
+
   const {
     chartTitle,
     chartYValueSymbol,
@@ -150,8 +152,8 @@ const RadialChart = ({
           <RadialBarChart
             width={300}
             height={393.5}
-            cx="50%"
-            cy="50%"
+            cx="45%"
+            cy="45%"
             innerRadius={120}
             outerRadius={140}
             barSize={24}
@@ -183,8 +185,8 @@ const RadialChart = ({
             />
             <path
               d={`
-                M ${300/2 + 232} ${300/2 - 140 + 46}
-                A 140 140 0 0 1 ${300/2 + 232} ${300/2 + 140 + 46}
+                M ${300/2 + 148} ${300/2 - 140 + 26}
+                A 140 140 0 0 1 ${300/2 + 148} ${300/2 + 140 + 26}
               `}
               fill="none"
               stroke="var(--charts-border-and-line-colour)"
@@ -192,6 +194,22 @@ const RadialChart = ({
             />
           </RadialBarChart>
         </ResponsiveContainer>
+      </div>
+      <div className={styles.chartFooter}>
+        <div className={styles.chartIcons}>
+          <div
+            className={`${styles.chartIcon}`}
+            onClick={() => onChartTypeChange('line')}
+          >
+            <FontAwesomeIcon icon={faChartLine} />
+          </div>
+          <div
+            className={`${styles.chartIcon} ${styles.active}`}
+            onClick={() => onChartTypeChange('radial')}
+          >
+            <FontAwesomeIcon icon={faChartPie} />
+          </div>
+        </div>
       </div>
     </li>
   );

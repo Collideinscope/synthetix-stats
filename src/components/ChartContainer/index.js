@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from './styles.module.css';
 
 import { GlobalContext } from '../../context/GlobalContext';
@@ -20,7 +20,11 @@ const ChartContainer = ({
   const { state } = useContext(GlobalContext);
   const summaryDataKey = METRIC_METADATA[metric].summaryDataKey;
   const summaryData = state[summaryDataKey];
-  const chartType = METRIC_METADATA[metric].chartType;
+  const [chartType, setChartType] = useState('line');
+
+  const handleChartTypeChange = (newType) => {
+    setChartType(newType);
+  };
 
   const renderChart = chartType === 'line'
     ? (
@@ -30,6 +34,7 @@ const ChartContainer = ({
         pool={pool}
         collateral_type={collateral_type}
         showFilters={showFilters}
+        onChartTypeChange={handleChartTypeChange}
       />
     ) : (
       <RadialChart
@@ -38,6 +43,7 @@ const ChartContainer = ({
         pool={pool}
         collateral_type={collateral_type}
         showFilters={showFilters}
+        onChartTypeChange={handleChartTypeChange}
       />
     )
 

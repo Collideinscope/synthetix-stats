@@ -3,6 +3,8 @@ import styles from './styles.module.css';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine, faChartPie } from '@fortawesome/free-solid-svg-icons';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -14,9 +16,10 @@ const Chart = ({
     pool,
     collateral_type,
     showFilters,
+    onChartTypeChange,  
   }) => {
   const [highlightValue, setHighlightValue] = useState(null);
-
+  
   const { state } = useContext(GlobalContext);
 
   const metricMetadata = METRIC_METADATA[metric];
@@ -284,6 +287,22 @@ const Chart = ({
             />
           </AreaChart>
         </ResponsiveContainer>
+      </div>
+      <div className={styles.chartFooter}>
+        <div className={styles.chartIcons}>
+          <div
+            className={`${styles.chartIcon} ${styles.active}`}
+            onClick={() => onChartTypeChange('line')}
+          >
+            <FontAwesomeIcon icon={faChartLine} />
+          </div>
+          <div
+            className={`${styles.chartIcon}`}
+            onClick={() => onChartTypeChange('radial')}
+          >
+            <FontAwesomeIcon icon={faChartPie} />
+          </div>
+        </div>
       </div>
     </li>
   );
