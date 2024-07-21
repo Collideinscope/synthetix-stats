@@ -67,15 +67,6 @@ const SummaryStatsPanel = ({ data, metric }) => {
           }</span>
         </div>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>ATH</span>
-          <span className={styles.statValue}>{
-            summaryDataType === '%' 
-              ? renderValueWithSymbol(data.ath * 100)
-              : renderValueWithSymbol(data.ath)
-          }</span>
-          <span className={styles.statDelta}>{renderDelta(data.ath_percentage)}</span>
-        </div>
-        <div className={styles.statItem}>
           <span className={styles.statLabel}>ATL</span>
           <span className={styles.statValue}>{
             summaryDataType === '%' 
@@ -83,6 +74,15 @@ const SummaryStatsPanel = ({ data, metric }) => {
               : renderValueWithSymbol(data.atl)
           }</span>
           <span className={styles.statDelta}>{renderDelta(data.atl_percentage)}</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>ATH</span>
+          <span className={styles.statValue}>{
+            summaryDataType === '%' 
+              ? renderValueWithSymbol(data.ath * 100)
+              : renderValueWithSymbol(data.ath)
+          }</span>
+          <span className={styles.statDelta}>{renderDelta(data.ath_percentage)}</span>
         </div>
       </div>
     </div>

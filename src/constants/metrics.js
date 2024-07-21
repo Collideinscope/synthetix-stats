@@ -6,6 +6,7 @@ const METRIC_METADATA = {
     key: 'allAPY',
     category: 'core',
     chartTitle: 'APY',
+    chartType: 'line',
     chartYValueSymbol: '%',
     dataStartDate: '2024-05-01',
     chartYAxisDataKey: 'apy_7d',
@@ -27,6 +28,7 @@ const METRIC_METADATA = {
     key: 'allTVL',
     category: 'core',
     chartTitle: 'TVL',
+    chartType: 'radial',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'collateral_value',
@@ -48,6 +50,7 @@ const METRIC_METADATA = {
     key: 'allPoolRewards',
     category: 'core',
     chartTitle: 'Pool Rewards',
+    chartType: 'line',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_rewards_usd',
@@ -69,6 +72,7 @@ const METRIC_METADATA = {
     key: 'allCoreDelegations',
     category: 'core',
     chartTitle: 'Core Delegations',
+    chartType: 'line',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'amount_delegated',
@@ -89,6 +93,7 @@ const METRIC_METADATA = {
     key: 'cumulativeUniqueStakers',
     category: 'core',
     chartTitle: 'Unique Stakers',
+    chartType: 'line',
     chartYValueSymbol: '',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_staker_count',
@@ -111,6 +116,7 @@ const METRIC_METADATA = {
     key: 'cumulativePerpsVolume',
     category: 'perps',
     chartTitle: 'Perps Volume',
+    chartType: 'line',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_volume',
@@ -129,10 +135,32 @@ const METRIC_METADATA = {
       return abbreviateNumber(val);
     }
   },
+  'openInterest': {
+    key: 'openInterest',
+    category: 'perps',
+    chartTitle: 'Open Interest',
+    chartType: 'line',
+    chartYValueSymbol: '$',
+    dataStartDate: null,
+    chartYAxisDataKey: 'daily_oi',
+    symbolLocation: 'left',
+    summaryDataKey: 'summaryDataOpenInterest',
+    smoothData: false,
+    dataChainFilter: (data, chain) => {
+      return data.filter(item => item.chain === chain);
+    },
+    getYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_oi);
+    },
+    yValueFormatter: (val) => {
+      return abbreviateNumber(val);
+    }
+  },
   'cumulativeUniqueTraders': {
     key: 'cumulativeUniqueTraders',
     category: 'perps',
     chartTitle: 'Unique Traders',
+    chartType: 'line',
     chartYValueSymbol: '',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_trader_count',
@@ -155,6 +183,7 @@ const METRIC_METADATA = {
     key: 'cumulativeCollectedFees',
     category: 'perps',
     chartTitle: 'Collected Fees',
+    chartType: 'line',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_collected_fees',
@@ -177,6 +206,7 @@ const METRIC_METADATA = {
     key: 'cumulativeExchangeFees',
     category: 'perps',
     chartTitle: 'Exchange Fees',
+    chartType: 'line',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_exchange_fees',
@@ -195,26 +225,6 @@ const METRIC_METADATA = {
       return abbreviateNumber(val);
     }
   },
-  'openInterest': {
-    key: 'openInterest',
-    category: 'perps',
-    chartTitle: 'Open Interest',
-    chartYValueSymbol: '$',
-    dataStartDate: null,
-    chartYAxisDataKey: 'daily_oi',
-    symbolLocation: 'left',
-    summaryDataKey: 'summaryDataOpenInterest',
-    smoothData: false,
-    dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
-    },
-    getYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_oi);
-    },
-    yValueFormatter: (val) => {
-      return abbreviateNumber(val);
-    }
-  }
 }
 
 const METRIC_OPTIONS_METADATA = {

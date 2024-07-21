@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import ChartContainer from '../ChartContainer';
 
 import { METRIC_METADATA } from '../../constants/metrics';
+import HIGHLIGHTS_METRICS from '../../constants/highlights_metrics';
 
 const HighlightsContainer = () => {
 
@@ -21,9 +22,9 @@ const HighlightsContainer = () => {
   }
 
   const generateChartList = () => {
-    const chartItems = Object.keys(METRIC_METADATA)
-      .map(item => {
-        return generateChart(item);
+    const chartItems = HIGHLIGHTS_METRICS
+      .map(metric => {
+        return generateChart(metric);
       })
 
     return (

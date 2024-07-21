@@ -5,6 +5,7 @@ import { GlobalContext } from '../../context/GlobalContext';
 
 import SummaryStatsPanel from '../SummaryStatsPanel';
 import Chart from '../Chart';
+import RadialChart from '../RadialChart';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 
@@ -18,10 +19,10 @@ const ChartContainer = ({
   const { state } = useContext(GlobalContext);
   const summaryDataKey = METRIC_METADATA[metric].summaryDataKey;
   const summaryData = state[summaryDataKey];
+  const chartType = METRIC_METADATA[metric].chartType;
 
-  return (
-    <div className={styles.container}>
-      <SummaryStatsPanel data={summaryData} metric={metric} />
+  const renderChart = chartType === 'line'
+    ? (
       <Chart 
         metric={metric}
         chain={chain}
@@ -29,6 +30,20 @@ const ChartContainer = ({
         collateral_type={collateral_type}
         showFilters={showFilters}
       />
+    ) : (
+      <RadialChart
+        metric={metric}
+        chain={chain}
+        pool={pool}
+        collateral_type={collateral_type}
+        showFilters={showFilters}
+      />
+    )
+
+  return (
+    <div className={styles.container}>
+      <SummaryStatsPanel data={summaryData} metric={metric} />
+      {renderChart}
     </div>
   );
 };

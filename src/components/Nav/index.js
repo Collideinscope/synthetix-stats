@@ -48,6 +48,7 @@ const Nav = () => {
         Object.keys(newState).forEach(menu => {
           newState[menu].activeSubNav = null;
         });
+
         return newState;
       });
     }

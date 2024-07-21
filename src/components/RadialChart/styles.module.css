@@ -1,0 +1,117 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--charts-border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+}
+
+.chartHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--block-margin-internal);
+  position: relative;
+}
+
+.titleContainer {
+  padding: var(--charts-padding-inside-containers);
+  display: flex;
+}
+
+.chartTitle {
+  color: var(--charts-title-colour);
+  font-size: var(--charts-figure-amount);
+  margin: 0;
+  margin-right: var(--charts-margin-between-blocks);
+}
+
+.titleMeta {
+  display: flex;
+}
+
+.symbol {
+  font-size: var(--charts-figure-amount);
+  margin-left: 2px;
+}
+
+.chartSubtitle {
+  color: var(--title-colour);
+  font-size: var(--charts-title-secondary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--border-and-line-colour);
+  background: var(--navy-900);
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.chartSubtitle:nth-child(2) {
+  margin: 0 var(--block-group-margin-internal);
+}
+
+.radialChartWrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+.centerBubble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: transparent;
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--charts-border-and-line-colour);
+}
+
+.centerValue {
+  color: var(--cyan-300);
+  font-size: var(--charts-title-primary);
+  display: flex;
+  align-items: center;
+}
+
+.customTick {
+  font-size: var(--charts-title-secondary);
+  fill: var(--charts-supporting-colour);
+}
+
+.statLabel {
+  font-size: var(--font-size-supporting);
+  fill: var(--charts-supporting-colour);
+  font-family: var(--font-family-body);
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  fill: var(--title-colour);
+  font-size: var(--charts-title-secondary);
+  font-family: var(--font-family-body);
+  letter-spacing: 0.5px;
+}
+
+.statDelta {
+  fill: var(--charts-supporting-colour);
+  font-size: var(--font-size-supporting);
+  font-family: var(--font-family-body);
+}
+
+.positive {
+  color: var(--green-500);
+}
+
+.negative {
+  color: var(--magenta-500);
+}
