@@ -40,9 +40,22 @@ const ChartContainer = ({
       />
     )
 
+  const renderSummaryStatsPanel = chartType === 'line'
+    ? (
+      <SummaryStatsPanel 
+        data={summaryData} 
+        metric={metric} 
+      />
+    ) : (
+      <SummaryStatsPanel 
+        data={summaryData} 
+        metric={metric} 
+      />
+    );
+
   return (
     <div className={styles.container}>
-      <SummaryStatsPanel data={summaryData} metric={metric} />
+      {/*renderSummaryStatsPanel*/}
       {renderChart}
     </div>
   );

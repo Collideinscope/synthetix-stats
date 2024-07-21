@@ -27,6 +27,7 @@ const RadialChart = ({
     yValueFormatter,
     symbolLocation,
     dataChainFilter,
+    summaryDataKey,
   } = metricMetadata;
 
   const dataChainFiltered = dataChainFilter(state[metric], chain);
@@ -39,10 +40,20 @@ const RadialChart = ({
   const ath = Math.max(...data.map(d => d.value));
   const atl = Math.min(...data.map(d => d.value));
 
+  const ath_percentage = state[summaryDataKey].ath_percentage;
+  const atl_percentage = state[summaryDataKey].atl_percentage;
+
   const formattedData = [
     { name: 'Current', value: ((latestValue - atl) / (ath - atl)) * 100, fill: 'url(#gradientGreenCyan)' }
   ];
 
+  const renderDelta = (value) => {
+    const isPositive = value >= 0;
+    const icon = isPositive ? '↑' : '↓';
+  
+    return `${icon}${abbreviateNumber(Math.abs(value))}%`;
+  };
+  
   const CustomTick = ({ cx, cy, payload }) => {
     const value = payload.value;
     let displayLabel, displayValue, delta, x, y, anchor, lineX1, lineY1, lineX2, lineY2;
@@ -50,9 +61,9 @@ const RadialChart = ({
     if (value === 100) {
       displayLabel = 'ATH';
       displayValue = `${valueAndSymbol(ath)}`;
-      delta = renderDelta(data.ath_percentage); 
-      x = cx + 50;
-      y = cy - 140;
+      delta = renderDelta(ath_percentage); 
+      x = cx;
+      y = cy - 160;
       anchor = "start";
       lineX1 = cx;
       lineY1 = cy - 140;
@@ -61,9 +72,9 @@ const RadialChart = ({
     } else if (value === 0) {
       displayLabel = 'ATL';
       displayValue = `${valueAndSymbol(atl)}`;
-      delta = renderDelta(data.atl_percentage); 
-      x = cx + 50;
-      y = cy + 140;
+      delta = renderDelta(atl_percentage); 
+      x = cx;
+      y = cy + 160;
       anchor = "start";
       lineX1 = cx;
       lineY1 = cy + 140;
@@ -72,6 +83,9 @@ const RadialChart = ({
     } else {
       return null;
     }
+  
+    const isPositive = (value === 100 ? ath_percentage : atl_percentage) >= 0;
+    const colorClass = isPositive ? styles.positive : styles.negative;
   
     return (
       <g>
@@ -95,8 +109,8 @@ const RadialChart = ({
           <tspan className={styles.statValue} dx="5" letterSpacing="0.5">
             {displayValue}
           </tspan>
-          <tspan className={styles.statDelta} dx="5">
-            10{delta}
+          <tspan className={`${styles.statDelta} ${colorClass}`} dx="5">
+            {delta}
           </tspan>
         </text>
       </g>
@@ -113,26 +127,6 @@ const RadialChart = ({
       </div>
     );
   }
-
-  const renderDelta = (value, label) => {
-    const isPositive = value >= 0;
-    const icon = isPositive ? faArrowUp : faArrowDown;
-    const colorClass = isPositive ? styles.positive : styles.negative;
-
-    const renderLabel = label 
-      ? <span className={styles.statLabel}>{label}</span>
-      : '';
-
-    return (
-      <div className={`${styles.statItem} ${colorClass}`}>
-        {renderLabel}
-        <span className={styles.statValue}>
-          <FontAwesomeIcon icon={icon} className={styles.icon} />
-          {abbreviateNumber(Math.abs(value))}%
-        </span>
-      </div>
-    );
-  };
 
   const valueAndSymbol = (val) => {
     const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';
@@ -152,10 +146,10 @@ const RadialChart = ({
         <div className={styles.centerBubble}>
           <span className={styles.centerValue}>{valueAndSymbol(latestValue)}</span>
         </div>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={393.5}>
           <RadialBarChart
             width={300}
-            height={240}
+            height={393.5}
             cx="50%"
             cy="50%"
             innerRadius={120}
@@ -189,8 +183,8 @@ const RadialChart = ({
             />
             <path
               d={`
-                M ${300/2 + 230} ${300/2 - 140}
-                A 140 140 0 0 1 ${300/2 + 230} ${300/2 + 140}
+                M ${300/2 + 232} ${300/2 - 140 + 46}
+                A 140 140 0 0 1 ${300/2 + 232} ${300/2 + 140 + 46}
               `}
               fill="none"
               stroke="var(--charts-border-and-line-colour)"

@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  height: 494px;
   align-items: center;
   border: 1px solid var(--charts-border-and-line-colour);
   border-radius: var(--border-radius-sm);
@@ -62,7 +63,7 @@
 
 .centerBubble {
   position: absolute;
-  top: 50%;
+  top: 65.6%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -74,6 +75,9 @@
   justify-content: center;
   align-items: center;
   border: 2px solid var(--charts-border-and-line-colour);
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 0;
 }
 
 .centerValue {
@@ -109,9 +113,13 @@
 }
 
 .positive {
-  color: var(--green-500);
+  fill: var(--green-500);
+  font-size: var(--charts-title-secondary);
+
 }
 
 .negative {
-  color: var(--magenta-500);
+  fill: var(--magenta-500);
+  font-size: var(--charts-title-secondary);
+
 }
