@@ -21,7 +21,8 @@ const METRIC_METADATA = {
       return item.apys.apy_7d.year * 100;
     },
     yValueFormatter: (val) => {
-      return val;
+      console.log(val, typeof val)
+      return parseFloat(val).toFixed(2);
     },
   },
   'allTVL': {

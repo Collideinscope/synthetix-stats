@@ -103,18 +103,18 @@ const Chart = ({
     return format(date, 'd');
   }
 
-  const ticksXAxis = data.reduce((acc, item, index) => {
+  const ticksXAxis = data.reduce((acc, item, index, arr) => {
     const currentDate = new Date(item.timestamp);
     const day = currentDate.getDate();
-    
+    const len = arr.length;
+
     // Always include the first data point
-    if (index === 0) {
+    if (index === 0 || index === len- 1) {
       acc.push(currentDate);
       return acc;
     }
   
     // Add first day of month, 8th, 16th, and 24th for hourly data
-    // For daily data, add every 3rd day or week
     if (day === 1 || day === 8 || day === 16 || day === 24) {
       if (!acc.some(date => date.getTime() === currentDate.getTime())) {
         acc.push(currentDate);
@@ -124,11 +124,6 @@ const Chart = ({
     return acc;
   }, []);
 
-  // Ensure first tick is shown as MMM if it's not already
-  if (ticksXAxis.length > 0 && ticksXAxis[0].getDate() !== 1) {
-    ticksXAxis[0] = startOfMonth(ticksXAxis[0]);
-  }
-  
   // Sort the ticks chronologically
   ticksXAxis.sort((a, b) => a.getTime() - b.getTime());
 
@@ -253,7 +248,6 @@ const Chart = ({
               tick={<CustomTick />}
               ticks={ticksXAxis}
               padding={{ bottom: 10 }}
-              ticksCount={0}
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}

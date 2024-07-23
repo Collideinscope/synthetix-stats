@@ -1,5 +1,5 @@
 .container {
-  width: 105px;
+  width: 105px !important;
   height: 534px !important;
   padding: var(--block-padding-internal) 0;
   background-color: var(--navy-900);
@@ -28,9 +28,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  flex-wrap: nowrap;
-  margin: 0 var(--block-group-padding-minimum);
+  width: 100%;
+
 }
 
 .statLabel {

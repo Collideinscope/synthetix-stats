@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styles from './styles.module.css';
 
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
+import { parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie  } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,6 +25,7 @@ const RadialChart = ({
   const {
     chartTitle,
     chartYValueSymbol,
+    dataStartDate,
     chartYAxisDataKey,
     getYAxisDataPoint,
     yValueFormatter,
@@ -33,14 +35,30 @@ const RadialChart = ({
   } = metricMetadata;
 
   const dataChainFiltered = dataChainFilter(state[metric], chain);
-  const data = dataChainFiltered.map(item => ({
-    timestamp: item.ts,
-    value: getYAxisDataPoint(item),
-  }));
 
-  const latestValue = data.length > 0 ? data[data.length - 1].value : 0;
-  const ath = Math.max(...data.map(d => d.value));
-  const atl = Math.min(...data.map(d => d.value));
+  const startDate = new Date(
+    dataStartDate
+      ? dataStartDate 
+      : state[metric].length > 0 
+        ? dataChainFiltered[0].ts
+        : '2024-01-01' // default start date
+  );
+
+  const data = dataChainFiltered
+    .filter(item => new Date(item.ts) >= startDate) 
+    .map(item => {
+      return {
+        timestamp: parseISO(item.ts),
+        [chartYAxisDataKey]: getYAxisDataPoint(item),
+      }
+    });
+
+  const latestValue = data.length > 0
+  ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
+  : '';
+
+  const ath = Math.max(...data.map(d => d[chartYAxisDataKey]));
+  const atl = Math.min(...data.map(d => d[chartYAxisDataKey]));
 
   const ath_percentage = state[summaryDataKey].ath_percentage;
   const atl_percentage = state[summaryDataKey].atl_percentage;
@@ -62,7 +80,7 @@ const RadialChart = ({
   
     if (value === 100) {
       displayLabel = 'ATH';
-      displayValue = `${valueAndSymbol(ath)}`;
+      displayValue = `${valueAndSymbolSVG(ath)}`;
       delta = renderDelta(ath_percentage); 
       x = cx;
       y = cy - 160;
@@ -73,7 +91,7 @@ const RadialChart = ({
       lineY2 = cy - 150;
     } else if (value === 0) {
       displayLabel = 'ATL';
-      displayValue = `${valueAndSymbol(atl)}`;
+      displayValue = `${valueAndSymbolSVG(atl)}`;
       delta = renderDelta(atl_percentage); 
       x = cx;
       y = cy + 160;
@@ -130,10 +148,17 @@ const RadialChart = ({
     );
   }
 
-  const valueAndSymbol = (val) => {
+  const valueAndSymbolSVG= (val) => {
     const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';
     const symbolRight = symbolLocation === 'right' ? chartYValueSymbol : '';
     return `${symbolLeft}${yValueFormatter(val)}${symbolRight}`;
+  }
+
+  const valueAndSymbol = (val) => {
+    const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
+    const symbolRight = symbolLocation === 'right' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
+
+    return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
   return (
@@ -185,8 +210,8 @@ const RadialChart = ({
             />
             <path
               d={`
-                M ${300/2 + 148} ${300/2 - 140 + 26}
-                A 140 140 0 0 1 ${300/2 + 148} ${300/2 + 140 + 26}
+                M ${300/2 + 155} ${300/2 - 140 + 26}
+                A 140 140 0 0 1 ${300/2 + 155} ${300/2 + 140 + 26}
               `}
               fill="none"
               stroke="var(--charts-border-and-line-colour)"
