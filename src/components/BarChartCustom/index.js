@@ -197,6 +197,9 @@ const BarChartCustom = ({
         </div>
         <p className={styles.latestValue}>
           {valueAndSymbol(highlightValue)}
+          <p className={styles.latestValueDate}>
+            {format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')}
+          </p>
         </p>
       </div>
       <div className={styles.chartWrapper}>
