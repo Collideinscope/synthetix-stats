@@ -81,11 +81,20 @@
   border-bottom: 0;
 }
 
+.latestValueDate {
+  position: absolute;
+  font-size: var(--font-size-supporting);
+  color: var(--supporting-text-colour);
+  top: 55%;
+  right: 22%;
+}
+
 .centerValue {
   color: var(--cyan-300);
   font-size: var(--charts-title-primary);
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .customTick {
@@ -116,13 +125,11 @@
 .positive {
   fill: var(--green-500);
   font-size: var(--charts-title-secondary);
-
 }
 
 .negative {
   fill: var(--magenta-500);
   font-size: var(--charts-title-secondary);
-
 }
 
 .chartFooter {

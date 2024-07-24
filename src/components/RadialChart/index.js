@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
-import { parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
@@ -96,7 +96,7 @@ const [ref, { width, height }] = useDimensions();
 
   const renderDelta = (value) => {
     const isPositive = value >= 0;
-    const icon = isPositive ? '↑' : '↓';
+    const icon = isPositive ? '▲' : '▼';
   
     return `${icon}${abbreviateNumber(Math.abs(value))}%`;
   };
@@ -199,6 +199,9 @@ const [ref, { width, height }] = useDimensions();
       <div className={styles.radialChartWrapper}>
         <div className={styles.centerBubble}>
           <span className={styles.centerValue}>{valueAndSymbol(latestValue)}</span>
+          <p className={styles.latestValueDate}>
+            {format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')}
+          </p>
         </div>
         <ResponsiveContainer width="100%" height={393.5}>
           <RadialBarChart

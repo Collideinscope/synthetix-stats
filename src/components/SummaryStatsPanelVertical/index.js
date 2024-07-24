@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import { abbreviateNumber } from "../../helpers";
@@ -26,7 +26,7 @@ const SummaryStatsPanel = ({ data, metric }) => {
 
   const renderDelta = (value, label) => {
     const isPositive = value >= 0;
-    const icon = isPositive ? faArrowUp : faArrowDown;
+    const icon = isPositive ? faCaretUp : faCaretDown;
     const colorClass = isPositive ? styles.positive : styles.negative;
 
     const renderLabel = label 
