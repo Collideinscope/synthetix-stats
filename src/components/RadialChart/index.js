@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie  } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import { abbreviateNumber } from "../../helpers";
@@ -33,6 +33,33 @@ const RadialChart = ({
     dataChainFilter,
     summaryDataKey,
   } = metricMetadata;
+
+
+const useDimensions = () => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const ref = useRef();
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (ref.current) {
+        setDimensions({
+          width: ref.current.offsetWidth,
+          height: ref.current.offsetHeight,
+        });
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return [ref, dimensions];
+};
+
+const [ref, { width, height }] = useDimensions(); 
+
 
   const dataChainFiltered = dataChainFilter(state[metric], chain);
 
@@ -208,15 +235,17 @@ const RadialChart = ({
               stroke="var(--charts-border-and-line-colour)"
               strokeWidth={1}
             />
-            <path
-              d={`
-                M ${300/2 + 155} ${300/2 - 140 + 26}
-                A 140 140 0 0 1 ${300/2 + 155} ${300/2 + 140 + 26}
-              `}
-              fill="none"
-              stroke="var(--charts-border-and-line-colour)"
-              strokeWidth={1}
-            />
+        <svg width={width} height={height} style={{ fill: 'blue', position: 'absolute', top: 0, left: 0 }}>
+          <path
+            d={`
+              M ${width / 2 + 155} ${height / 2 - 140 + 26}
+              A 140 140 0 0 1 ${width / 2 + 155} ${height / 2 + 140 + 26}
+            `}
+            fill="none"
+            stroke="var(--charts-border-and-line-colour)"
+            strokeWidth={1}
+          />
+        </svg>
           </RadialBarChart>
         </ResponsiveContainer>
       </div>
@@ -227,6 +256,12 @@ const RadialChart = ({
             onClick={() => onChartTypeChange('line')}
           >
             <FontAwesomeIcon icon={faChartLine} />
+          </div>
+          <div
+            className={`${styles.chartIcon}`}
+            onClick={() => onChartTypeChange('bar')}
+          >
+            <FontAwesomeIcon icon={faChartBar} />
           </div>
           <div
             className={`${styles.chartIcon} ${styles.active}`}

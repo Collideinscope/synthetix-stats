@@ -1,0 +1,136 @@
+.chartHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--block-margin-internal);
+  position: relative;
+}
+
+.titleContainer {
+  padding: var(--charts-padding-inside-containers);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.chartTitle {
+  color: var(--charts-title-colour);
+  font-size: var(--charts-figure-amount);
+  margin: 0;
+  margin-right: var(--charts-margin-between-blocks);
+}
+
+.titleMeta {
+  display: flex;
+}
+
+.symbol {
+  font-size: var(--charts-figure-amount);
+  margin-left: 2px;
+}
+
+.chartSubtitle {
+  color: var(--title-colour);
+  font-size: var(--charts-title-secondary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--border-and-line-colour);
+  background: var(--navy-900);
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.chartSubtitle:nth-child(2) {
+  margin: 0 var(--block-group-margin-internal);
+}
+
+.latestValue {
+  color: var(--cyan-300);
+  font-size: var(--charts-title-primary);
+  margin: var(--block-margin-minimum) 0 0 0;
+  margin-right: var(--charts-padding-inside-containers);
+  display: flex;
+  align-items: center;
+}
+
+.tooltip {
+  background-color: var(--charts-background-colour);
+  border: 1px solid var(--charts-border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 0 var(--block-group-padding-minimum);
+  color: var(--charts-main-cta-colour);
+  font-size: var(--charts-title-secondary);
+}
+
+.largeTick {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.smallTick {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.chartFooter {
+  width: 100%;
+  height: 40px;
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+}
+
+.chartIcons {
+  display: flex;
+  margin: 0;
+}
+
+.chartIcon {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.chartIcon svg {
+  color: var(--border-and-line-colour);
+  transition: color 0.2s ease;
+}
+
+.chartIcon:hover svg {
+  color: var(--title-colour);
+}
+
+.chartIcon.active svg {
+  color: var(--title-colour);
+}
+
+.legend {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 100%;
+  left: 47.5%;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.legendColor {
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+.legendText {
+  font-size: var(--font-size-supporting);
+  color: var(--supporting-text-colour);
+}

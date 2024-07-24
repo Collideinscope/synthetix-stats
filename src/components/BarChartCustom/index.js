@@ -1,16 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import styles from './styles.module.css';
 
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 
-const Chart = ({ 
+const BarChartCustom = ({ 
     metric, 
     chain,
     pool,
@@ -32,7 +32,6 @@ const Chart = ({
     yValueFormatter,
     symbolLocation,
     dataChainFilter,
-    smoothData,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[metric], chain);
 
@@ -46,48 +45,58 @@ const Chart = ({
 
   const data = dataChainFiltered
     .filter(item => new Date(item.ts) >= startDate) 
-    .map(item => {
-      return {
-        timestamp: parseISO(item.ts),
-        [chartYAxisDataKey]: getYAxisDataPoint(item),
-      }
-    });
+    .map(item => ({
+      timestamp: parseISO(item.ts),
+      [chartYAxisDataKey]: getYAxisDataPoint(item),
+    }));
 
   const latestValue = data.length > 0
-  ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
-  : '';
-    
+    ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
+    : '';
+    console.log(data)
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);
 
-  const onHighlightValueChange = (value) => {
-    setHighlightValue(value);
+  const valueAndSymbol = (val) => {
+    const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
+    const symbolRight = symbolLocation === 'right' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
+
+    return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
-  // 7day moving average expecting hourly data
-  const smoothenData = (data, windowSize = 168) => {
-    return data.map((point, index, array) => {
-      if (index < windowSize - 1) {
-        // Not enough previous data points, return original
-        return point;
+  const getMonthlyData = () => {
+    const monthlyData = {};
+    data.forEach(item => {
+      const monthStart = startOfMonth(item.timestamp);
+      const monthKey = format(monthStart, 'yyyy-MM');
+  
+      if (!monthlyData[monthKey]) {
+        monthlyData[monthKey] = {
+          month: monthStart,
+          values: [],
+        };
       }
-      const window = array.slice(index - windowSize + 1, index + 1);
-      const sum = window.reduce((acc, curr) => acc + curr[chartYAxisDataKey], 0);
-
+  
+      monthlyData[monthKey].values.push(item[chartYAxisDataKey]);
+    });
+  
+    return Object.values(monthlyData).map(({ month, values }) => {
+      const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
+      const max = Math.max(...values);
       return {
-        ...point,
-        [chartYAxisDataKey]: sum / windowSize
+        month,
+        avg,
+        maxDiff: max - avg,
       };
     });
   };
-    
-  const smoothedData = smoothData
-    ? smoothenData(data)
-    : data;
 
-  const maxYValue = Math.max(...data.map(d => d[chartYAxisDataKey]));
-  const yAxisUpperLimit = Math.ceil(maxYValue * 1.1);
+  const monthlyData = getMonthlyData();
+
+  const yAxisUpperLimit = () => {
+    return Math.ceil(Math.max(...monthlyData.map(d => d.avg + d.maxDiff)) * 1.1);
+  };
 
   const formatXAxis = (tickItem) => {
     const date = new Date(tickItem);
@@ -96,36 +105,8 @@ const Chart = ({
       return format(date, 'yyyy');
     }
 
-    if (date.getDate() === 1) {
-      return format(date, 'MMM');
-    }
-
-    return format(date, 'd');
+    return format(date, 'MMM');
   }
-
-  const ticksXAxis = data.reduce((acc, item, index, arr) => {
-    const currentDate = new Date(item.timestamp);
-    const day = currentDate.getDate();
-    const len = arr.length;
-
-    // Always include the first data point
-    if (index === 0 || index === len- 1) {
-      acc.push(currentDate);
-      return acc;
-    }
-  
-    // Add first day of month, 8th, 16th, and 24th for hourly data
-    if (day === 1 || day === 8 || day === 16 || day === 24) {
-      if (!acc.some(date => date.getTime() === currentDate.getTime())) {
-        acc.push(currentDate);
-      }
-    }
-
-    return acc;
-  }, []);
-
-  // Sort the ticks chronologically
-  ticksXAxis.sort((a, b) => a.getTime() - b.getTime());
 
   const formatYAxis = (tickItem) => {
     const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';
@@ -134,39 +115,26 @@ const Chart = ({
     return symbolLeft + yValueFormatter(tickItem) + symbolRight;
   }
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const value = payload[0].value.toFixed(2);
-      onHighlightValueChange(value);
-
+      const avgValue = payload.find(p => p.dataKey === 'avg')?.value.toFixed(2);
+      const maxValue = (parseFloat(avgValue) + payload.find(p => p.dataKey === 'maxDiff')?.value).toFixed(2);
+  
       return (
         <div className={styles.tooltip}>
-          <p>{format(new Date(label), 'MMM dd, yyyy')}</p>
+          <p>{format(payload[0].payload.month, 'MMMM yyyy')}</p>
+          <p>Avg: {yValueFormatter(avgValue)}</p>
+          <p>Max: {yValueFormatter(maxValue)}</p>
         </div>
       );
     }
-
-    onHighlightValueChange(latestValue);
-
+  
     return null;
   };
 
-  const CustomCursor = ({ points, width, height, payload }) => {
-    if (!points || points.length === 0 || !payload || payload.length === 0) return null;
-    const { x, y } = points[0];
-    const dataY = payload[0].payload[payload[0].dataKey];
-    const yScale = height / (yAxisUpperLimit || 1); 
-    const scaledY = height - (dataY * yScale);
-  
+  const CustomCursor = ({ x, y, width, height, stroke }) => {
     return (
-      <line 
-        x1={x} 
-        y1={scaledY} 
-        x2={x} 
-        y2={height} 
-        stroke="var(--charts-border-and-line-colour)" 
-        strokeDasharray="3 3" 
-      />
+      <rect x={x} y={y} width={width} height={height} fill="none" stroke={stroke} />
     );
   };
 
@@ -192,14 +160,6 @@ const Chart = ({
     );
   };
 
-  // location of symbol dependant on metric
-  const valueAndSymbol = (val) => {
-    const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
-    const symbolRight = symbolLocation === 'right' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
-
-    return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
-  }
-
   const renderFilters = () => {
     if (!showFilters) return null;
 
@@ -212,42 +172,58 @@ const Chart = ({
     );
   }
 
+  const CustomLegend = () => {
+    return (
+      <div className={styles.legend}>
+        <div className={styles.legendItem}>
+          <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)' }}></div>
+          <span className={styles.legendText}>Avg</span>
+        </div>
+        <div className={styles.legendItem}>
+          <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)', opacity: 0.4 }}></div>
+          <span className={styles.legendText}>Max</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
         <div className={styles.titleContainer}>
           <h3 className={styles.chartTitle}>{chartTitle}</h3>
           {renderFilters()}
+          <CustomLegend />
         </div>
         <p className={styles.latestValue}>
           {valueAndSymbol(highlightValue)}
         </p>
       </div>
       <div className={styles.chartWrapper}>
-        <ResponsiveContainer 
-          width="100%" 
-          height={300}
-        >
-          <AreaChart 
-            data={smoothedData} 
-            margin={{ top: 0, right: 30, left: 15, bottom: 0 }}
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart 
+            data={monthlyData} 
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            barSize={25}
           >
             <defs>
+              <pattern id="patternStripe" width="4" height="4" patternUnits="userSpaceOnUse">
+                <rect width="4" height="4" fill="var(--cyan-300)"/>
+                <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-300)" strokeWidth={1}/>
+              </pattern>
               <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
                 <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <XAxis 
-              dataKey="timestamp" 
+              dataKey="month" 
               tickFormatter={formatXAxis} 
               stroke="var(--charts-supporting-colour)"
               angle={-45}
               textAnchor="end"
               height={60}
               tick={<CustomTick />}
-              ticks={ticksXAxis}
-              padding={{ bottom: 10 }}
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}
@@ -259,36 +235,31 @@ const Chart = ({
             <Tooltip 
               content={<CustomTooltip />}
               cursor={<CustomCursor />}
-              onMouseMove = {(e) => {
+              onMouseMove={(e) => {
                 if (e.activePayload && e.activePayload.length > 0) {
-                  onHighlightValueChange(e.activePayload[0].value);
                 }
               }}
             />
-            <Area 
-              type="monotone" 
-              dataKey={chartYAxisDataKey}
-              stroke="var(--cyan-300)" 
-              strokeWidth={2}
-              fillOpacity={0.6}
-              fill="url(#colorAPY)"
-              activeDot={{
-                r: 6,
-                stroke: "var(--cyan-300)",
-                strokeWidth: 2,
-                fill: "var(--charts-background-colour)"
-              }}
-            />
-          </AreaChart>
+            <Bar dataKey="avg" fill="url(#patternStripe)" stackId="a">
+            </Bar>
+            <Bar dataKey="maxDiff" fill="url(#colorAPY)" stackId="a">
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       </div>
       <div className={styles.chartFooter}>
         <div className={styles.chartIcons}>
           <div
-            className={`${styles.chartIcon} ${styles.active}`}
+            className={`${styles.chartIcon}`}
             onClick={() => onChartTypeChange('line')}
           >
             <FontAwesomeIcon icon={faChartLine} />
+          </div>
+          <div
+            className={`${styles.chartIcon} ${styles.active}`}
+            onClick={() => onChartTypeChange('bar')}
+          >
+            <FontAwesomeIcon icon={faChartBar} />
           </div>
           <div
             className={`${styles.chartIcon}`}
@@ -302,4 +273,4 @@ const Chart = ({
   );
 };
 
-export default Chart;
+export default BarChartCustom;

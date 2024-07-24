@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './styles.module.css';
 
-import logoSymbol from '../../assets/blue-x.svg'; 
+import synthetix_stats from '../../assets/synthetix_stats.svg'; 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -20,11 +20,10 @@ const Header = () => {
         >
           <h1>
             <img 
-              src={logoSymbol}
+              src={synthetix_stats}
               alt="Synthetix Symbol" 
               className={styles.logo} 
             />
-            <span>stats</span>
           </h1>
         </Link>
       </div>

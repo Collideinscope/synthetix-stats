@@ -5,8 +5,9 @@ import { GlobalContext } from '../../context/GlobalContext';
 
 import SummaryStatsPanel from '../SummaryStatsPanel';
 import SummaryStatsPanelVertical from '../SummaryStatsPanelVertical';
-import Chart from '../Chart';
+import AreaChartCustom from '../AreaChartCustom';
 import RadialChart from '../RadialChart';
+import BarChartCustom from '../BarChartCustom'; 
 
 import { METRIC_METADATA } from '../../constants/metrics';
 
@@ -26,9 +27,9 @@ const ChartContainer = ({
     setChartType(newType);
   };
 
-  const renderChart = chartType === 'line'
+  const renderChart = chartType === 'bar' 
     ? (
-      <Chart 
+      <BarChartCustom
         metric={metric}
         chain={chain}
         pool={pool}
@@ -36,33 +37,43 @@ const ChartContainer = ({
         showFilters={showFilters}
         onChartTypeChange={handleChartTypeChange}
       />
-    ) : (
-      <RadialChart
-        metric={metric}
-        chain={chain}
-        pool={pool}
-        collateral_type={collateral_type}
-        showFilters={showFilters}
-        onChartTypeChange={handleChartTypeChange}
-      />
-    )
+    ) : chartType === 'radial' 
+      ? (
+        <RadialChart
+          metric={metric}
+          chain={chain}
+          pool={pool}
+          collateral_type={collateral_type}
+          showFilters={showFilters}
+          onChartTypeChange={handleChartTypeChange}
+        />
+      ) : (
+        <AreaChartCustom 
+          metric={metric}
+          chain={chain}
+          pool={pool}
+          collateral_type={collateral_type}
+          showFilters={showFilters}
+          onChartTypeChange={handleChartTypeChange}
+        />
+      )
 
-  const renderSummaryStatsPanel = chartType === 'line'
+  const renderSummaryStatsPanel = chartType === 'radial'
     ? (
-      <SummaryStatsPanel 
+      <SummaryStatsPanelVertical 
         data={summaryData} 
         metric={metric} 
       />
     ) : (
-      <SummaryStatsPanelVertical 
+      <SummaryStatsPanel 
         data={summaryData} 
         metric={metric} 
       />
     );
 
-  const verticalSummaryPanelClass = chartType === 'line'
-    ? ''
-    : 'verticalSummary';
+  const verticalSummaryPanelClass = chartType === 'radial'
+    ? 'verticalSummary'
+    : '';
 
   return (
     <div className={`${styles.container} ${styles[verticalSummaryPanelClass]}`}>
