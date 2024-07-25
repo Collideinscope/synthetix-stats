@@ -17,7 +17,8 @@
 }
 
 .radialContainer {
-  width: 476px !important;
+  width: 464px !important;
+  min-width: 464px !important;
 }
 
 .genericContainer {
@@ -42,9 +43,15 @@
   }
 }
 
-@media (min-width: 480) and (max-width: 767px) {
+@media (min-width: 480px) and (max-width: 767px) {
   .genericContainer {
-    min-width: 476px !important;
+    min-width: 464px;
+    max-width: 100%;
+    flex: 1 1 464px;
+    margin-right: 0;
+  }
+
+  .radialContainer {
     margin-right: 0;
   }
 }

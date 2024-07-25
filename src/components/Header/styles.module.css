@@ -66,3 +66,43 @@ h1 span {
 .searchContainer .fa-magnifying-glass:hover {
   color: var(--title-colour);
 }
+
+.navIconSection {
+  display: none;
+  height: 100%;
+}
+
+.navIcon {
+  cursor: pointer;
+  color: var(--supporting-text-colour);
+  margin-right: var(--block-group-margin-internal);
+}
+
+.navIcon:hover {
+  color: var(--title-colour);
+}
+
+.navIconSection .fa-bars:hover {
+  color: var(--title-colour);
+}
+
+@media (max-width: 991px) {
+  .logoSection {
+    width: 25%;
+    position: static;
+    z-index: 0;
+  }
+
+  .searchContainer {
+    width: 65%;
+    justify-content: flex-end;
+    margin: 0;
+  }
+
+  .navIconSection {
+    display: flex;
+    width: 10%;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -16,7 +16,9 @@ const parseActiveMenuFromPath = (path) => {
   return null;
 };
 
-const Nav = () => {
+const Nav = ({ 
+  navOpen,
+ }) => {
   const location = useLocation();
   
   const initialMenuActive = Object.keys(NAV_MENU).reduce((acc, menu) => {
@@ -141,8 +143,12 @@ const Nav = () => {
     );
   };
 
+  const navClosedClass = navOpen 
+    ? ''
+    : 'navClosed';
+
   return (
-    <nav className={styles.nav}>
+    <nav className={`${styles.nav} ${styles[navClosedClass]}`}>
       {generateNav()}
     </nav>
   )

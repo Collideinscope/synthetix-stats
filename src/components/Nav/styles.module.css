@@ -84,3 +84,29 @@ nav {
 .activeSubNav .subNavItemTitle {
   color: var(--title-colour) !important;
 }
+
+@media (max-width: 991px) {
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+    left: 0;
+    top: 64px;
+    width: 100%;
+    height: calc(100% - 64px); /* header */
+    overflow-y: auto; 
+    border-top-right-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-and-line-colour);
+    background: var(--navy-900);
+    z-index: 1;
+  }
+
+  .navList {
+    background: var(--navy-900);
+  }
+
+  .navClosed {
+    display: none;
+  }
+}
