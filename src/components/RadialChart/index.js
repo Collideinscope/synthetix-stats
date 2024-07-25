@@ -238,17 +238,15 @@ const [ref, { width, height }] = useDimensions();
               stroke="var(--charts-border-and-line-colour)"
               strokeWidth={1}
             />
-        <svg width={width} height={height} style={{ fill: 'blue', position: 'absolute', top: 0, left: 0 }}>
-          <path
-            d={`
-              M ${width / 2 + 155} ${height / 2 - 140 + 26}
-              A 140 140 0 0 1 ${width / 2 + 155} ${height / 2 + 140 + 26}
-            `}
-            fill="none"
-            stroke="var(--charts-border-and-line-colour)"
-            strokeWidth={1}
-          />
-        </svg>
+              <path
+                d={`
+                  M ${300 / 2 + 155} ${300 / 2 - 140 + 26}
+                  A 140 140 0 0 1 ${300 / 2 + 155} ${300 / 2 + 140 + 26}
+                `}
+                fill="none"
+                stroke="var(--charts-border-and-line-colour)"
+                strokeWidth={1}
+              />
           </RadialBarChart>
         </ResponsiveContainer>
       </div>

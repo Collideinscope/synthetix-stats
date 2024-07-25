@@ -17,7 +17,7 @@
 }
 
 .titleContainer {
-  padding: var(--charts-padding-inside-containers);
+  padding: var(--charts-padding-inside-containers) var(--block-group-padding-internal);
   display: flex;
 }
 

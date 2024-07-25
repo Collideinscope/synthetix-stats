@@ -1,9 +1,12 @@
 .container {
   border: 1px solid var(--border-and-line-colour);
   border-radius: var(--border-radius-sm); 
-  margin: var(--block-margin-internal) var(--block-margin-between);
-  min-width: 350px;
-  max-width: 768px;
+  margin: var(--block-margin-internal) 0;
+  margin-right: 16px;
+  min-width: 504px;
+  max-width: 100%;
+  flex: 1 1 560px;
+  padding: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -16,6 +19,10 @@
   background-color: var(--navy-900);
 }
 
+.radialContainer {
+  max-width: 504px;
+}
+
 .container:hover {
   box-shadow: 0 6px 12px rgba(255, 255, 255, 0.15), 0 4px 24px rgba(255, 255, 255, 0.15);
 }
@@ -25,3 +32,16 @@
   justify-content: stretch;
   align-items: flex-start;
 }
+
+@media (min-width: 1536px) {
+  .container {
+    min-width: 768px;
+  }
+
+  .radialContainer {
+    min-width: 504px;
+    max-width: 504px;
+  }
+  
+}
+
