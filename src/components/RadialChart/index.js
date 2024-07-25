@@ -34,33 +34,6 @@ const RadialChart = ({
     summaryDataKey,
   } = metricMetadata;
 
-
-const useDimensions = () => {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const ref = useRef();
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (ref.current) {
-        setDimensions({
-          width: ref.current.offsetWidth,
-          height: ref.current.offsetHeight,
-        });
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return [ref, dimensions];
-};
-
-const [ref, { width, height }] = useDimensions(); 
-
-
   const dataChainFiltered = dataChainFilter(state[metric], chain);
 
   const startDate = new Date(
@@ -238,15 +211,15 @@ const [ref, { width, height }] = useDimensions();
               stroke="var(--charts-border-and-line-colour)"
               strokeWidth={1}
             />
-              <path
-                d={`
-                  M ${300 / 2 + 155} ${300 / 2 - 140 + 26}
-                  A 140 140 0 0 1 ${300 / 2 + 155} ${300 / 2 + 140 + 26}
-                `}
-                fill="none"
-                stroke="var(--charts-border-and-line-colour)"
-                strokeWidth={1}
-              />
+            <path
+              d={`
+                M ${300 / 2 + 22} ${300 / 2 - 140 + 26}
+                A 140 140 0 0 1 ${300 / 2 + 22} ${300 / 2 + 140 + 26}
+              `}
+              fill="none"
+              stroke="var(--charts-border-and-line-colour)"
+              strokeWidth={1}
+            />
           </RadialBarChart>
         </ResponsiveContainer>
       </div>
