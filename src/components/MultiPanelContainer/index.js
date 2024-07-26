@@ -5,14 +5,17 @@ import ChartContainer from '../ChartContainer';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 
-const MultiPanel = ({ category, filters }) => {
+const MultiPanel = ({ filters, category, metric }) => {
 
-  const categoryMetadata = Object
-    .keys(METRIC_METADATA)
-    .filter(key => {
-      return METRIC_METADATA[key].category === category;
-    })
-
+  // all metrics by category if category multipanel, otherwise indiv metric
+  const chartMetadata = category 
+    ? Object
+      .keys(METRIC_METADATA)
+      .filter(key => {
+        return METRIC_METADATA[key].category === category;
+      })
+    : [metric];
+console.log()
   const generateChart = (item) => {
     return (
       <ChartContainer
@@ -27,7 +30,7 @@ const MultiPanel = ({ category, filters }) => {
   }
 
   const generateChartList = () => {
-    const chartItems = categoryMetadata
+    const chartItems = chartMetadata
       .map(item => {
         return generateChart(item);
       })

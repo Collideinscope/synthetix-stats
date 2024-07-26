@@ -7,7 +7,7 @@
 }
 
 .titleContainer {
-  padding: var(--charts-padding-inside-containers);
+  padding: var(--charts-padding-inside-containers) var(--block-group-padding-internal);
   display: flex;
 }
 
@@ -15,7 +15,7 @@
   color: var(--charts-title-colour);
   font-size: var(--charts-figure-amount);
   margin: 0;
-  margin-right: var(--charts-margin-between-blocks);
+  margin-right: var(--block-group-margin-internal);
 }
 
 .titleMeta {
@@ -37,6 +37,7 @@
   border: 1px solid var(--border-and-line-colour);
   background: var(--navy-900);
   width: 60px;
+  height: 29.5px;
   display: flex;
   justify-content: center;
   padding: 5px;
@@ -115,4 +116,45 @@
 
 .chartIcon.active svg {
   color: var(--title-colour);
+}
+
+.customLabel {
+  background-color: var(--charts-background-colour);
+  border: 1px solid var(--charts-border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 4px 8px;
+  font-size: var(--charts-title-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.athLabel {
+  color: var(--green-500);
+}
+
+.atlLabel {
+  color: var(--magenta-500);
+}
+
+.labelText {
+  margin-bottom: 2px;
+}
+
+.statDelta {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-supporting);
+}
+
+.icon {
+  margin-right: 2px;
+}
+
+.positive {
+  color: var(--green-500);
+}
+
+.negative {
+  color: var(--magenta-500);
 }

@@ -7,7 +7,7 @@
 }
 
 .titleContainer {
-  padding: var(--charts-padding-inside-containers);
+  padding: var(--charts-padding-inside-containers) var(--block-group-padding-internal);
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -17,7 +17,7 @@
   color: var(--charts-title-colour);
   font-size: var(--charts-figure-amount);
   margin: 0;
-  margin-right: var(--charts-margin-between-blocks);
+  margin-right: var(--block-group-margin-minimum);
 }
 
 .titleMeta {
@@ -39,6 +39,7 @@
   border: 1px solid var(--border-and-line-colour);
   background: var(--navy-900);
   width: 60px;
+  height: 29.5px;
   display: flex;
   justify-content: center;
   padding: 5px;

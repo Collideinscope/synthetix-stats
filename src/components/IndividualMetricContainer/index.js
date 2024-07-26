@@ -5,10 +5,10 @@ import styles from './styles.module.css';
 import ViewOptionsContainer from '../ViewOptionsContainer';
 import MultiPanelContainer from '../MultiPanelContainer';
 
-const AggregatedDataContainer = ({
-  category, // 'core', 'perps', etc - nav
+const IndividualMetricContainer = ({
+  metric,
 }) => {
-
+console.log(metric)
   const [filters, setFilters] = useState({
     chain: 'base',
     pool: '1',
@@ -30,9 +30,9 @@ const AggregatedDataContainer = ({
         filters={filters}
         handleFilterChange={handleFilterChange} 
       />
-      <MultiPanelContainer filters={filters} category={category} metric={false} />
+      <MultiPanelContainer filters={filters} category={false} metric={metric} />
     </section>
   )
 }
 
-export default AggregatedDataContainer;
+export default IndividualMetricContainer;

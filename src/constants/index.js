@@ -4,19 +4,24 @@ const NAV_MENU = {
       route: '/core/overview',
     },
     'APY': {
-      route: '',
+      route: '/core/apy',
+      metricKey: 'allAPY',
     },
     'TVL': {
-      route: '',
+      route: '/core/tvl',
+      metricKey: 'allTVL'
     },
     'Core Delegations': {
-      route: '',
+      route: '/core/core-delegations',
+      metricKey: 'allCoreDelegations',
     },
     'Pool Rewards': {
-      route: '',
+      route: '/core/pool-rewards',
+      metricKey: 'allPoolRewards',
     },
     'Unique Stakers': {
-      route: '',
+      route: '/core/unique-stakers',
+      metricKey: 'cumulativeUniqueStakers',
     }
   },
   Perps: {
@@ -24,19 +29,24 @@ const NAV_MENU = {
       route: '/perps/overview',
     },
     'Volume': {
-      route: '',
+      route: '/perps/volume',
+      metricKey: 'cumulativePerpsVolume',
     },
     'Open Interest': {
-      route: '',
+      route: '/perps/open-interest',
+      metricKey: 'openInterest',
     },
     'Unique Traders': {
-      route: '',
+      route: '/perps/unique-traders',
+      metricKey: 'cumulativeUniqueTraders',
     },
     'Exchange Fees': {
-      route: '',
+      route: '/perps/exchange-fees',
+      metricKey: 'cumulativeExchangeFees',
     },
     'Collected Fees': {
-      route: '',
+      route: '/perps/collected-fees',
+      metricKey: 'cumulativeCollectedFees',
     },
   },
   Stakers: {

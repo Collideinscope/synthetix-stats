@@ -9,8 +9,10 @@ import { GlobalContext } from '../../context/GlobalContext';
 import Header from '../Header';
 import HighlightsContainer from '../HighlightsContainer';
 import AggregatedDataContainer from '../AggregatedDataContainer';
+import IndividualMetricContainer from '../IndividualMetricContainer';
 
 import API from '../../fetch_functions';
+import { NAV_MENU } from '../../constants';
 
 const App = () => {
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
@@ -101,6 +103,35 @@ const App = () => {
     fetchData();
   }, []);
 
+  const generateMetricRoutes = () => {
+    const routes = [];
+
+    Object.entries(NAV_MENU).forEach(([category, items]) => {
+      Object.entries(items).forEach(([itemName, itemData]) => {
+        const {route, metricKey} = itemData;
+
+        if (metricKey && route) {
+          routes.push(
+            <Route 
+              exact
+              key={route}
+              path={route} 
+              element={
+                <IndividualMetricContainer 
+                  filters={[]}
+                  category={false}
+                  metric={metricKey}
+                />
+              } 
+            />
+          );
+        }
+      });
+    });
+
+    return routes;
+  };
+
   return (
     <Router>
       <GlobalContext.Provider value={{ state, appDispatch }}>
@@ -111,6 +142,7 @@ const App = () => {
               <Route exact path="/" element={<HighlightsContainer />} />
               <Route exact path="/core/overview" element={<AggregatedDataContainer category="core" />} />
               <Route exact path="/perps/overview" element={<AggregatedDataContainer category="perps" />} />
+              {generateMetricRoutes()}
             </Routes>
           </main>
         </div>
