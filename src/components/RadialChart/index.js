@@ -259,7 +259,7 @@ const RadialChart = ({
         </div>
         <div className={styles.chartIconsRight}>
           <div
-            className={`${styles.chartIcon} ${styles.active}`}
+            className={`${styles.chartIcon}`}
             onClick={() => onChartTypeChange('line')}
           >
             <FontAwesomeIcon icon={faChartLine} />
@@ -271,7 +271,7 @@ const RadialChart = ({
             <FontAwesomeIcon icon={faChartBar} />
           </div>
           <div
-            className={`${styles.chartIcon}`}
+            className={`${styles.chartIcon} ${styles.active}`}
             onClick={() => onChartTypeChange('radial')}
           >
             <FontAwesomeIcon icon={faChartPie} />

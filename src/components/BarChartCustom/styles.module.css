@@ -17,7 +17,7 @@
   color: var(--charts-title-colour);
   font-size: var(--charts-figure-amount);
   margin: 0;
-  margin-right: var(--block-group-margin-minimum);
+  margin-right: var(--charts-margin-between-blocks);
 }
 
 .titleMeta {
