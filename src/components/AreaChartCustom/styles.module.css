@@ -89,14 +89,15 @@
   height: 40px;
   border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  padding: 0;
+  padding: 0 var(--block-group-padding-internal);
+  position: relative;
 }
 
-.chartIcons {
+.chartIconsLeft, .chartIconsRight {
   display: flex;
-  margin: 0;
+  align-items: center;
 }
 
 .chartIcon {
@@ -157,4 +158,30 @@
 
 .negative {
   color: var(--magenta-500);
+}
+
+.settingsMenu {
+  position: absolute;
+  left: var(--block-group-padding-internal);
+  bottom: 100%;
+  background-color: var(--navy-800);
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.settingsOption {
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--supporting-text-colour);
+  white-space: nowrap;
+}
+
+.settingsOption:hover,
+.settingsOption.active {
+  color: var(--title-colour);
+  background-color: var(--navy-700);
 }

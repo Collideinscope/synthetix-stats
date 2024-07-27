@@ -37,6 +37,7 @@
   align-items: flex-start;
 }
 
+
 @media (min-width: 1536px) {
   .genericContainer {
     min-width: 648px;

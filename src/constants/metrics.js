@@ -17,8 +17,9 @@ const METRIC_METADATA = {
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
-    getYAxisDataPoint: (item) => {
-      return item.apys.apy_7d.year * 100;
+    getYAxisDataPoint: (item, period) => {
+      const apyKey = `apy_${period}`;
+      return item.apys[apyKey].year * 100;
     },
     yValueFormatter: (val) => {
       return parseFloat(val).toFixed(2);

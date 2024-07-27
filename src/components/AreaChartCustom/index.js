@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -21,6 +21,9 @@ const AreaChartCustom = ({
   const [highlightValue, setHighlightValue] = useState(null);
   
   const { state } = useContext(GlobalContext);
+
+  const [showSettings, setShowSettings] = useState(false);
+  const [apyPeriod, setApyPeriod] = useState('7d');
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -49,7 +52,7 @@ const AreaChartCustom = ({
     .map(item => {
       return {
         timestamp: parseISO(item.ts),
-        [chartYAxisDataKey]: getYAxisDataPoint(item),
+        [chartYAxisDataKey]: getYAxisDataPoint(item, apyPeriod),
       }
     });
 
@@ -60,7 +63,13 @@ const AreaChartCustom = ({
   const latestValueDate = data.length > 0
     ? format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')
     : '';
-    
+  
+  const handleApyPeriodChange = (period) => {
+    setApyPeriod(period);
+    setShowSettings(false);
+    // You might want to trigger a data refresh or chart update here
+  };
+
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);
@@ -286,7 +295,31 @@ const AreaChartCustom = ({
         </ResponsiveContainer>
       </div>
       <div className={styles.chartFooter}>
-        <div className={styles.chartIcons}>
+        <div className={styles.chartIconsLeft}>
+          <div
+            className={`${styles.chartIcon}`}
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            <FontAwesomeIcon icon={faCog} />
+          </div>
+          {showSettings && (
+            <div className={styles.settingsMenu}>
+              <div
+                className={`${styles.settingsOption} ${apyPeriod === '7d' ? styles.active : ''}`}
+                onClick={() => handleApyPeriodChange('7d')}
+              >
+                7d
+              </div>
+              <div
+                className={`${styles.settingsOption} ${apyPeriod === '28d' ? styles.active : ''}`}
+                onClick={() => handleApyPeriodChange('28d')}
+              >
+                28d
+              </div>
+            </div>
+          )}
+        </div>
+        <div className={styles.chartIconsRight}>
           <div
             className={`${styles.chartIcon} ${styles.active}`}
             onClick={() => onChartTypeChange('line')}
