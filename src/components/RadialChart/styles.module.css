@@ -142,7 +142,7 @@
 }
 
 .negative {
-  fill: var(--magenta-500);
+  fill: var(--pink-600);
   font-size: var(--font-size-supporting);
 }
 
@@ -151,16 +151,15 @@
   height: 40px;
   border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  padding: 0;
-  position: absolute;
-  bottom: 0;
+  padding: 0 var(--block-group-padding-internal);
+  position: relative;
 }
 
-.chartIcons {
+.chartIconsLeft, .chartIconsRight {
   display: flex;
-  margin: 0;
+  align-items: center;
 }
 
 .chartIcon {
@@ -180,4 +179,71 @@
 
 .chartIcon.active svg {
   color: var(--title-colour);
+}
+
+.customLabel {
+  background-color: var(--charts-background-colour);
+  border: 1px solid var(--charts-border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 4px 8px;
+  font-size: var(--charts-title-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.athLabel {
+  color: var(--green-500);
+}
+
+.atlLabel {
+  color: var(--pink-600);
+}
+
+.labelText {
+  margin-bottom: 2px;
+}
+
+.statDelta {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-supporting);
+}
+
+.icon {
+  margin-right: 2px;
+}
+
+.positive {
+  color: var(--green-500);
+}
+
+.negative {
+  color: var(--pink-600);
+}
+
+.settingsMenu {
+  position: absolute;
+  left: var(--block-group-padding-internal);
+  bottom: 100%;
+  background-color: var(--navy-800);
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.settingsOption {
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--supporting-text-colour);
+  white-space: nowrap;
+}
+
+.settingsOption:hover,
+.settingsOption.active {
+  color: var(--title-colour);
+  background-color: var(--navy-700);
 }

@@ -1,4 +1,4 @@
-@import 'theme.css';
+@import 'newTheme.css';
 
 @font-face {
   font-family: 'GT America Extended Bold';
@@ -31,7 +31,7 @@ html, body {
 
 body {
   background: var(--navy-900);
-  color: var(--grey-50);
+  color: var(--gray-50);
   font-family: var(--font-family-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

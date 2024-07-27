@@ -135,7 +135,7 @@
 }
 
 .atlLabel {
-  color: var(--magenta-500);
+  color: var(--pink-600);
 }
 
 .labelText {
@@ -157,7 +157,7 @@
 }
 
 .negative {
-  color: var(--magenta-500);
+  color: var(--pink-600);
 }
 
 .settingsMenu {

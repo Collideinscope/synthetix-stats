@@ -53,7 +53,7 @@ const RadialChart = ({
     .map(item => {
       return {
         timestamp: parseISO(item.ts),
-        [chartYAxisDataKey]: getYAxisDataPoint(item),
+        [chartYAxisDataKey]: getYAxisDataPoint(item, apyPeriod),
       }
     });
 
@@ -187,7 +187,7 @@ const RadialChart = ({
             </p>
           </div>
           <RadialBarChart
-            width={300}
+            width={320}
             height={366.58}
             cx="55%"
             cy="50%"
@@ -222,8 +222,8 @@ const RadialChart = ({
             />
             <path
               d={`
-                M ${300 * 0.55} ${300 / 2 - 95}
-                A 100 100 0 0 1 ${300 * 0.55} ${300 / 2 + 160}
+                M ${300 * 0.59} ${300 / 2 - 95}
+                A 100 100 0 0 1 ${300 * 0.59} ${300 / 2 + 160}
               `}
               fill="none"
               stroke="var(--charts-border-and-line-colour)"

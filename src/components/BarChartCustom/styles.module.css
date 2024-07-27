@@ -111,7 +111,6 @@
   color: var(--supporting-text-colour);
 }
 
-
 .chartFooter {
   width: 100%;
   height: 40px;
@@ -163,7 +162,7 @@
 }
 
 .atlLabel {
-  color: var(--magenta-500);
+  color: var(--pink-600);
 }
 
 .labelText {
@@ -185,7 +184,7 @@
 }
 
 .negative {
-  color: var(--magenta-500);
+  color: var(--pink-600);
 }
 
 .settingsMenu {

@@ -43,6 +43,7 @@ nav {
   justify-content: center;
   align-items: center;
   background: var(--navy-800);
+  font-size: var(--font-size-supporting);
   width: 100%;
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 }

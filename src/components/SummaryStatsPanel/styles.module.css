@@ -49,7 +49,7 @@
 }
 
 .negative {
-  color: var(--magenta-500);
+  color: var(--red-500);
 }
 
 @media (max-width: 767px) {
