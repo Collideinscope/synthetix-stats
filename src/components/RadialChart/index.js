@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import { abbreviateNumber } from "../../helpers";
@@ -20,6 +20,10 @@ const RadialChart = ({
   onChartTypeChange,  
 }) => {
   const { state } = useContext(GlobalContext);
+
+  const [showSettings, setShowSettings] = useState(false);
+  const [apyPeriod, setApyPeriod] = useState('28d');
+
   const metricMetadata = METRIC_METADATA[metric];
 
   const {
@@ -56,6 +60,11 @@ const RadialChart = ({
   const latestValue = data.length > 0
   ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
   : '';
+
+  const handleApyPeriodChange = (period) => {
+    setApyPeriod(period);
+    setShowSettings(false);
+  };
 
   const ath = Math.max(...data.map(d => d[chartYAxisDataKey]));
   const atl = Math.min(...data.map(d => d[chartYAxisDataKey]));
@@ -211,22 +220,46 @@ const RadialChart = ({
               stroke="var(--charts-border-and-line-colour)"
               strokeWidth={1}
             />
-<path
-  d={`
-    M ${300 * 0.55} ${300 / 2 - 95}
-    A 100 100 0 0 1 ${300 * 0.55} ${300 / 2 + 160}
-  `}
-  fill="none"
-  stroke="var(--charts-border-and-line-colour)"
-  strokeWidth={1}
-/>
+            <path
+              d={`
+                M ${300 * 0.55} ${300 / 2 - 95}
+                A 100 100 0 0 1 ${300 * 0.55} ${300 / 2 + 160}
+              `}
+              fill="none"
+              stroke="var(--charts-border-and-line-colour)"
+              strokeWidth={1}
+            />
           </RadialBarChart>
         </div>
       </div>
       <div className={styles.chartFooter}>
-        <div className={styles.chartIcons}>
+        <div className={styles.chartIconsLeft}>
           <div
             className={`${styles.chartIcon}`}
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            <FontAwesomeIcon icon={faCog} />
+          </div>
+          {showSettings && (
+            <div className={styles.settingsMenu}>
+              <div
+                className={`${styles.settingsOption} ${apyPeriod === '7d' ? styles.active : ''}`}
+                onClick={() => handleApyPeriodChange('7d')}
+              >
+                7d
+              </div>
+              <div
+                className={`${styles.settingsOption} ${apyPeriod === '28d' ? styles.active : ''}`}
+                onClick={() => handleApyPeriodChange('28d')}
+              >
+                28d
+              </div>
+            </div>
+          )}
+        </div>
+        <div className={styles.chartIconsRight}>
+          <div
+            className={`${styles.chartIcon} ${styles.active}`}
             onClick={() => onChartTypeChange('line')}
           >
             <FontAwesomeIcon icon={faChartLine} />
@@ -238,7 +271,7 @@ const RadialChart = ({
             <FontAwesomeIcon icon={faChartBar} />
           </div>
           <div
-            className={`${styles.chartIcon} ${styles.active}`}
+            className={`${styles.chartIcon}`}
             onClick={() => onChartTypeChange('radial')}
           >
             <FontAwesomeIcon icon={faChartPie} />

@@ -11,6 +11,8 @@ import HighlightsContainer from '../HighlightsContainer';
 import AggregatedDataContainer from '../AggregatedDataContainer';
 import IndividualMetricContainer from '../IndividualMetricContainer';
 
+import { getCachedData, setCachedData } from '../../utils/cache';
+
 import API from '../../fetch_functions';
 import { NAV_MENU } from '../../constants';
 
@@ -20,57 +22,12 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [
-          allAPY,
-          allTVL,
-          allPoolRewards,
-          allCoreDelegations,
-          allPerpStats,
-          allPerpAccountStats,
-          cumulativeUniqueStakers,
-          cumulativeUniqueTraders,
-          cumulativePerpsVolume,
-          cumulativeExchangeFees,
-          cumulativeCollectedFees,
-          openInterest,
-          summaryDataAPY,
-          summaryDataTVL,
-          summaryDataPoolRewards,
-          summaryDataCoreDelegations,
-          summaryDataUniqueStakers,
-          summaryDataUniqueTraders,
-          summaryDataCumulativePerpsVolume,
-          summaryDataCumulativeExchangeFees,
-          summaryDataCumulativeCollectedFees,
-          summaryDataOpenInterest,
-        ] = await Promise.all([
-          API.fetchAllAPY(),
-          API.fetchAllTVL(),
-          API.fetchAllPoolRewards('base'),
-          API.fetchAllCoreDelegations(),
-          API.fetchAllPerpStats('base'),
-          API.fetchAllPerpAccountStats('base'),
-          API.fetchCumulativeUniqueStakers(),
-          API.fetchCumulativeUniqueTraders('base'),
-          API.fetchCumulativePerpsVolume('base'),
-          API.fetchCumulativeExchangeFees('base'),
-          API.fetchCumulativeCollectedFees('base'),
-          API.fetchOpenInterest('base'),
-          API.fetchSummaryDataAPY('base'),
-          API.fetchSummaryDataTVL('base'),
-          API.fetchSummaryDataPoolRewards('base'),
-          API.fetchSummaryDataCoreDelegations('base'),
-          API.fetchSummaryDataUniqueStakers('base'),
-          API.fetchSummaryDataCumulativeUniqueTraders('base'),
-          API.fetchSummaryDataCumulativePerpsVolume('base'),
-          API.fetchSummaryDataCumulativeExchangeFees('base'),
-          API.fetchSummaryDataCumulativeCollectedFees('base'),
-          API.fetchSummaryDataOpenInterest('base'),
-        ]);
+        const cachedData = getCachedData();
 
-        appDispatch({
-          type: 'SET_INITIAL_DATA',
-          payload: {
+        if (cachedData) {
+          appDispatch({ type: 'SET_INITIAL_DATA', payload: cachedData });
+        } else {
+          const [
             allAPY,
             allTVL,
             allPoolRewards,
@@ -93,8 +50,59 @@ const App = () => {
             summaryDataCumulativeExchangeFees,
             summaryDataCumulativeCollectedFees,
             summaryDataOpenInterest,
-          },
-        });
+          ] = await Promise.all([
+            API.fetchAllAPY(),
+            API.fetchAllTVL(),
+            API.fetchAllPoolRewards('base'),
+            API.fetchAllCoreDelegations(),
+            API.fetchAllPerpStats('base'),
+            API.fetchAllPerpAccountStats('base'),
+            API.fetchCumulativeUniqueStakers(),
+            API.fetchCumulativeUniqueTraders('base'),
+            API.fetchCumulativePerpsVolume('base'),
+            API.fetchCumulativeExchangeFees('base'),
+            API.fetchCumulativeCollectedFees('base'),
+            API.fetchOpenInterest('base'),
+            API.fetchSummaryDataAPY('base'),
+            API.fetchSummaryDataTVL('base'),
+            API.fetchSummaryDataPoolRewards('base'),
+            API.fetchSummaryDataCoreDelegations('base'),
+            API.fetchSummaryDataUniqueStakers('base'),
+            API.fetchSummaryDataCumulativeUniqueTraders('base'),
+            API.fetchSummaryDataCumulativePerpsVolume('base'),
+            API.fetchSummaryDataCumulativeExchangeFees('base'),
+            API.fetchSummaryDataCumulativeCollectedFees('base'),
+            API.fetchSummaryDataOpenInterest('base'),
+          ]);
+
+          const newData = {
+            allAPY,
+            allTVL,
+            allPoolRewards,
+            allCoreDelegations,
+            allPerpStats,
+            allPerpAccountStats,
+            cumulativeUniqueStakers,
+            cumulativeUniqueTraders,
+            cumulativePerpsVolume,
+            cumulativeExchangeFees,
+            cumulativeCollectedFees,
+            openInterest,
+            summaryDataAPY,
+            summaryDataTVL,
+            summaryDataPoolRewards,
+            summaryDataCoreDelegations,
+            summaryDataUniqueStakers,
+            summaryDataUniqueTraders,
+            summaryDataCumulativePerpsVolume,
+            summaryDataCumulativeExchangeFees,
+            summaryDataCumulativeCollectedFees,
+            summaryDataOpenInterest,
+          };
+
+          appDispatch({ type: 'SET_INITIAL_DATA', payload: newData });
+          //setCachedData(newData);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }

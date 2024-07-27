@@ -1,7 +1,6 @@
-import setInitialStateWithStorage from "../utils/cache";
+import { getInitialState } from "../utils/cache";
 
-// start initial state from cache if exists
-export const globalInitialState = setInitialStateWithStorage();
+export const globalInitialState = getInitialState();
 
 export const globalReducer = (state = globalInitialState, action) => {
   switch (action.type) {

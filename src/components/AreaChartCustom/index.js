@@ -23,7 +23,7 @@ const AreaChartCustom = ({
   const { state } = useContext(GlobalContext);
 
   const [showSettings, setShowSettings] = useState(false);
-  const [apyPeriod, setApyPeriod] = useState('7d');
+  const [apyPeriod, setApyPeriod] = useState('28d');
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -67,7 +67,6 @@ const AreaChartCustom = ({
   const handleApyPeriodChange = (period) => {
     setApyPeriod(period);
     setShowSettings(false);
-    // You might want to trigger a data refresh or chart update here
   };
 
   useEffect(() => {

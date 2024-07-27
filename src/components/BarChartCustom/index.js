@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -21,6 +21,9 @@ const BarChartCustom = ({
   const [highlightValue, setHighlightValue] = useState(null);
   
   const { state } = useContext(GlobalContext);
+
+  const [showSettings, setShowSettings] = useState(false);
+  const [apyPeriod, setApyPeriod] = useState('28d');
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -47,13 +50,18 @@ const BarChartCustom = ({
     .filter(item => new Date(item.ts) >= startDate) 
     .map(item => ({
       timestamp: parseISO(item.ts),
-      [chartYAxisDataKey]: getYAxisDataPoint(item),
+      [chartYAxisDataKey]: getYAxisDataPoint(item, apyPeriod),
     }));
 
   const latestValue = data.length > 0
     ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
     : '';
-    console.log(data)
+  
+  const handleApyPeriodChange = (period) => {
+    setApyPeriod(period);
+    setShowSettings(false);
+  };
+  
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);
@@ -250,16 +258,41 @@ const BarChartCustom = ({
           </BarChart>
         </ResponsiveContainer>
       </div>
+     
       <div className={styles.chartFooter}>
-        <div className={styles.chartIcons}>
+        <div className={styles.chartIconsLeft}>
           <div
             className={`${styles.chartIcon}`}
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            <FontAwesomeIcon icon={faCog} />
+          </div>
+          {showSettings && (
+            <div className={styles.settingsMenu}>
+              <div
+                className={`${styles.settingsOption} ${apyPeriod === '7d' ? styles.active : ''}`}
+                onClick={() => handleApyPeriodChange('7d')}
+              >
+                7d
+              </div>
+              <div
+                className={`${styles.settingsOption} ${apyPeriod === '28d' ? styles.active : ''}`}
+                onClick={() => handleApyPeriodChange('28d')}
+              >
+                28d
+              </div>
+            </div>
+          )}
+        </div>
+        <div className={styles.chartIconsRight}>
+          <div
+            className={`${styles.chartIcon} ${styles.active}`}
             onClick={() => onChartTypeChange('line')}
           >
             <FontAwesomeIcon icon={faChartLine} />
           </div>
           <div
-            className={`${styles.chartIcon} ${styles.active}`}
+            className={`${styles.chartIcon}`}
             onClick={() => onChartTypeChange('bar')}
           >
             <FontAwesomeIcon icon={faChartBar} />

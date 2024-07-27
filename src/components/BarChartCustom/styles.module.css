@@ -86,40 +86,6 @@
   font-weight: 300;
 }
 
-.chartFooter {
-  width: 100%;
-  height: 40px;
-  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0;
-}
-
-.chartIcons {
-  display: flex;
-  margin: 0;
-}
-
-.chartIcon {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.chartIcon svg {
-  color: var(--border-and-line-colour);
-  transition: color 0.2s ease;
-}
-
-.chartIcon:hover svg {
-  color: var(--title-colour);
-}
-
-.chartIcon.active svg {
-  color: var(--title-colour);
-}
-
 .legend {
   display: flex;
   justify-content: flex-start;
@@ -143,4 +109,107 @@
 .legendText {
   font-size: var(--font-size-supporting);
   color: var(--supporting-text-colour);
+}
+
+
+.chartFooter {
+  width: 100%;
+  height: 40px;
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--block-group-padding-internal);
+  position: relative;
+}
+
+.chartIconsLeft, .chartIconsRight {
+  display: flex;
+  align-items: center;
+}
+
+.chartIcon {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.chartIcon svg {
+  color: var(--border-and-line-colour);
+  transition: color 0.2s ease;
+}
+
+.chartIcon:hover svg {
+  color: var(--title-colour);
+}
+
+.chartIcon.active svg {
+  color: var(--title-colour);
+}
+
+.customLabel {
+  background-color: var(--charts-background-colour);
+  border: 1px solid var(--charts-border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 4px 8px;
+  font-size: var(--charts-title-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.athLabel {
+  color: var(--green-500);
+}
+
+.atlLabel {
+  color: var(--magenta-500);
+}
+
+.labelText {
+  margin-bottom: 2px;
+}
+
+.statDelta {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-supporting);
+}
+
+.icon {
+  margin-right: 2px;
+}
+
+.positive {
+  color: var(--green-500);
+}
+
+.negative {
+  color: var(--magenta-500);
+}
+
+.settingsMenu {
+  position: absolute;
+  left: var(--block-group-padding-internal);
+  bottom: 100%;
+  background-color: var(--navy-800);
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.settingsOption {
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--supporting-text-colour);
+  white-space: nowrap;
+}
+
+.settingsOption:hover,
+.settingsOption.active {
+  color: var(--title-colour);
+  background-color: var(--navy-700);
 }

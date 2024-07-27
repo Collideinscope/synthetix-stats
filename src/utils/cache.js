@@ -1,40 +1,47 @@
-const setInitialStateWithStorage = () => {
-  // set default initial state values
-  const defaultState = {
-      allAPY: [],
-      allTVL: [],
-      allCoreDelegations: [],
-      allPoolRewards: [],
-      allCoreAccountDelegations: [],
-      allPerpStats: [],
-      allPerpAccountStats: [],
-      cumulativeUniqueStakers: {},
-      cumulativePerpsVolume: {},
-      cumulativeUniqueTraders: {},
-      cumulativeExchangeFees: {},
-      cumulativeCollectedFees: {},
-      openInterest: [],
-      summaryDataAPY: {},
-      summaryDataTVL: {},
-      summaryDataPoolRewards: {},
-      summaryDataCoreDelegations: {},
-      summaryDataUniqueStakers: {},
-      summaryDataPerpsVolume: {},
-      summaryDataUniqueTraders: {},
-      summaryDataExchangeFees: {},
-      summaryDataCollectedFees: {},
-      summaryDataOpenInterest: {},
-  };
+export const getCachedData = () => {
+  const cachedData = localStorage.getItem('appState');
+  const cachedTimestamp = localStorage.getItem('appStateTimestamp');
+  const currentTime = new Date().getTime();
+  const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
 
-  // try to get data from local storage first and set it
-  const initialData = localStorage.getItem('appState');
-
-  if (initialData) {  
-    const parsedData = JSON.parse(initialData);
-    return { ...defaultState, ...parsedData };
-  };
-
-  return defaultState;
+  if (cachedData && cachedTimestamp && (currentTime - parseInt(cachedTimestamp) < oneHour)) {
+    return JSON.parse(cachedData);
+  }
+  return null;
 };
 
-export default setInitialStateWithStorage;
+export const setCachedData = (data) => {
+  localStorage.setItem('appState', JSON.stringify(data));
+  localStorage.setItem('appStateTimestamp', new Date().getTime().toString());
+};
+
+export const getInitialState = () => {
+  const defaultState = {
+    allAPY: [],
+    allTVL: [],
+    allCoreDelegations: [],
+    allPoolRewards: [],
+    allCoreAccountDelegations: [],
+    allPerpStats: [],
+    allPerpAccountStats: [],
+    cumulativeUniqueStakers: {},
+    cumulativePerpsVolume: {},
+    cumulativeUniqueTraders: {},
+    cumulativeExchangeFees: {},
+    cumulativeCollectedFees: {},
+    openInterest: [],
+    summaryDataAPY: {},
+    summaryDataTVL: {},
+    summaryDataPoolRewards: {},
+    summaryDataCoreDelegations: {},
+    summaryDataUniqueStakers: {},
+    summaryDataPerpsVolume: {},
+    summaryDataUniqueTraders: {},
+    summaryDataExchangeFees: {},
+    summaryDataCollectedFees: {},
+    summaryDataOpenInterest: {},
+  };
+
+  const cachedData = getCachedData();
+  return cachedData ? { ...defaultState, ...cachedData } : defaultState;
+};
