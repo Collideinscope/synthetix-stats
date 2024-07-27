@@ -16,14 +16,15 @@
 }
 
 .radialContainer {
-  width: 464px !important;
-  min-width: 464px !important;
-}
-
-.genericContainer {
   min-width: 520px;
   max-width: 100%;
   flex: 1 1 560px;
+}
+
+.genericContainer {
+  min-width: 580px;
+  max-width: 100%;
+  flex: 1 1 580px;
 }
 
 .container:hover {
@@ -42,8 +43,8 @@
   }
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
-  .genericContainer {
+@media (max-width: 767px) {
+  .genericContainer, .radialContainer {
     min-width: 464px;
     max-width: 100%;
     flex: 1 1 464px;

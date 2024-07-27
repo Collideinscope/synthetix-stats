@@ -58,22 +58,13 @@ const ChartContainer = ({
         />
       )
 
-  const renderSummaryStatsPanel = chartType === 'radial'
-    ? (
-      <SummaryStatsPanelVertical 
+  const renderSummaryStatsPanel = (
+    <SummaryStatsPanel 
         data={summaryData} 
         metric={metric} 
-      />
-    ) : (
-      <SummaryStatsPanel 
-        data={summaryData} 
-        metric={metric} 
+        chartType={chartType}
       />
     );
-
-  const verticalSummaryPanelClass = chartType === 'radial'
-    ? 'verticalSummary'
-    : '';
 
   const containerClass = chartType === 'radial'
     ? 'radialContainer'
@@ -81,7 +72,7 @@ const ChartContainer = ({
 
   return (
     <div 
-      className={`${styles.container} ${styles[verticalSummaryPanelClass]} ${styles[containerClass]}`}
+      className={`${styles.container} ${styles[containerClass]}`}
     >
       {renderSummaryStatsPanel}
       {renderChart}

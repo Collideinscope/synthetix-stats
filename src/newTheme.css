@@ -1,0 +1,252 @@
+:root {
+  /* COLOURS */
+
+  /* Pink */
+  --pink-900: #4E0055;
+  --pink-800: #6E0077;
+  --pink-700: #8D0099;
+  --pink-600: #BE02CE;
+  --pink-500: #EE2EFF;
+  --pink-400: #EB46FF;
+  --pink-300: #F471FF;
+  --pink-200: #F583FF;
+  --pink-100: #F9B6FF;
+  --pink-50: #FDE8FF;
+
+  /* Purple */
+  --purple-900: #10104E;
+  --purple-800: #1D1084;
+  --purple-700: #2D1EA6;
+  --purple-600: #402FC8;
+  --purple-500: #5744EA;
+  --purple-400: #6B59FF;
+  --purple-300: #8D7EFF;
+  --purple-200: #AEA4FF;
+  --purple-100: #CFC9FF;
+  --purple-50: #F0EEFF;
+
+  /* Cyan */
+  --cyan-900: #004B5C;
+  --cyan-800: #006D85;
+  --cyan-700: #008EAD;
+  --cyan-600: #00B0D6;
+  --cyan-500: #00D1FF;
+  --cyan-400: #2ED9FF;
+  --cyan-300: #5CE1FF;
+  --cyan-200: #8AEAFF;
+  --cyan-100: #B7F2FF;
+  --cyan-50: #E5FAFF;
+
+  /* Blue */
+  --blue-900: #012546;
+  --blue-800: #073968;
+  --blue-700: #11508A;
+  --blue-600: #1F68AC;
+  --blue-500: #3182CE;
+  --blue-400: #479EF0;
+  --blue-300: #73BBFF;
+  --blue-200: #9CCFFF;
+  --blue-100: #C4E2FF;
+  --blue-50: #EDF6FF;
+
+  /* Teal */
+  --teal-900: #1D4044;
+  --teal-800: #234E52;
+  --teal-700: #285E61;
+  --teal-600: #2C7A7B;
+  --teal-500: #319795;
+  --teal-400: #38B2AC;
+  --teal-300: #4FD1C5;
+  --teal-200: #81E6D9;
+  --teal-100: #B2F5EA;
+  --teal-50: #E6FFFA;
+
+  /* Green */
+  --green-900: #015037;
+  --green-800: #077250;
+  --green-700: #11946B;
+  --green-600: #2BD39F;
+  --green-500: #34EDB3;
+  --green-400: #47FAC2;
+  --green-300: #72FFD3;
+  --green-200: #9AE6B4;
+  --green-100: #C3FFEC;
+  --green-50: #EDFFF9;
+
+  /* Yellow */
+  --yellow-900: #55430D;
+  --yellow-800: #776017;
+  --yellow-700: #B5932B;
+  --yellow-600: #EAD516;
+  --yellow-500: #FAE527;
+  --yellow-400: #FFF458;
+  --yellow-300: #FFF889;
+  --yellow-200: #FFF5A8;
+  --yellow-100: #FFF2CA;
+  --yellow-50: #FFFBEF;
+
+  /* Orange */
+  --orange-900: #522100;
+  --orange-800: #743002;
+  --orange-700: #96420A;
+  --orange-600: #DC732D;
+  --orange-500: #FC8738;
+  --orange-400: #FF9A54;
+  --orange-300: #FFA365;
+  --orange-200: #FFBE92;
+  --orange-100: #FFD8BE;
+  --orange-50: #FFF3EB;
+
+  /* Red */
+  --red-900: #63171B;
+  --red-800: #822727;
+  --red-700: #9B2C2C;
+  --red-600: #C53030;
+  --red-500: #E4364B;
+  --red-400: #FF4A60;
+  --red-300: #FF7384;
+  --red-200: #FF9BA7;
+  --red-100: #FFC4CB;
+  --red-50: #FFEDEF;
+
+  /* Gray */
+  --gray-900: #424251;
+  --gray-800: #575768;
+  --gray-700: #6C6C7E;
+  --gray-600: #828295;
+  --gray-500: #9999AC;
+  --gray-400: #B0B0C2;
+  --gray-300: #C9C9D9;
+  --gray-200: #E2E2F0;
+  --gray-100: #F5F5FF;
+  --gray-50: #FEFEFF;
+
+  /* Black Alpha */
+  --blackAlpha-900: rgba(0, 0, 0, 0.92);
+  --blackAlpha-800: rgba(0, 0, 0, 0.80);
+  --blackAlpha-700: rgba(0, 0, 0, 0.64);
+  --blackAlpha-600: rgba(0, 0, 0, 0.48);
+  --blackAlpha-500: rgba(0, 0, 0, 0.36);
+  --blackAlpha-400: rgba(0, 0, 0, 0.24);
+  --blackAlpha-300: rgba(0, 0, 0, 0.16);
+  --blackAlpha-200: rgba(0, 0, 0, 0.08);
+  --blackAlpha-100: rgba(0, 0, 0, 0.06);
+  --blackAlpha-50: rgba(0, 0, 0, 0.04);
+
+  /* White Alpha */
+  --whiteAlpha-900: rgba(255, 255, 255, 0.92);
+  --whiteAlpha-800: rgba(255, 255, 255, 0.80);
+  --whiteAlpha-700: rgba(255, 255, 255, 0.64);
+  --whiteAlpha-600: rgba(255, 255, 255, 0.48);
+  --whiteAlpha-500: rgba(255, 255, 255, 0.36);
+  --whiteAlpha-400: rgba(255, 255, 255, 0.24);
+  --whiteAlpha-300: rgba(255, 255, 255, 0.16);
+  --whiteAlpha-200: rgba(255, 255, 255, 0.08);
+  --whiteAlpha-100: rgba(255, 255, 255, 0.06);
+  --whiteAlpha-50: rgba(255, 255, 255, 0.04);
+
+  /* Black & White */
+  --white: #FFFFFF;
+  --black: #000000;
+
+  /* Navy */
+  --navy-900: #06061B;
+  --navy-800: #0A0A25;
+  --navy-700: #0B0B22;
+  --navy-600: #0E052F;
+  --navy-500: #150942;
+  --navy-400: #1F0777;
+  --navy-300: #2F1298;
+  --navy-200: #3719A6;
+  --navy-100: #401FB7;
+  --navy-50: #522ED1;
+
+  /* Gradients */
+  --gradient-pink-purple-600: linear-gradient(to top right, var(--pink-600), var(--purple-600));
+  --gradient-green-cyan-700: linear-gradient(to top right, var(--green-700), var(--cyan-700));
+  --gradient-pink-purple-700: linear-gradient(to top right, var(--pink-700), var(--purple-700));
+  --gradient-green-cyan-orange: linear-gradient(to top right, var(--green-600), var(--cyan-600), var(--orange-500), var(--orange-300));
+  --gradient-navy-purple: linear-gradient(to bottom, var(--navy-800), var(--purple-800));
+  --gradient-navy: linear-gradient(to bottom, var(--navy-800), var(--navy-500));
+  --gradient-green-cyan: linear-gradient(to top right, var(--green-500), var(--cyan-500));
+  --gradient-pink-purple: linear-gradient(to top right, var(--pink-500), var(--purple-500));
+  --gradient-pink-cyan: linear-gradient(to right, var(--pink-500), var(--cyan-500));
+
+  /* FONT & STYLING */
+
+  /* Typography */
+  --font-family-heading: 'Inter', sans-serif;
+  --font-family-body: 'Inter', sans-serif;
+
+  /* Font Sizes */
+  --font-size-h1: 36px;
+  --font-size-sub-heading: 24px;
+  --font-size-copy: 16px;
+  --font-size-supporting: 12px;
+  --font-size-small-details: 10px;
+
+  /* Spacing */
+  --space-block: 8px;
+
+  /* Borders and Radii */
+  --border-radius-sm: 6px;
+  --border-width-normal: 1px;
+  --border-colour-default: var(--gray-900);
+
+  /* LAYOUT */
+
+  /* Primary Containers - main */
+  --primary-container-margin-top: 48px;
+  --primary-container-margin-bottom: 64px;
+
+  /* Secondary Containers */
+  --secondary-container-margin-between: 24px;
+
+  /* Blocks */
+  --block-margin-between: 24px;
+  --block-margin-internal: 16px;
+  --block-group-margin-internal: 12px;
+  --block-group-margin-minimum: 8px;
+
+  --block-padding-between: 24px;
+  --block-padding-internal: 16px;
+  --block-group-padding-internal: 12px;
+  --block-group-padding-minimum: 8px;
+
+  /* Breakpoints */
+  --2xl: 1536px;
+  --xl: 1280px;
+  --lg: 992px;
+  --md: 768px;
+  --sm: 480px;
+
+  /* APPLIED COLOURS */
+  
+  --title-colour: var(--gray-50);
+  --supporting-text-colour: var(--gray-500);
+  --main-cta-colour: var(--gradient-green-cyan);
+  --link-and-button-colour: var(--cyan-500);
+  --border-and-line-colour: var(--gray-900);
+  --container-colour: var(--navy-700);
+
+  /* CHARTS */
+
+  /* spacing */
+  --charts-margin-between-groups: 40px;
+  --charts-margin-between-blocks: 16px;
+  --charts-padding-inside-containers: 24px;
+
+  /* colours */
+  --charts-title-colour: var(--gray-50);
+  --charts-supporting-colour: var(--gray-500);
+  --charts-border-and-line-colour: var(--gray-900);
+  --charts-background-colour: var(--navy-800);
+  --charts-container-colour: var(--navy-700);
+  --charts-main-cta-colour: var(--gradient-green-cyan);
+  --charts-link-and-button-colour: var(--gray-50);
+
+  /* sizes */
+  --charts-title-primary: 36px;
+  --charts-title-secondary: 14px;
+  --charts-figure-amount: 24px;
+}

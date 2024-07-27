@@ -83,23 +83,23 @@ const RadialChart = ({
       displayValue = `${valueAndSymbolSVG(ath)}`;
       delta = renderDelta(ath_percentage); 
       x = cx;
-      y = cy - 160;
+      y = cy - 148;
       anchor = "start";
       lineX1 = cx;
-      lineY1 = cy - 140;
+      lineY1 = cy - 138;
       lineX2 = cx;
-      lineY2 = cy - 150;
+      lineY2 = cy - 128;
     } else if (value === 0) {
       displayLabel = 'ATL';
       displayValue = `${valueAndSymbolSVG(atl)}`;
       delta = renderDelta(atl_percentage); 
       x = cx;
-      y = cy + 160;
+      y = cy + 146;
       anchor = "start";
       lineX1 = cx;
-      lineY1 = cy + 140;
+      lineY1 = cy + 126;
       lineX2 = cx;
-      lineY2 = cy + 150;
+      lineY2 = cy + 136;
     } else {
       return null;
     }
@@ -170,21 +170,21 @@ const RadialChart = ({
         </div>
       </div>
       <div className={styles.radialChartWrapper}>
-        <div className={styles.centerBubble}>
-          <span className={styles.centerValue}>{valueAndSymbol(latestValue)}</span>
-          <p className={styles.latestValueDate}>
-            {format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')}
-          </p>
-        </div>
-        <ResponsiveContainer width="100%" height={393.5}>
+        <div className={styles.radialChartInner}>
+          <div className={styles.centerBubble}>
+            <span className={styles.centerValue}>{valueAndSymbol(latestValue)}</span>
+            <p className={styles.latestValueDate}>
+              {format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')}
+            </p>
+          </div>
           <RadialBarChart
             width={300}
-            height={393.5}
-            cx="45%"
-            cy="45%"
-            innerRadius={120}
-            outerRadius={140}
-            barSize={24}
+            height={366.58}
+            cx="55%"
+            cy="50%"
+            innerRadius={110}
+            outerRadius={160}
+            barSize={16}
             data={formattedData}
             startAngle={-90}
             endAngle={90}
@@ -211,17 +211,17 @@ const RadialChart = ({
               stroke="var(--charts-border-and-line-colour)"
               strokeWidth={1}
             />
-            <path
-              d={`
-                M ${300 / 2 + 17} ${300 / 2 - 140 + 26}
-                A 140 140 0 0 1 ${300 / 2 + 15} ${300 / 2 + 140 + 26}
-              `}
-              fill="none"
-              stroke="var(--charts-border-and-line-colour)"
-              strokeWidth={1}
-            />
+<path
+  d={`
+    M ${300 * 0.55} ${300 / 2 - 95}
+    A 100 100 0 0 1 ${300 * 0.55} ${300 / 2 + 160}
+  `}
+  fill="none"
+  stroke="var(--charts-border-and-line-colour)"
+  strokeWidth={1}
+/>
           </RadialBarChart>
-        </ResponsiveContainer>
+        </div>
       </div>
       <div className={styles.chartFooter}>
         <div className={styles.chartIcons}>
