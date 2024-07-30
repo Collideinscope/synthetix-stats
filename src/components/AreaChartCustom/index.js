@@ -33,7 +33,7 @@ const AreaChartCustom = ({
     },
     pool: {
       active: pool,
-      options: ['1', 'all'],
+      options: [1, 'all'],
     }, 
     collateral_type: {
       active: collateral_type,

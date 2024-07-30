@@ -1,106 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
-
 import FILTER_TYPES from '../../constants/filters';
 
-const ViewOptionsContainer = ({
-  filters,
-  handleFilterChange,
-}) => {
+const ViewOptionsContainer = ({ filters, handleFilterChange }) => {
+  const [openFilterMenu, setOpenFilterMenu] = useState(null);
 
-  const [filterToggles, setFilterToggles] = useState(
-    Object.keys(filters).reduce((acc, key) => {
-      acc[key] = false;
-
-      return acc;
-    }, {})
-  );
-
-  const handleToggleFilterSelect = (val) => {
-    setFilterToggles(prevToggles => {
-      return {
-        ...prevToggles,
-        [val]: !prevToggles[val]
-      }
-    })
-  }
+  const handleToggleFilterSelect = (filter) => {
+    setOpenFilterMenu(openFilterMenu === filter ? null : filter);
+  };
 
   const handleOptionSelect = (filter, val) => {
-    setFilterToggles(prevToggles => {
-      return {
-        ...prevToggles,
-        [filter]: !prevToggles[filter]
-      }
-    })
-
     handleFilterChange(filter, val);
-  }
+    setOpenFilterMenu(null);
+  };
 
-  const generateDropdownOptionsList = (filter) => {
-    const dropDownItems = FILTER_TYPES[filter]
-      .options
-      .map(option => {
-        return (
-          <li 
+  const renderFilterMenu = (filter) => {
+    const options = FILTER_TYPES[filter].options;
+    return (
+      <div className={styles.filterMenu}>
+        {options.map((option) => (
+          <div 
             key={option.value}
-            className={styles.option} 
-            onClick={(e) => handleOptionSelect(filter, option.value)}
+            className={`${styles.filterOption} ${option.value === filters[filter] ? styles.activeFilterOption : ''}`}
+            onClick={() => handleOptionSelect(filter, option.value)}
           >
             {option.label}
-          </li>
-        );
-      })
-
-    return (
-      <ul className={styles.options}>
-        {dropDownItems}
-      </ul>
-    )
-  }
-
-  const generateDropdowns = () => {
-    const generateDropdownsList = Object 
-      .keys(FILTER_TYPES)
-      .map(key => {
-        const activeSelectClass = filterToggles[key]
-        ? 'activeSelect'
-        : '';
-
-        const dropdownOptionsList = filterToggles[key]
-          ? generateDropdownOptionsList(key)
-          : '';
-
-        return (
-          <div key={key} className={styles.filterItem}>
-            <div 
-              className={`${styles.filterSelect} ${styles[activeSelectClass]}`}
-              onClick={(e) => handleToggleFilterSelect(key)}
-            >
-              {filters[key]}
-            </div>
-            {dropdownOptionsList}
           </div>
-        )
-      })
-
-    return (
-      <div className={styles.filters}>
-        {generateDropdownsList}
-      </div>
-    )
-  }
-
-  const generateFilterPanel = () => {
-    return (
-      <div className={styles.filterPanel}>
-        {generateDropdowns()}
+        ))}
       </div>
     );
-  }
-  
+  };
+
+  const renderFilters = () => {
+    return Object.keys(FILTER_TYPES).map((filter) => {
+      const openFilterClass = openFilterMenu === filter ? styles.openFilterMenu : '';
+
+      return (
+        <div 
+          key={filter}
+          className={styles.filterWrapper}
+          onMouseEnter={() => handleToggleFilterSelect(filter)}
+          onMouseLeave={() => setOpenFilterMenu(null)}
+        >
+          <p className={`${styles.filterSelect} ${openFilterClass}`}>
+            {filters[filter]}
+          </p>
+          {openFilterMenu === filter && renderFilterMenu(filter)}
+        </div>
+      );
+    });
+  };
+
   return (
     <div className={styles.container}>
-      {generateFilterPanel()}
+      <div className={styles.filterPanel}>
+        {renderFilters()}
+      </div>
     </div>
   );
 };

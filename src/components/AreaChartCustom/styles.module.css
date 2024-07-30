@@ -37,7 +37,7 @@
   align-items: center;
   cursor: pointer;
   border: 1px solid var(--border-and-line-colour);
-  background: var(--navy-900);
+  background: var(--navy-700);
   width: 60px;
   height: 29.5px;
   display: flex;
@@ -218,6 +218,7 @@
 .filterOption:hover,
 .activeFilterOption {
   color: var(--title-colour);
+  background: var(--navy-700);
 }
 
 .openFilterMenu {
