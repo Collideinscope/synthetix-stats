@@ -27,6 +27,10 @@ const ChartContainer = ({
     setChartType(newType);
   };
 
+  const handleFilterChange = (type, option) => {
+    console.log('filter changed', type, option);
+  }
+
   const renderChart = chartType === 'bar' 
     ? (
       <BarChartCustom
@@ -55,6 +59,7 @@ const ChartContainer = ({
           collateral_type={collateral_type}
           showFilters={showFilters}
           onChartTypeChange={handleChartTypeChange}
+          onFilterChange={handleFilterChange}
         />
       )
 

@@ -20,6 +20,8 @@
 
 .titleMeta {
   display: flex;
+  position: relative;
+  align-items: flex-start;
 }
 
 .symbol {
@@ -41,6 +43,7 @@
   display: flex;
   justify-content: center;
   padding: 5px;
+  box-sizing: border-box;
 }
 
 .chartSubtitle:nth-child(2) {
@@ -185,3 +188,44 @@
   color: var(--title-colour);
   background-color: var(--navy-700);
 }
+
+.filterMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--navy-900);
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  padding: var(--block-group-padding-minimum);
+  width: 100%;
+  padding: 0;
+}
+
+.filterOption {
+  padding: 8px;
+  cursor: pointer;
+  color: var(--supporting-text-colour);
+  font-size: var(--font-size-supporting);
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  width: 100%;
+}
+
+.filterOption:hover,
+.activeFilterOption {
+  color: var(--title-colour);
+}
+
+.openFilterMenu {
+  color: var(--link-and-button-colour);
+}
+
+.filterWrapper {
+  position: static;
+  display: inline-block; 
+}
+

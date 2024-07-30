@@ -17,6 +17,7 @@ const AreaChartCustom = ({
     collateral_type,
     showFilters,
     onChartTypeChange,  
+    onFilterChange
   }) => {
   const [highlightValue, setHighlightValue] = useState(null);
   
@@ -24,6 +25,21 @@ const AreaChartCustom = ({
 
   const [showSettings, setShowSettings] = useState(false);
   const [apyPeriod, setApyPeriod] = useState('28d');
+  const [openFilterMenu, setOpenFilterMenu] = useState(null);
+  const [filterOptions, setFilterOptions] = useState({
+    chain: {
+      active: chain,
+      options: ['base', 'ethereum', 'all'],
+    },
+    pool: {
+      active: pool,
+      options: ['1', 'all'],
+    }, 
+    collateral_type: {
+      active: collateral_type,
+      options: ['USDC', 'ALL']
+    },
+  });
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -211,14 +227,62 @@ const AreaChartCustom = ({
     return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
+  const renderFilterMenu = (filterType) => {
+    const renderFilterOptions = filterOptions[openFilterMenu].options
+      .map(option => {
+          const activeFilterOption = option === filterOptions[openFilterMenu].active
+            ? 'activeFilterOption'
+            : '';
+
+          return (
+            <div 
+              key={option}
+              className={`${styles.filterOption} ${styles[activeFilterOption]}`}
+              onClick={() => onFilterChange(filterType, option)}
+            >
+              {option}
+            </div>
+          );
+      });
+
+    return (
+      <div className={styles.filterMenu}>
+        {renderFilterOptions}
+      </div>
+    );
+  }
+
   const renderFilters = () => {
     if (!showFilters) return null;
 
+    const filterTypeElements = ['chain', 'pool', 'collateral_type']
+      .map((filterType) => {
+        const openFilterClass = openFilterMenu === filterType 
+          ? styles.openFilterMenu 
+          : '';
+
+        const filterMenu = openFilterMenu === filterType 
+          ? renderFilterMenu(filterType)
+          : '';
+
+        return (
+          <div 
+            key={filterType}
+            className={styles.filterWrapper}
+            onMouseEnter={() => setOpenFilterMenu(filterType)}
+            onMouseLeave={() => setOpenFilterMenu(null)}
+          >
+            <p className={`${styles.chartSubtitle} ${openFilterClass}`}>
+              {filterOptions[filterType].active}
+            </p>
+            {filterMenu}
+          </div>
+        );
+      });
+
     return (
       <div className={styles.titleMeta}>
-        <p className={styles.chartSubtitle}>{chain}</p>
-        <p className={styles.chartSubtitle}>{pool}</p>
-        <p className={styles.chartSubtitle}>{collateral_type}</p>
+        {filterTypeElements}
       </div>
     );
   }
