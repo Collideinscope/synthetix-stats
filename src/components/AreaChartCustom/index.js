@@ -38,7 +38,7 @@ const AreaChartCustom = ({
     }, 
     collateral_type: {
       active: collateral_type,
-      options: ['USDC', 'ALL']
+      options: ['USDC', 'all']
     },
   });
 
