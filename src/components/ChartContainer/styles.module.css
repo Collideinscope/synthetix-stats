@@ -16,9 +16,9 @@
 }
 
 .radialContainer {
-  min-width: 520px;
+  min-width: 580px;
   max-width: 100%;
-  flex: 1 1 560px;
+  flex: 1 1 580px;
 }
 
 .genericContainer {

@@ -116,15 +116,14 @@
   height: 40px;
   border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 0 var(--block-group-padding-internal);
   position: relative;
 }
 
-.chartIconsLeft, .chartIconsRight {
+.chartIconsRight {
   display: flex;
-  align-items: center;
 }
 
 .chartIcon {

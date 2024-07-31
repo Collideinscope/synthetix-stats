@@ -233,30 +233,6 @@ const RadialChart = ({
         </div>
       </div>
       <div className={styles.chartFooter}>
-        <div className={styles.chartIconsLeft}>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => setShowSettings(!showSettings)}
-          >
-            <FontAwesomeIcon icon={faCog} />
-          </div>
-          {showSettings && (
-            <div className={styles.settingsMenu}>
-              <div
-                className={`${styles.settingsOption} ${apyPeriod === '7d' ? styles.active : ''}`}
-                onClick={() => handleApyPeriodChange('7d')}
-              >
-                7d
-              </div>
-              <div
-                className={`${styles.settingsOption} ${apyPeriod === '28d' ? styles.active : ''}`}
-                onClick={() => handleApyPeriodChange('28d')}
-              >
-                28d
-              </div>
-            </div>
-          )}
-        </div>
         <div className={styles.chartIconsRight}>
           <div
             className={`${styles.chartIcon}`}
