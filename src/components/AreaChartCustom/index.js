@@ -17,7 +17,8 @@ const AreaChartCustom = ({
     collateral_type,
     showFilters,
     onChartTypeChange,  
-    onFilterChange
+    onFilterChange,
+    containerWidth,
   }) => {
   const [highlightValue, setHighlightValue] = useState(null);
   
@@ -54,6 +55,18 @@ const AreaChartCustom = ({
     smoothData,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[metric], chain);
+
+  const getTitleSize = () => {
+    return containerWidth < 564 
+      ? '16px'
+      : '24px';
+  };
+
+  const getLatestValueSize = () => {
+    return containerWidth < 564 
+      ? '24px'
+      : '36px';
+  };
 
   const startDate = new Date(
     dataStartDate
@@ -291,10 +304,15 @@ const AreaChartCustom = ({
     <li className={styles.container}>
       <div className={styles.chartHeader}>
         <div className={styles.titleContainer}>
-          <h3 className={styles.chartTitle}>{chartTitle}</h3>
+          <h3 
+            className={styles.chartTitle}
+            style={{ fontSize: getTitleSize() }}
+          >
+            {chartTitle}
+          </h3>
           {renderFilters()}
         </div>
-        <p className={styles.latestValue}>
+        <p className={styles.latestValue} style={{ fontSize: getLatestValueSize() }}>
           {valueAndSymbol(highlightValue)}
           <p className={styles.latestValueDate}>
             {latestValueDate}

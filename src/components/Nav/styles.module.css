@@ -111,3 +111,11 @@ nav {
     display: none;
   }
 }
+
+@media (max-width: 767px) {
+
+  .subNav {
+    font-size: var(--font-size-copy);
+  }
+
+}

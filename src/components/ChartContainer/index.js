@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 
 import { GlobalContext } from '../../context/GlobalContext';
@@ -22,6 +22,21 @@ const ChartContainer = ({
   const summaryDataKey = METRIC_METADATA[metric].summaryDataKey;
   const summaryData = state[summaryDataKey];
   const [chartType, setChartType] = useState('line');
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth(); 
+    window.addEventListener('resize', updateWidth);
+
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   const handleChartTypeChange = (newType) => {
     setChartType(newType);
@@ -40,6 +55,7 @@ const ChartContainer = ({
         collateral_type={collateral_type}
         showFilters={showFilters}
         onChartTypeChange={handleChartTypeChange}
+        containerWidth={containerWidth}
       />
     ) : chartType === 'radial' 
       ? (
@@ -50,6 +66,7 @@ const ChartContainer = ({
           collateral_type={collateral_type}
           showFilters={showFilters}
           onChartTypeChange={handleChartTypeChange}
+          containerWidth={containerWidth}
         />
       ) : (
         <AreaChartCustom 
@@ -60,6 +77,7 @@ const ChartContainer = ({
           showFilters={showFilters}
           onChartTypeChange={handleChartTypeChange}
           onFilterChange={handleFilterChange}
+          containerWidth={containerWidth}
         />
       )
 
@@ -77,6 +95,7 @@ const ChartContainer = ({
 
   return (
     <div 
+      ref={containerRef}
       className={`${styles.container} ${styles[containerClass]}`}
     >
       {renderSummaryStatsPanel}

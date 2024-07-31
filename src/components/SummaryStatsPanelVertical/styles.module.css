@@ -1,6 +1,6 @@
 .container {
-  width: 120px !important;
-  height: 534px !important;
+  width: 105px !important;
+  height: 420px !important;
   padding: var(--block-padding-internal) 0;
   background-color: var(--navy-900);
   border-right: 1px solid var(--border-and-line-colour);
@@ -10,13 +10,6 @@
   align-items: center;
   justify-content: space-around;
   letter-spacing: 1px;
-}
-
-.statsGroup {
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  justify-content: flex-start;
 }
 
 .icon {
@@ -29,7 +22,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-
+  margin: var(--block-group-padding-minimum) 0;
 }
 
 .statLabel {
@@ -39,7 +32,7 @@
 }
 
 .statValue {
-  font-size: var(--charts-title-secondary);
+  font-size: var(--font-size-supporting);
   display: flex;
   justify-content: center;
   margin-top: var(--block-group-margin-minimum);
@@ -56,5 +49,15 @@
 }
 
 .negative {
-  color: var(--pink-600);
+  color: var(--red-500);
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: 100px !important;
+  }
+  
+  .statItem {
+    margin: 2px 0;
+  }
 }
