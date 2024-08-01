@@ -1,5 +1,6 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
+
+import React, { useContext, useState, useRef, useEffect } from 'react';
 
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';

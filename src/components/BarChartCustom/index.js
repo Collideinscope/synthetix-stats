@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
 import styles from './styles.module.css';
+
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';

@@ -1,5 +1,7 @@
-import React from 'react';
 import styles from './styles.module.css';
+
+import React from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 

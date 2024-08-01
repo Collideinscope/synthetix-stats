@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import styles from './styles.module.css';
+
+import React, { useState } from 'react';
 import FILTER_TYPES from '../../constants/filters';
 
 const ViewOptionsContainer = ({ filters, handleFilterChange }) => {

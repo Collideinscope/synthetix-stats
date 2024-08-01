@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
+
+import React, { useState, useContext, useEffect, useRef } from 'react';
 
 import { GlobalContext } from '../../context/GlobalContext';
 

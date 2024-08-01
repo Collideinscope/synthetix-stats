@@ -1,8 +1,8 @@
-import React from 'react';
 import styles from './styles.module.css';
 
-import ChartContainer from '../ChartContainer';
+import React from 'react';
 
+import ChartContainer from '../ChartContainer';
 import { METRIC_METADATA } from '../../constants/metrics';
 
 const MultiPanel = ({ filters, category, metric }) => {

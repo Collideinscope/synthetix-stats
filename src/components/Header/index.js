@@ -1,7 +1,7 @@
+import styles from './styles.module.css';
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import styles from './styles.module.css';
 
 import synthetix_stats from '../../assets/synthetix_stats.svg'; 
 

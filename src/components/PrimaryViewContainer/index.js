@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
+
+import React, { useState, useEffect } from 'react';
 
 import ViewOptionsContainer from '../ViewOptionsContainer';
 import TableContainer from '../TableContainer';

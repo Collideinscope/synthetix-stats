@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
 import styles from './styles.module.css';
+
+import React, { useContext, useState, useEffect } from 'react';
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';
