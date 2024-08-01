@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar, faCog, faExpand, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -26,7 +26,7 @@ const AreaChartCustom = ({
   const { state } = useContext(GlobalContext);
 
   const [showSettings, setShowSettings] = useState(false);
-  const [apyPeriod, setApyPeriod] = useState('28d');
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const [openFilterMenu, setOpenFilterMenu] = useState(null);
   const [filterOptions, setFilterOptions] = useState({
     chain: {
@@ -57,6 +57,11 @@ const AreaChartCustom = ({
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[metric], chain);
 
+  const toggleFullScreen = () => {
+    console.log(isFullScreen)
+    setIsFullScreen(!isFullScreen);
+  };
+
   const getTitleSize = () => {
     return containerWidth < 564 
       ? '16px'
@@ -82,7 +87,7 @@ const AreaChartCustom = ({
     .map(item => {
       return {
         timestamp: parseISO(item.ts),
-        [chartYAxisDataKey]: getYAxisDataPoint(item, apyPeriod),
+        [chartYAxisDataKey]: getYAxisDataPoint(item),
       }
     });
 
@@ -94,11 +99,6 @@ const AreaChartCustom = ({
     ? format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')
     : '';
   
-  const handleApyPeriodChange = (period) => {
-    setApyPeriod(period);
-    setShowSettings(false);
-  };
-
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);
@@ -301,82 +301,107 @@ const AreaChartCustom = ({
     );
   }
 
-  return (
-    <li className={styles.container}>
-      <div className={styles.chartHeader}>
-        <div className={styles.titleContainer}>
-          <h3 
-            className={styles.chartTitle}
-            style={{ fontSize: getTitleSize() }}
-          >
-            {chartTitle}
-          </h3>
-          {renderFilters()}
-        </div>
-        <p className={styles.latestValue} style={{ fontSize: getLatestValueSize() }}>
-          {valueAndSymbol(highlightValue)}
-          <p className={styles.latestValueDate}>
-            {latestValueDate}
-          </p>
-        </p>
+  const fullScreenClass = isFullScreen 
+    ? 'fullScreen'
+    : '';
+
+  const renderExitFullScreen = isFullScreen 
+    ? (
+      <div 
+        className={`${styles.exitFullScreen} ${styles.chartIcon}`} 
+        onClick={toggleFullScreen}
+      >
+        <FontAwesomeIcon icon={faXmark} />
       </div>
-      <div className={styles.chartWrapper}>
-        <ResponsiveContainer width="100%" height={300}>
-          <AreaChart 
-            data={smoothedData} 
-            margin={{ top: 0, right: 30, left: 15, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
-                <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
-              </linearGradient>
-            </defs>
-            <XAxis 
-              dataKey="timestamp" 
-              tickFormatter={formatXAxis} 
-              stroke="var(--charts-supporting-colour)"
-              angle={-45}
-              textAnchor="end"
-              height={60}
-              tick={<CustomTick />}
-              ticks={ticksXAxis}
-              padding={{ bottom: 10 }}
-            />
-            <YAxis 
-              domain={[0, yAxisUpperLimit]}
-              tickFormatter={formatYAxis}
-              stroke="var(--charts-supporting-colour)"
-              tick={{fontSize: 'var(--charts-title-secondary)'}}
-              style={{ fontSize: '12px' }}
-            />
-            <Tooltip 
-              content={<CustomTooltip />}
-              cursor={<CustomCursor />}
-              onMouseMove={(e) => {
-                if (e.activePayload && e.activePayload.length > 0) {
-                  onHighlightValueChange(e.activePayload[0].value);
-                }
-              }}
-            />
-            <Area 
-              type="monotone" 
-              dataKey={chartYAxisDataKey}
-              stroke="var(--cyan-300)" 
-              strokeWidth={2}
-              fillOpacity={0.6}
-              fill="url(#colorAPY)"
-              activeDot={{
-                r: 6,
-                stroke: "var(--cyan-300)",
-                strokeWidth: 2,
-                fill: "var(--charts-background-colour)"
-              }}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+    ) : '';
+
+  return (
+    <li className={`${styles.container} ${styles[fullScreenClass]}`}>
+      {renderExitFullScreen}
+      <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
+        <div className={styles.chartHeader}>
+          <div className={styles.titleContainer}>
+            <h3 
+              className={styles.chartTitle}
+              style={{ fontSize: getTitleSize() }}
+            >
+              {chartTitle}
+            </h3>
+            {renderFilters()}
+          </div>
+          <p className={styles.latestValue} style={{ fontSize: getLatestValueSize() }}>
+            {valueAndSymbol(highlightValue)}
+            <p className={styles.latestValueDate}>
+              {latestValueDate}
+            </p>
+          </p>
+        </div>
+        <div className={`${styles.chartWrapper}`}>
+          <ResponsiveContainer width="100%" height={isFullScreen ? "100%" : 300}>
+            <AreaChart 
+              data={smoothedData} 
+              margin={{ top: 0, right: 30, left: 15, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
+                  <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <XAxis 
+                dataKey="timestamp" 
+                tickFormatter={formatXAxis} 
+                stroke="var(--charts-supporting-colour)"
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                tick={<CustomTick />}
+                ticks={ticksXAxis}
+                padding={{ bottom: 10 }}
+              />
+              <YAxis 
+                domain={[0, yAxisUpperLimit]}
+                tickFormatter={formatYAxis}
+                stroke="var(--charts-supporting-colour)"
+                tick={{fontSize: 'var(--charts-title-secondary)'}}
+                style={{ fontSize: '12px' }}
+              />
+              <Tooltip 
+                content={<CustomTooltip />}
+                cursor={<CustomCursor />}
+                onMouseMove={(e) => {
+                  if (e.activePayload && e.activePayload.length > 0) {
+                    onHighlightValueChange(e.activePayload[0].value);
+                  }
+                }}
+              />
+              <Area 
+                type="monotone" 
+                dataKey={chartYAxisDataKey}
+                stroke="var(--cyan-300)" 
+                strokeWidth={2}
+                fillOpacity={0.6}
+                fill="url(#colorAPY)"
+                activeDot={{
+                  r: 6,
+                  stroke: "var(--cyan-300)",
+                  strokeWidth: 2,
+                  fill: "var(--charts-background-colour)"
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </div>
       <div className={styles.chartFooter}>
+        <div className={styles.chartIconsLeft}>
+          <div
+            className={`${styles.chartIcon}`}
+            onClick={toggleFullScreen}
+          >
+            <FontAwesomeIcon icon={faExpand} />
+          </div>
+        </div>
         <div className={styles.chartIconsRight}>
           <div
             className={`${styles.chartIcon} ${styles.active}`}

@@ -11,6 +11,12 @@
   display: flex;
 }
 
+.chartContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .chartTitle {
   color: var(--charts-title-colour);
   font-size: var(--charts-figure-amount);
@@ -92,13 +98,17 @@
   height: 40px;
   border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 0 var(--block-group-padding-internal);
   position: relative;
 }
 
 .chartIconsRight {
+  display: flex;
+}
+
+.chartIconsLeft {
   display: flex;
 }
 
@@ -227,4 +237,38 @@
 .filterWrapper {
   position: static;
   display: inline-block; 
+}
+
+.fullScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: var(--navy-900);
+  display: flex;
+  flex-direction: column;
+}
+
+.fullScreenChart {
+  flex-grow: 1;
+}
+
+.exitFullScreen {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--title-colour);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.chartWrapper {
+  flex-grow: 1;
+  transition: height 0.3s ease;
+}
+
+.fullScreenChart .recharts-responsive-container {
+  height: 100% !important;
 }

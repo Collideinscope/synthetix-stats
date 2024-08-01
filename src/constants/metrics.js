@@ -9,7 +9,7 @@ const METRIC_METADATA = {
     chartType: 'line',
     chartYValueSymbol: '%',
     dataStartDate: '2024-05-01',
-    chartYAxisDataKey: 'apy_7d',
+    chartYAxisDataKey: 'apy_28d',
     symbolLocation: 'right',
     summaryDataKey: 'summaryDataAPY',
     summaryDataType: '%',
@@ -17,9 +17,8 @@ const METRIC_METADATA = {
     dataChainFilter: (data, chain) => {
       return data.filter(item => item.chain === chain);
     },
-    getYAxisDataPoint: (item, period) => {
-      const apyKey = `apy_${period}`;
-      return item.apys[apyKey].year * 100;
+    getYAxisDataPoint: (item) => {
+      return item.apys['apy_28d'].year * 100;
     },
     yValueFormatter: (val) => {
       return parseFloat(val).toFixed(2);
