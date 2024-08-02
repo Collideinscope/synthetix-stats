@@ -56,4 +56,8 @@
   .statItem {
     margin: 0 2px;
   }
+
+  .statValue {
+    font-size: var(--font-size-small-details);
+  }
 }
