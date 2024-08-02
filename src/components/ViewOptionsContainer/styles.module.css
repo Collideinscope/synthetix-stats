@@ -83,3 +83,14 @@
   color: var(--title-colour);
   background-color: var(--navy-700);
 }
+
+@media (max-width: 767px) {
+  .filterSelect {
+    font-size: var(--font-size-supporting);
+  }
+
+  .filterOption {
+    font-size: var(--font-size-supporting);
+  }
+}
+
