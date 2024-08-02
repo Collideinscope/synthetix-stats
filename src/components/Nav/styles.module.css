@@ -25,7 +25,6 @@ nav {
 .navItem {
   width: 100%;
   text-align: center; 
-  font-weight: bold;
   color: var(--supporting-text-colour);
 }
 
@@ -37,6 +36,7 @@ nav {
   padding: var(--block-padding-between) 0;
   margin: 0;
   border-right: 0;
+  font-weight: bold;
 }
 
 .subNav {
@@ -48,6 +48,7 @@ nav {
   width: 100%;
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
   color: var(--supporting-text-colour);
+  font-weight: normal;
 }
 
 .subNavItem {
