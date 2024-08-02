@@ -25,10 +25,12 @@ nav {
 .navItem {
   width: 100%;
   text-align: center; 
+  font-weight: bold;
+  color: var(--supporting-text-colour);
 }
 
 .navItem:hover .navItemTitle {
-  color: var(--link-and-button-colour);
+  color: var(--title-colour);
 }
 
 .navItemTitle {
@@ -43,9 +45,9 @@ nav {
   justify-content: center;
   align-items: center;
   background: var(--navy-800);
-  font-size: var(--font-size-supporting);
   width: 100%;
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+  color: var(--supporting-text-colour);
 }
 
 .subNavItem {
@@ -80,7 +82,7 @@ nav {
 }
 
 .activeNav {
-  color: var(--link-and-button-colour);
+  color: var(--title-colour);
 }
 
 .activeSubNav .subNavItemTitle {
