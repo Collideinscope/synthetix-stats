@@ -3,11 +3,27 @@ import styles from './styles.module.css';
 import React, { useState, useEffect } from 'react';
 
 import ChartContainer from '../ChartContainer';
+import ViewOptionsContainer from '../ViewOptionsContainer';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import HIGHLIGHTS_METRICS from '../../constants/highlights_metrics';
 
 const HighlightsContainer = () => {
+
+  const [filters, setFilters] = useState({
+    network: 'base',
+    pool: '1',
+    collateralType: 'USDC',
+  });
+
+  const handleFilterChange = (filter, value) => {
+    setFilters(prevFilters => { 
+      return {
+        ...prevFilters, 
+        [filter]: value
+      };
+    })
+  };
 
   const generateChart = (item) => {
     return (
@@ -46,6 +62,10 @@ const HighlightsContainer = () => {
   
   return (
     <div className={styles['container']}>
+      <ViewOptionsContainer 
+        filters={filters}
+        handleFilterChange={handleFilterChange} 
+      />
       {generateHightlightBox()}
     </div>
   );
