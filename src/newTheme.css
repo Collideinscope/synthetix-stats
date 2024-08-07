@@ -226,7 +226,7 @@
   --supporting-text-colour: var(--gray-500);
   --main-cta-colour: var(--gradient-green-cyan);
   --link-and-button-colour: var(--cyan-500);
-  --border-and-line-colour: var(--gray-900);
+  --border-and-line-colour: #1F1F2D;
   --container-colour: var(--navy-700);
 
   /* CHARTS */

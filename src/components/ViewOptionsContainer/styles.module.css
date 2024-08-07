@@ -1,5 +1,5 @@
 .container {
-  background: var(--navy-900);
+  border: 1px solid var(--border-and-line-colour);
   border-radius: var(--border-radius-sm);
   margin: var(--block-margin-between) 0;
   width: calc(100% - 16px);
@@ -7,90 +7,90 @@
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 2px 20px rgba(255, 255, 255, 0.1);
-  transition: box-shadow 0.1s ease;
-  background-color: var(--navy-900);
 }
 
 .filterPanel {
   display: flex;
   justify-content: flex-start;
-  min-width: 350px;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--block-group-margin-internal);
-  padding: 0 var(--block-padding-internal);
+  position: relative;
 }
 
 .filterWrapper {
   position: relative;
   display: inline-block;
+  margin: 0 var(--block-group-margin-minimum);
 }
 
 .filterSelect {
-  color: var(--supporting-text-colour);
+  color: var(--title-colour);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-copy);
-  background-color: var(--navy-800);
-  border: 0;
+  font-size: var(--font-size-supporting);
   border-radius: var(--border-radius-sm);
   padding: 8px 12px;
-  width: 100px;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-}
-
-.openFilterMenu {
-  color: var(--link-and-button-colour);
+  font-weight: bold;
+  width: 150px;
+  border: 1px solid var(--border-and-line-colour);
 }
 
 .filterSelect:hover {
-  border-color: var(--cyan-500);
   color: var(--title-colour);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F7FAFC' d='M6 9L0 3h12z'/%3E%3C/svg%3E");
 }
 
 .filterMenu {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
   background-color: var(--navy-900);
   border: 1px solid var(--border-and-line-colour);
-  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  border-radius: var(--border-radius-sm);
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   z-index: 10;
+  padding: 2px;
   width: 100%;
-  padding: 0;
 }
 
 .filterOption {
   padding: 8px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
-  color: var(--supporting-text-colour);
-  font-size: var(--font-size-copy);
-  white-space: nowrap;
+  color: var(--title-colour);
+  font-size: var(--font-size-supporting);
   transition: background-color 0.2s ease, color 0.2s ease;
   width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
 }
 
-.filterOption:hover,
 .activeFilterOption {
   color: var(--title-colour);
-  background-color: var(--navy-700);
+  font-size: var(--font-size-supporting);
+}
+
+.filterOption:hover {
+  background: var(--whiteAlpha-100);
+}
+
+.selectionBox {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border-and-line-colour);
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+.activeFilterOption .selectionBox {
+  background-color: var(--whiteAlpha-200);
 }
 
 @media (max-width: 767px) {
-  .filterSelect {
-    font-size: var(--font-size-supporting);
-  }
-
-  .filterOption {
+  .filterSelect, .filterOption {
     font-size: var(--font-size-supporting);
   }
 }
-

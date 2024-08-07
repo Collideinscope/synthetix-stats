@@ -1,5 +1,4 @@
 import styles from './styles.module.css';
-
 import React, { useState } from 'react';
 import FILTER_TYPES from '../../constants/filters';
 
@@ -20,11 +19,12 @@ const ViewOptionsContainer = ({ filters, handleFilterChange }) => {
     return (
       <div className={styles.filterMenu}>
         {options.map((option) => (
-          <div 
+          <div
             key={option.value}
             className={`${styles.filterOption} ${option.value === filters[filter] ? styles.activeFilterOption : ''}`}
             onClick={() => handleOptionSelect(filter, option.value)}
           >
+            <div className={styles.selectionBox}></div>
             {option.label}
           </div>
         ))}
@@ -35,16 +35,18 @@ const ViewOptionsContainer = ({ filters, handleFilterChange }) => {
   const renderFilters = () => {
     return Object.keys(FILTER_TYPES).map((filter) => {
       const openFilterClass = openFilterMenu === filter ? styles.openFilterMenu : '';
-
+      const filterLabel = FILTER_TYPES[filter]
+        .options
+        .find(option => option.value === filters[filter]).label;
       return (
-        <div 
+        <div
           key={filter}
           className={styles.filterWrapper}
           onMouseEnter={() => handleToggleFilterSelect(filter)}
           onMouseLeave={() => setOpenFilterMenu(null)}
         >
           <p className={`${styles.filterSelect} ${openFilterClass}`}>
-            {filters[filter]}
+            {filterLabel}
           </p>
           {openFilterMenu === filter && renderFilterMenu(filter)}
         </div>

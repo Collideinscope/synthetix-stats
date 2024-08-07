@@ -24,9 +24,9 @@ const API = {
   /*
     Generalized Fetcher
   */
-  fetchGeneralData: async (endpoint, chain) => {
+  fetchGeneralData: async (endpoint, network) => {
     try {
-      const chainParam = chain ? chain : '';
+      const chainParam = network ? network : '';
       const URL = `${BASE_URL}/${endpoint}/${chainParam}`;
 
       return fetchData(URL);
@@ -39,61 +39,61 @@ const API = {
   /*
     APY
   */
-  fetchLatestAPY: async (chain) => API.fetchGeneralData('apy/latest', chain),
-  fetchAllAPY: async (chain) => API.fetchGeneralData('apy/all', chain),
-  fetchSummaryDataAPY: async (chain) => API.fetchGeneralData('apy/summary', chain),
+  fetchLatestAPY: async (network) => API.fetchGeneralData('apy/latest', network),
+  fetchAllAPY: async (network) => API.fetchGeneralData('apy/all', network),
+  fetchSummaryDataAPY: async (network) => API.fetchGeneralData('apy/summary', network),
 
   /*
     TVL
   */
-  fetchLatestTVL: async (chain) => API.fetchGeneralData('tvl/latest', chain),
-  fetchAllTVL: async (chain) => API.fetchGeneralData('tvl/all', chain),
-  fetchSummaryDataTVL: async (chain) => API.fetchGeneralData('tvl/summary', chain),
+  fetchLatestTVL: async (network) => API.fetchGeneralData('tvl/latest', network),
+  fetchAllTVL: async (network) => API.fetchGeneralData('tvl/all', network),
+  fetchSummaryDataTVL: async (network) => API.fetchGeneralData('tvl/summary', network),
 
   /*
     Core Delegations
   */
-  fetchLatestCoreDelegations: async (chain) => API.fetchGeneralData('core-delegations/latest', chain),
-  fetchAllCoreDelegations: async (chain) => API.fetchGeneralData('core-delegations/all', chain),
-  fetchSummaryDataCoreDelegations: async (chain) => API.fetchGeneralData('core-delegations/summary', chain),
+  fetchLatestCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/latest', network),
+  fetchAllCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/all', network),
+  fetchSummaryDataCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/summary', network),
 
   /*
     Pool Rewards
   */
-  fetchLatestPoolRewards: async (chain) => API.fetchGeneralData('pool-rewards/latest', chain),
-  fetchAllPoolRewards: async (chain) => API.fetchGeneralData('pool-rewards/all', chain),
-  fetchSummaryDataPoolRewards: async (chain) => API.fetchGeneralData('pool-rewards/summary', chain),
+  fetchLatestPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/latest', network),
+  fetchAllPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/all', network),
+  fetchSummaryDataPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/summary', network),
 
   /*
     Core Account Delegations
   */
-  fetchStakerCount: async (chain) => API.fetchGeneralData('core-account-delegations/staker-count', chain),
-  fetchCumulativeUniqueStakers: async (chain) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers', chain),
-  fetchAllCoreAccountDelegations: async (chain) => API.fetchGeneralData('core-account-delegations/all', chain),
+  fetchStakerCount: async (network) => API.fetchGeneralData('core-account-delegations/staker-count', network),
+  fetchCumulativeUniqueStakers: async (network) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers', network),
+  fetchAllCoreAccountDelegations: async (network) => API.fetchGeneralData('core-account-delegations/all', network),
   fetchCoreAccountDelegationsByAccount: async (accountId) => API.fetchGeneralData(`core-account-delegations/account/${accountId}`),
-  fetchCoreAccountDelegationsOrderedByAccount: async (chain) => API.fetchGeneralData('core-account-delegations/ordered-by-account', chain),
-  fetchSummaryDataUniqueStakers: async (chain) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers/summary', chain),
+  fetchCoreAccountDelegationsOrderedByAccount: async (network) => API.fetchGeneralData('core-account-delegations/ordered-by-account', network),
+  fetchSummaryDataUniqueStakers: async (network) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers/summary', network),
 
   /* 
     Perp Stats 
   */
-  fetchLatestPerpStats: async (chain) => API.fetchGeneralData('perp-stats/latest', chain),
-  fetchAllPerpStats: async (chain) => API.fetchGeneralData('perp-stats/all', chain),
-  fetchCumulativePerpsVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume', chain),
-  fetchSummaryDataCumulativePerpsVolume: async (chain) => API.fetchGeneralData('perp-stats/cumulative-volume/summary', chain),
-  fetchCumulativeExchangeFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees', chain),
-  fetchSummaryDataCumulativeExchangeFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees/summary', chain),
-  fetchCumulativeCollectedFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-collected-fees', chain),
-  fetchSummaryDataCumulativeCollectedFees: async (chain) => API.fetchGeneralData('perp-stats/cumulative-collected-fees/summary', chain),
+  fetchLatestPerpStats: async (network) => API.fetchGeneralData('perp-stats/latest', network),
+  fetchAllPerpStats: async (network) => API.fetchGeneralData('perp-stats/all', network),
+  fetchCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/cumulative-volume', network),
+  fetchSummaryDataCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/cumulative-volume/summary', network),
+  fetchCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees', network),
+  fetchSummaryDataCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees/summary', network),
+  fetchCumulativeCollectedFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-collected-fees', network),
+  fetchSummaryDataCumulativeCollectedFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-collected-fees/summary', network),
 
   /* Perp Account Stats */
-  fetchAllPerpAccountStats: async (chain) => API.fetchGeneralData('perp-account-stats/all', chain),
-  fetchCumulativeUniqueTraders: async (chain) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders', chain),
-  fetchSummaryDataCumulativeUniqueTraders: async (chain) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders/summary', chain),
+  fetchAllPerpAccountStats: async (network) => API.fetchGeneralData('perp-account-stats/all', network),
+  fetchCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders', network),
+  fetchSummaryDataCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders/summary', network),
 
   /* Perp Market History */
-  fetchOpenInterest: async (chain) => API.fetchGeneralData('perp-market-history/open-interest', chain),
-  fetchSummaryDataOpenInterest: async (chain) => API.fetchGeneralData('perp-market-history/open-interest/summary', chain),
+  fetchOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest', network),
+  fetchSummaryDataOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/summary', network),
 };
 
 export default API;

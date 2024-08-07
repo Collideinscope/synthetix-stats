@@ -14,7 +14,7 @@ import { METRIC_METADATA } from '../../constants/metrics';
 
 const ChartContainer = ({
   metric,
-  chain,
+  network,
   pool,
   collateral_type,
   showFilters,
@@ -51,7 +51,7 @@ const ChartContainer = ({
     ? (
       <BarChartCustom
         metric={metric}
-        chain={chain}
+        network={network}
         pool={pool}
         collateral_type={collateral_type}
         showFilters={showFilters}
@@ -62,7 +62,7 @@ const ChartContainer = ({
       ? (
         <RadialChart
           metric={metric}
-          chain={chain}
+          network={network}
           pool={pool}
           collateral_type={collateral_type}
           showFilters={showFilters}
@@ -72,7 +72,7 @@ const ChartContainer = ({
       ) : (
         <AreaChartCustom 
           metric={metric}
-          chain={chain}
+          network={network}
           pool={pool}
           collateral_type={collateral_type}
           showFilters={showFilters}

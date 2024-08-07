@@ -13,7 +13,7 @@ import { METRIC_METADATA } from '../../constants/metrics';
 
 const BarChartCustom = ({ 
     metric, 
-    chain,
+    network,
     pool,
     collateral_type,
     showFilters,
@@ -37,7 +37,7 @@ const BarChartCustom = ({
     symbolLocation,
     dataChainFilter,
   } = metricMetadata;
-  const dataChainFiltered = dataChainFilter(state[metric], chain);
+  const dataChainFiltered = dataChainFilter(state[metric], network);
 
   const startDate = new Date(
     dataStartDate
@@ -174,7 +174,7 @@ const BarChartCustom = ({
 
     return (
       <div className={styles.titleMeta}>
-        <p className={styles.chartSubtitle}>{chain}</p>
+        <p className={styles.chartSubtitle}>{network}</p>
         <p className={styles.chartSubtitle}>{pool}</p>
         <p className={styles.chartSubtitle}>{collateral_type}</p>
       </div>

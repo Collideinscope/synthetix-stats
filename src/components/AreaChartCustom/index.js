@@ -13,7 +13,7 @@ import { METRIC_METADATA } from '../../constants/metrics';
 
 const AreaChartCustom = ({ 
     metric, 
-    chain,
+    network,
     pool,
     collateral_type,
     showFilters,
@@ -29,8 +29,8 @@ const AreaChartCustom = ({
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [openFilterMenu, setOpenFilterMenu] = useState(null);
   const [filterOptions, setFilterOptions] = useState({
-    chain: {
-      active: chain,
+    network: {
+      active: network,
       options: ['base', 'ethereum', 'all'],
     },
     pool: {
@@ -55,7 +55,7 @@ const AreaChartCustom = ({
     dataChainFilter,
     smoothData,
   } = metricMetadata;
-  const dataChainFiltered = dataChainFilter(state[metric], chain);
+  const dataChainFiltered = dataChainFilter(state[metric], network);
 
   const toggleFullScreen = () => {
     console.log(isFullScreen)
@@ -269,7 +269,7 @@ const AreaChartCustom = ({
   const renderFilters = () => {
     if (!showFilters) return null;
 
-    const filterTypeElements = ['chain', 'pool', 'collateral_type']
+    const filterTypeElements = ['network', 'pool', 'collateral_type']
       .map((filterType) => {
         const openFilterClass = openFilterMenu === filterType 
           ? styles.openFilterMenu 

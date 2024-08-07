@@ -10,7 +10,7 @@ const IndividualMetricContainer = ({
 }) => {
 console.log(metric)
   const [filters, setFilters] = useState({
-    chain: 'base',
+    network: 'base',
     pool: '1',
     collateralType: 'USDC',
   });

@@ -1,23 +1,22 @@
 const FILTER_TYPES = {
-  'chain': {
-    type: 'chain',
+  'network': {
+    type: 'network',
     options: [
-      { value: 'base', label: 'base' },
-      { value: 'arbitrum', label: 'arbitrum' },
+      { value: 'base', label: 'Base' },
+      { value: 'arbitrum', label: 'Arbitrum' },
+      { value: 'mainnet', label: 'Mainnet' },
     ]
   },
   'pool': {
     type: 'pool',
     options: [
-      { value: '1', label: '1' },
-      { value: '2', label: '2' },
+      { value: '1', label: 'Spartan Council Pool' },
     ]
   },
   'collateralType': {
     type: 'collateralType',
     options: [
       { value: 'USDC', label: 'USDC' },
-      { value: 'ETH', label: 'ETH' },
     ]
   }
 };

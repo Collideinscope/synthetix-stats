@@ -14,7 +14,7 @@ const HighlightsContainer = () => {
       <ChartContainer
         key={item}
         metric={item} 
-        chain={'base'} 
+        network={'base'} 
         pool={1}
         collateral_type={'USDC'}
         showFilters={true}
