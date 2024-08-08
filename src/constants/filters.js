@@ -3,8 +3,6 @@ const FILTER_TYPES = {
     type: 'network',
     options: [
       { value: 'base', label: 'Base' },
-      { value: 'arbitrum', label: 'Arbitrum' },
-      { value: 'mainnet', label: 'Mainnet' },
     ]
   },
   'pool': {
