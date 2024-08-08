@@ -67,7 +67,6 @@ const Header = () => {
   return (
     <header>
       {generateLogo()}
-      {generateSearch()}
       <Nav navOpen={navOpen} />
       {generateNavIcon()}
     </header>
