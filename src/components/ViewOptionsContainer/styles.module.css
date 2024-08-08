@@ -91,7 +91,7 @@
 
 @media (min-width: 768px) and (max-width: 991px) {
   .container {
-    width: calc(100% - 16px);
+    width: calc(100%);
   }
 }
 
@@ -110,5 +110,10 @@
 
   .container {
     width: 100%;
+  }
+
+  .filterPanel {
+    width: 100%;
+    justify-content: space-around;
   }
 }
