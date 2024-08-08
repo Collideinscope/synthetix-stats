@@ -17,6 +17,7 @@ const parseActiveMenuFromPath = (path) => {
 };
 
 const Nav = ({ 
+  navRef,
   navOpen,
  }) => {
   const location = useLocation();
@@ -148,7 +149,7 @@ const Nav = ({
     : 'navClosed';
 
   return (
-    <nav className={`${styles.nav} ${styles[navClosedClass]}`}>
+    <nav ref={navRef} className={`${styles.nav} ${styles[navClosedClass]}`}>
       {generateNav()}
     </nav>
   )

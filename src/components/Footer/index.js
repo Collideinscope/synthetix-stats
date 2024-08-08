@@ -10,7 +10,7 @@ import blue_x from '../../assets/blue-x.svg';
 
 import FOOTER_MENU from '../../constants/footer';
 
-const Footer = () => {
+const Footer = ({ footerRef }) => {
   const renderLink = (route, children) => {
     const isExternal = route.startsWith('http');
     return isExternal ? (
@@ -36,7 +36,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className={styles.footer}>
+    <footer ref={footerRef} className={styles.footer}>
       <div className={styles.footerContent}>
         <div className={styles.footerLinks}>
           {generateFooterLinks()}

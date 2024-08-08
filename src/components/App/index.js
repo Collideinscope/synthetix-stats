@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { globalReducer, globalInitialState } from '../../reducers/globalReducer';
@@ -19,6 +19,8 @@ import { NAV_MENU } from '../../constants';
 
 const App = () => {
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
+  const navRef = useRef(null);
+  const footerRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,6 +114,46 @@ const App = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const handleIntersection = ([entry]) => {
+      if (navRef.current) {
+        if (entry.isIntersecting) {
+          navRef.current.style.position = 'absolute';
+          navRef.current.style.top = '64px';
+        } else {
+          navRef.current.style.position = 'fixed';
+          navRef.current.style.top = '64px';
+          navRef.current.style.bottom = 'initial';
+        }
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null,
+      threshold: 0,
+    });
+
+    const handleResize = () => {
+      if (window.innerWidth > 991) {
+        if (footerRef.current) {
+          observer.observe(footerRef.current);
+        }
+      } else {
+        observer.disconnect();
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
+    };
+  }, []);
+
+
   const generateMetricRoutes = () => {
     const routes = [];
 
@@ -146,7 +188,7 @@ const App = () => {
       <GlobalContext.Provider value={{ state, appDispatch }}>
         <div className={styles['app-container']}>
           <div className={styles.contentWrapper}>
-            <Header />
+            <Header navRef={navRef} />
             <main>
               <Routes>
                 <Route exact path="/" element={<HighlightsContainer />} />
@@ -156,7 +198,7 @@ const App = () => {
               </Routes>
             </main>
           </div>
-          <Footer />
+          <Footer footerRef={footerRef} />
         </div>
       </GlobalContext.Provider>
     </Router>

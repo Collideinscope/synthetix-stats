@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import synthetix_stats from '../../assets/synthetix_stats.svg'; 
+import top_right_arrow from '../../assets/top_right_arrow.svg'; 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faBars } from '@fortawesome/free-solid-svg-icons';
 
 import Nav from '../Nav';
 
-const Header = () => {
+const Header = ({ navRef }) => {
 
   const [navOpen, setNavOpen] = useState(false);
 
@@ -58,9 +59,16 @@ const Header = () => {
 
   const generateStakingButton = () => {
     return (
-      <button className={styles.stakingButton}>
-        Liquidity App
-      </button>
+      <a
+        href="https://liquidity.synthetix.eth.limo/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.stakingLink}
+      >
+        <button className={styles.stakingButton}>
+          Liquidity App ↗
+        </button>
+      </a>
     )
   }
 
@@ -71,7 +79,7 @@ const Header = () => {
         {generateStakingButton()}
         {generateNavIcon()}
       </div>
-      <Nav navOpen={navOpen} />
+      <Nav navRef={navRef} navOpen={navOpen} />
     </header>
   );
 };

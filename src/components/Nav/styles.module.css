@@ -4,13 +4,15 @@ nav {
   align-items: flex-start;
   position: fixed;
   left: 0;
-  top: 72px; 
+  top: 64px; 
   border-bottom: 0;
   border-left: 0;
   width: 184px;
   height: calc(100% - 64px); /* header */
   overflow-y: auto; 
   border-top-right-radius: var(--border-radius-sm);
+  padding-left: 8px;
+  transition: top 0.3s ease, bottom 0.3s ease, position 0.3s ease;
 }
 
 .navList {
