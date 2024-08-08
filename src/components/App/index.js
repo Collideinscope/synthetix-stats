@@ -7,6 +7,7 @@ import { globalReducer, globalInitialState } from '../../reducers/globalReducer'
 import { GlobalContext } from '../../context/GlobalContext';
 
 import Header from '../Header';
+import Footer from '../Footer';
 import HighlightsContainer from '../HighlightsContainer';
 import AggregatedDataContainer from '../AggregatedDataContainer';
 import IndividualMetricContainer from '../IndividualMetricContainer';
@@ -144,15 +145,18 @@ const App = () => {
     <Router>
       <GlobalContext.Provider value={{ state, appDispatch }}>
         <div className={styles['app-container']}>
-          <Header />
-          <main>
-            <Routes>
-              <Route exact path="/" element={<HighlightsContainer />} />
-              <Route exact path="/core/overview" element={<AggregatedDataContainer category="core" />} />
-              <Route exact path="/perps/overview" element={<AggregatedDataContainer category="perps" />} />
-              {generateMetricRoutes()}
-            </Routes>
-          </main>
+          <div className={styles.contentWrapper}>
+            <Header />
+            <main>
+              <Routes>
+                <Route exact path="/" element={<HighlightsContainer />} />
+                <Route exact path="/core/overview" element={<AggregatedDataContainer category="core" />} />
+                <Route exact path="/perps/overview" element={<AggregatedDataContainer category="perps" />} />
+                {generateMetricRoutes()}
+              </Routes>
+            </main>
+          </div>
+          <Footer />
         </div>
       </GlobalContext.Provider>
     </Router>

@@ -17,8 +17,15 @@
   padding-right: 16px;
 }
 
+@media (min-width: 768px) and (max-width: 991px) {
+  .chartList {
+    padding-right: 0 !important;
+  }
+}
+
 @media (max-width: 767px) {
   .chartList{
     padding-right: 0;
   }
 }
+

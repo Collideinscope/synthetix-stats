@@ -36,14 +36,6 @@ const Header = () => {
     );
   };
 
-  const generateSearch = () => {
-    return (
-      <section className={styles.searchContainer}>
-        <FontAwesomeIcon className={styles['fa-magnifying-glass']} icon={faMagnifyingGlass} />
-      </section>
-    );
-  }
-
   const generateNavIcon = () => {
     const navIcon = navOpen 
       ? 'X' 
@@ -64,11 +56,22 @@ const Header = () => {
     )
   }
 
+  const generateStakingButton = () => {
+    return (
+      <button className={styles.stakingButton}>
+        Liquidity App
+      </button>
+    )
+  }
+
   return (
     <header>
       {generateLogo()}
+      <div className={styles.icons}>
+        {generateStakingButton()}
+        {generateNavIcon()}
+      </div>
       <Nav navOpen={navOpen} />
-      {generateNavIcon()}
     </header>
   );
 };

@@ -10,6 +10,7 @@
   align-items: stretch;
   cursor: pointer;
   background-color: var(--navy-900);
+  margin-right: var(--block-margin-internal);
 }
 
 .radialContainer {
@@ -36,10 +37,20 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 991px) {
+  .container {
+    margin-right: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .genericContainer, .radialContainer {
     min-width: 464px;
     max-width: 100%;
     flex: 1 1 464px;
+  }
+
+  .container {
+    margin-right: 0;
   }
 }

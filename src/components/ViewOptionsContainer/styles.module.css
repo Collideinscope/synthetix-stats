@@ -2,7 +2,7 @@
   border: 1px solid var(--border-and-line-colour);
   border-radius: var(--border-radius-sm);
   margin: var(--block-margin-between) 0;
-  width: calc(100% - 16px);
+  width: calc(100% - 32px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -87,6 +87,12 @@
 
 .activeFilterOption .selectionBox {
   background-color: var(--whiteAlpha-200);
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .container {
+    width: calc(100% - 16px);
+  }
 }
 
 @media (max-width: 767px) {

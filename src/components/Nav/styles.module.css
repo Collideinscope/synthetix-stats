@@ -26,6 +26,7 @@ nav {
   width: 100%;
   text-align: center; 
   color: var(--supporting-text-colour);
+  font-size: var(--font-size-supporting);
 }
 
 .navItem:hover .navItemTitle {

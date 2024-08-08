@@ -15,8 +15,8 @@ const MultiPanel = ({ filters, category, metric }) => {
         return METRIC_METADATA[key].category === category;
       })
     : [metric];
-console.log()
-  const generateChart = (item) => {
+
+    const generateChart = (item) => {
     return (
       <ChartContainer
         key={item}
