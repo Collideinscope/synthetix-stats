@@ -20,9 +20,12 @@ const ChartContainer = ({
   showFilters,
 }) => {
   const { state } = useContext(GlobalContext);
-  const summaryDataKey = METRIC_METADATA[metric].summaryDataKey;
-  const summaryData = state[summaryDataKey];
-  const [chartType, setChartType] = useState('line');
+
+  const metricMetadata = METRIC_METADATA[metric];
+  const summaryData = state[metricMetadata.summaryDataKey]; 
+  const timeFilter = metricMetadata.hasDailyData ? 'daily' : 'monthly';
+  const [chartType, setChartType] = useState(metricMetadata.defaultChartType || 'area');
+  const [dataType, setDataType] = useState('cumulative');
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef(null);
 
@@ -41,46 +44,43 @@ const ChartContainer = ({
 
   const handleChartTypeChange = (newType) => {
     setChartType(newType);
+
+    // reset data type if chart type is area
+    if (newType === 'area') {
+      setDataType('cumulative');
+    }
+  };
+
+  const handleDataTypeChange = (newDataType) => {
+    setDataType(newDataType);
   };
 
   const handleFilterChange = (type, option) => {
     console.log('filter changed', type, option);
   }
 
-  const renderChart = chartType === 'bar' 
-    ? (
-      <BarChartCustom
-        metric={metric}
-        network={network}
-        pool={pool}
-        collateral_type={collateral_type}
-        showFilters={showFilters}
-        onChartTypeChange={handleChartTypeChange}
-        containerWidth={containerWidth}
-      />
-    ) : chartType === 'radial' 
-      ? (
-        <RadialChart
-          metric={metric}
-          network={network}
-          pool={pool}
-          collateral_type={collateral_type}
-          showFilters={showFilters}
-          onChartTypeChange={handleChartTypeChange}
-          containerWidth={containerWidth}
-        />
-      ) : (
-        <AreaChartCustom 
-          metric={metric}
-          network={network}
-          pool={pool}
-          collateral_type={collateral_type}
-          showFilters={showFilters}
-          onChartTypeChange={handleChartTypeChange}
-          onFilterChange={handleFilterChange}
-          containerWidth={containerWidth}
-        />
-      )
+  const renderChart = () => {
+    const commonProps = {
+      metric,
+      network,
+      pool,
+      collateral_type,
+      showFilters,
+      onChartTypeChange: handleChartTypeChange,
+      onDataTypeChange: handleDataTypeChange,
+      timeFilter,
+      dataType,
+    };
+
+    switch (chartType) {
+      case 'bar':
+        return <BarChartCustom {...commonProps} />;
+      case 'radial':
+        return <RadialChart {...commonProps} />;
+      default:
+        return <AreaChartCustom {...commonProps} />;
+    }
+  };
 
   const renderSummaryStatsPanel = (
     <SummaryStatsPanel 
@@ -100,7 +100,7 @@ const ChartContainer = ({
       className={`${styles.container} ${styles[containerClass]}`}
     >
       {renderSummaryStatsPanel}
-      {renderChart}
+      {renderChart()}
     </div>
   );
 };

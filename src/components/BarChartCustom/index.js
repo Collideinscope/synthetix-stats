@@ -18,9 +18,12 @@ const BarChartCustom = ({
     collateral_type,
     showFilters,
     onChartTypeChange,  
+    onDataTypeChange,
+    timeFilter,
+    dataType,
   }) => {
   const [highlightValue, setHighlightValue] = useState(null);
-  
+
   const { state } = useContext(GlobalContext);
 
   const [showSettings, setShowSettings] = useState(false);
@@ -32,13 +35,18 @@ const BarChartCustom = ({
     chartYValueSymbol,
     dataStartDate,
     chartYAxisDataKey,
+    dailyChartYAxisDataKey,
+    getDailyChartYAxisDataPoint,
     getYAxisDataPoint,
     yValueFormatter,
     symbolLocation,
     dataChainFilter,
+    defaultChartType,
+    dailyKey,
   } = metricMetadata;
-  const dataChainFiltered = dataChainFilter(state[metric], network);
 
+  const dataChainFiltered = dataChainFilter(state[dailyKey], network);
+  
   const startDate = new Date(
     dataStartDate
       ? dataStartDate 
@@ -51,21 +59,25 @@ const BarChartCustom = ({
     .filter(item => new Date(item.ts) >= startDate) 
     .map(item => ({
       timestamp: parseISO(item.ts),
-      [chartYAxisDataKey]: getYAxisDataPoint(item, apyPeriod),
+      [dailyChartYAxisDataKey]: getDailyChartYAxisDataPoint(item),
     }));
 
-  const latestValue = data.length > 0
-    ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
-    : '';
-  
-  const handleApyPeriodChange = (period) => {
-    setApyPeriod(period);
-    setShowSettings(false);
-  };
-  
+  // Get the cumulative data
+  const cumulativeData = dataChainFilter(state[metric], network);
+
+  // Calculate the latest cumulative value
+  const latestCumulativeValue = cumulativeData.length > 0
+    ? parseFloat(cumulativeData[cumulativeData.length - 1][chartYAxisDataKey])
+    : 0;
+
+  const latestDate = cumulativeData.length > 0
+    ? new Date(cumulativeData[cumulativeData.length - 1].ts)
+    : new Date();
+    console.log(latestCumulativeValue)
+
   useEffect(() => {
-    setHighlightValue(latestValue);
-  }, [latestValue]);
+    setHighlightValue(latestCumulativeValue.toFixed(2));
+  }, [latestCumulativeValue]);
 
   const valueAndSymbol = (val) => {
     const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
@@ -74,8 +86,16 @@ const BarChartCustom = ({
     return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
+  const getDailyData = () => {
+    return data.map(item => ({
+      date: item.timestamp,
+      value: item[metricMetadata.dailyChartYAxisDataKey],
+    }));
+  };
+  
   const getMonthlyData = () => {
     const monthlyData = {};
+    
     data.forEach(item => {
       const monthStart = startOfMonth(item.timestamp);
       const monthKey = format(monthStart, 'yyyy-MM');
@@ -87,24 +107,26 @@ const BarChartCustom = ({
         };
       }
   
-      monthlyData[monthKey].values.push(item[chartYAxisDataKey]);
+      monthlyData[monthKey].values.push(item[metricMetadata.dailyChartYAxisDataKey]);
     });
   
-    return Object.values(monthlyData).map(({ month, values }) => {
-      const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
-      const max = Math.max(...values);
-      return {
-        month,
-        avg,
-        maxDiff: max - avg,
-      };
-    });
+    return Object.values(monthlyData).map(({ month, values }) => ({
+      date: month,
+      avg: values.reduce((sum, val) => sum + val, 0) / values.length,
+      max: Math.max(...values),
+    }));
   };
 
-  const monthlyData = getMonthlyData();
+  const chartData = timeFilter === 'monthly'
+   ? getMonthlyData() 
+   : getDailyData();
 
-  const yAxisUpperLimit = () => {
-    return Math.ceil(Math.max(...monthlyData.map(d => d.avg + d.maxDiff)) * 1.1);
+   const yAxisUpperLimit = () => {
+    if (timeFilter === 'monthly') {
+      return Math.ceil(Math.max(...chartData.map(d => d.max)) * 1.1);
+    } else {
+      return Math.ceil(Math.max(...chartData.map(d => d.value)) * 1.1);
+    }
   };
 
   const formatXAxis = (tickItem) => {
@@ -114,7 +136,13 @@ const BarChartCustom = ({
       return format(date, 'yyyy');
     }
 
-    return format(date, 'MMM');
+    if (date.getDate() === 1 || ((timeFilter === 'daily') && (date.getDate() === 8 || date.getDate() === 16 || date.getDate() === 24))) {
+      return format(date, 'MMM d');
+    }
+
+    return timeFilter === 'daily'
+      ? ''
+      : format(date, 'MMM');
   }
 
   const formatYAxis = (tickItem) => {
@@ -126,16 +154,27 @@ const BarChartCustom = ({
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const avgValue = payload.find(p => p.dataKey === 'avg')?.value.toFixed(2);
-      const maxValue = (parseFloat(avgValue) + payload.find(p => p.dataKey === 'maxDiff')?.value).toFixed(2);
-  
-      return (
-        <div className={styles.tooltip}>
-          <p>{format(payload[0].payload.month, 'MMMM yyyy')}</p>
-          <p>Avg: {yValueFormatter(avgValue)}</p>
-          <p>Max: {yValueFormatter(maxValue)}</p>
-        </div>
-      );
+      const date = payload[0].payload.date;
+      if (timeFilter === 'monthly') {
+        const avgValue = payload.find(p => p.dataKey === 'avg')?.value.toFixed(2);
+        const maxValue = payload.find(p => p.dataKey === 'max')?.value.toFixed(2);
+    
+        return (
+          <div className={styles.tooltip}>
+            <p>{format(date, 'MMMM yyyy')}</p>
+            <p>Avg: {yValueFormatter(avgValue)}</p>
+            <p>Max: {yValueFormatter(maxValue)}</p>
+          </div>
+        );
+      } else {
+        const value = payload[0].value.toFixed(2);
+        return (
+          <div className={styles.tooltip}>
+            <p>{format(date, 'MMMM d, yyyy')}</p>
+            <p>Value: {yValueFormatter(value)}</p>
+          </div>
+        );
+      }
     }
   
     return null;
@@ -182,20 +221,27 @@ const BarChartCustom = ({
   }
 
   const CustomLegend = () => {
-    return (
-      <div className={styles.legend}>
-        <div className={styles.legendItem}>
-          <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)' }}></div>
-          <span className={styles.legendText}>Avg</span>
+    if (timeFilter === 'monthly') {
+      return (
+        <div className={styles.legend}>
+          <div className={styles.legendItem}>
+            <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)' }}></div>
+            <span className={styles.legendText}>Avg</span>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)', opacity: 0.4 }}></div>
+            <span className={styles.legendText}>Max</span>
+          </div>
         </div>
-        <div className={styles.legendItem}>
-          <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)', opacity: 0.4 }}></div>
-          <span className={styles.legendText}>Max</span>
-        </div>
-      </div>
-    );
+      );
+    }
+    return null;
   };
 
+  if (!data || data.length === 0) {
+    return '';
+  }
+console.log(data)
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
@@ -207,16 +253,16 @@ const BarChartCustom = ({
         <p className={styles.latestValue}>
           {valueAndSymbol(highlightValue)}
           <p className={styles.latestValueDate}>
-            {format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')}
+            {format(new Date(latestDate), 'MMM d, yyyy')}
           </p>
         </p>
       </div>
       <div className={styles.chartWrapper}>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart 
-            data={monthlyData} 
+            data={chartData} 
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            barSize={25}
+            barSize={timeFilter === 'daily' ? 5 : 25}
           >
             <defs>
               <pattern id="patternStripe" width="4" height="4" patternUnits="userSpaceOnUse">
@@ -229,13 +275,14 @@ const BarChartCustom = ({
               </linearGradient>
             </defs>
             <XAxis 
-              dataKey="month" 
+              dataKey="date" 
               tickFormatter={formatXAxis} 
               stroke="var(--charts-supporting-colour)"
               angle={-45}
               textAnchor="end"
               height={60}
               tick={<CustomTick />}
+              interval={timeFilter === 'daily' ? 0 : 'preserveStartEnd'}
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}
@@ -247,15 +294,15 @@ const BarChartCustom = ({
             <Tooltip 
               content={<CustomTooltip />}
               cursor={<CustomCursor />}
-              onMouseMove={(e) => {
-                if (e.activePayload && e.activePayload.length > 0) {
-                }
-              }}
             />
-            <Bar dataKey="avg" fill="url(#patternStripe)" stackId="a">
-            </Bar>
-            <Bar dataKey="maxDiff" fill="url(#colorAPY)" stackId="a">
-            </Bar>
+            {timeFilter === 'monthly' ? (
+              <>
+                <Bar dataKey="avg" fill="url(#colorBar)" stackId="a" />
+                <Bar dataKey="max" fill="url(#colorBar)" fillOpacity={0.4} stackId="a" />
+              </>
+            ) : (
+              <Bar dataKey="value" fill="url(#colorBar)" />
+            )}
           </BarChart>
         </ResponsiveContainer>
       </div>

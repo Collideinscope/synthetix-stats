@@ -73,7 +73,9 @@ const API = {
   fetchCoreAccountDelegationsByAccount: async (accountId) => API.fetchGeneralData(`core-account-delegations/account/${accountId}`),
   fetchCoreAccountDelegationsOrderedByAccount: async (network) => API.fetchGeneralData('core-account-delegations/ordered-by-account', network),
   fetchSummaryDataUniqueStakers: async (network) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers/summary', network),
-
+  fetchDailyUniqueStakers: async (network) => API.fetchGeneralData('core-account-delegations/daily-new-unique-stakers', network),
+  fetchSummaryDataDailyUniqueStakers: async (network) => API.fetchGeneralData('core-account-delegations/daily-new-unique-stakers/summary', network),
+  
   /* 
     Perp Stats 
   */

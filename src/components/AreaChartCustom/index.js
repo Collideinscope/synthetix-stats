@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 
 import React, { useContext, useState, useEffect } from 'react';
 
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie, faChartBar, faCog, faExpand, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -388,6 +388,12 @@ const AreaChartCustom = ({
                   strokeWidth: 2,
                   fill: "var(--charts-background-colour)"
                 }}
+              />
+              <Bar
+                dataKey={chartYAxisDataKey}
+                fill="var(--cyan-300)"
+                opacity={0.5}
+                barSize={5}
               />
             </AreaChart>
           </ResponsiveContainer>

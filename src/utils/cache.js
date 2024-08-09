@@ -24,7 +24,8 @@ export const getInitialState = () => {
     allCoreAccountDelegations: [],
     allPerpStats: [],
     allPerpAccountStats: [],
-    cumulativeUniqueStakers: {},
+    uniqueStakers: {},
+    dailyUniqueStakers: {},
     cumulativePerpsVolume: {},
     cumulativeUniqueTraders: {},
     cumulativeExchangeFees: {},
@@ -40,6 +41,7 @@ export const getInitialState = () => {
     summaryDataExchangeFees: {},
     summaryDataCollectedFees: {},
     summaryDataOpenInterest: {},
+    summaryDataDailyUniqueStakers: {},
   };
 
   const cachedData = getCachedData();

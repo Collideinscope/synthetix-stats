@@ -37,7 +37,7 @@ const App = () => {
             allCoreDelegations,
             allPerpStats,
             allPerpAccountStats,
-            cumulativeUniqueStakers,
+            uniqueStakers,
             cumulativeUniqueTraders,
             cumulativePerpsVolume,
             cumulativeExchangeFees,
@@ -53,6 +53,8 @@ const App = () => {
             summaryDataCumulativeExchangeFees,
             summaryDataCumulativeCollectedFees,
             summaryDataOpenInterest,
+            dailyUniqueStakers,
+            summaryDataDailyUniqueStakers,
           ] = await Promise.all([
             API.fetchAllAPY(),
             API.fetchAllTVL(),
@@ -76,6 +78,8 @@ const App = () => {
             API.fetchSummaryDataCumulativeExchangeFees('base'),
             API.fetchSummaryDataCumulativeCollectedFees('base'),
             API.fetchSummaryDataOpenInterest('base'),
+            API.fetchDailyUniqueStakers('base'),
+            API.fetchSummaryDataDailyUniqueStakers('base'),
           ]);
 
           const newData = {
@@ -85,7 +89,7 @@ const App = () => {
             allCoreDelegations,
             allPerpStats,
             allPerpAccountStats,
-            cumulativeUniqueStakers,
+            uniqueStakers,
             cumulativeUniqueTraders,
             cumulativePerpsVolume,
             cumulativeExchangeFees,
@@ -101,6 +105,8 @@ const App = () => {
             summaryDataCumulativeExchangeFees,
             summaryDataCumulativeCollectedFees,
             summaryDataOpenInterest,
+            dailyUniqueStakers,
+            summaryDataDailyUniqueStakers,
           };
 
           appDispatch({ type: 'SET_INITIAL_DATA', payload: newData });

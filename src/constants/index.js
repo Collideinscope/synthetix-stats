@@ -21,7 +21,7 @@ const NAV_MENU = {
     },
     'Unique Stakers': {
       route: '/core/unique-stakers',
-      metricKey: 'cumulativeUniqueStakers',
+      metricKey: 'uniqueStakers',
     }
   },
   Perps: {

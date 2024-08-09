@@ -89,14 +89,18 @@ const METRIC_METADATA = {
       return abbreviateNumber(val);
     }
   },
-  'cumulativeUniqueStakers': {
-    key: 'cumulativeUniqueStakers',
+  'uniqueStakers': {
+    key: 'uniqueStakers',
+    dailyKey: 'dailyUniqueStakers',
+    hasDailyData: true,
+    defaultChartType: 'bar',
     category: 'core',
     chartTitle: 'Unique Stakers',
     chartType: 'line',
     chartYValueSymbol: '',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_staker_count',
+    dailyChartYAxisDataKey: 'daily_new_unique_stakers',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueStakers',
     smoothData: false,
@@ -107,6 +111,9 @@ const METRIC_METADATA = {
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_staker_count);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_new_unique_stakers);
     },
     yValueFormatter: (val) => {
       return parseFloat(val).toFixed(0);
