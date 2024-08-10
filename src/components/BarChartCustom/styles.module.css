@@ -7,17 +7,27 @@
 }
 
 .titleContainer {
-  padding: var(--charts-padding-inside-containers) var(--block-group-padding-internal);
+  padding: var(--charts-margin-between-blocks) var(--charts-margin-between-groups);
   display: flex;
-  flex-direction: row;
-  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  width: auto;
 }
 
 .chartTitle {
   color: var(--charts-title-colour);
   font-size: var(--charts-figure-amount);
   margin: 0;
-  margin-right: var(--charts-margin-between-blocks);
+  height: 45.5px;
+  display: flex;
+  align-items: center;
+}
+
+.timeFilter {
+  margin: 0;
+  color: var(--supporting-text-colour);
+  align-self: flex-end;
+  font-size: var(--font-size-supporting);
 }
 
 .titleMeta {
@@ -49,22 +59,26 @@
   margin: 0 var(--block-group-margin-internal);
 }
 
+.latestValueContainer {
+  padding: var(--charts-margin-between-blocks) var(--charts-margin-between-groups);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: auto;
+}
+
 .latestValue {
   color: var(--cyan-300);
   font-size: var(--charts-title-primary);
-  margin: var(--block-margin-minimum) 0 0 0;
-  margin-right: var(--charts-padding-inside-containers);
-  display: flex;
-  align-items: center;
-  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .latestValueDate {
-  position: absolute;
-  font-size: var(--font-size-supporting);
+  margin: 0;
   color: var(--supporting-text-colour);
-  top: 62%;
-  right: 0;
+  align-self: flex-end;
+  font-size: var(--font-size-supporting);
 }
 
 .tooltip {
@@ -76,13 +90,9 @@
   font-size: var(--charts-title-secondary);
 }
 
-.largeTick {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.smallTick {
-  font-size: 12px;
+.tickLabel {
+  white-space: pre-line;
+  font-size: 10px;
   font-weight: 300;
 }
 

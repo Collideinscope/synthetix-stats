@@ -129,22 +129,81 @@ const BarChartCustom = ({
     }
   };
 
-  const formatXAxis = (tickItem) => {
+  const formatXAxis = (tickItem, ticks) => {
     const date = new Date(tickItem);
-
-    if (date.getMonth() === 0 && date.getDate() === 1) {
-      return format(date, 'yyyy');
+  
+    // Find the first tick of each year
+    const isFirstTickOfYear = ticks.some(tick => {
+      const tickDate = new Date(tick);
+      return tickDate.getFullYear() === date.getFullYear() && tickDate.getTime() === tickItem.getTime();
+    });
+  
+    if (isFirstTickOfYear) {
+      return format(date, 'MMM d, yyyy');
     }
+  
+    // For other ticks, return "Month Day"
+    return format(date, 'MMM d');
+  };
 
-    if (date.getDate() === 1 || ((timeFilter === 'daily') && (date.getDate() === 8 || date.getDate() === 16 || date.getDate() === 24))) {
-      return format(date, 'MMM d');
-    }
+  /*
+    - first and last always display
+    - first gets month day, year
+    - then first and middle of every month with month day
+    - if jan then month day, year
+  */
+  const getTicksToShow = (data) => {
+    const ticks = [];
+    const months = new Set();
+    const monthCounts = {};
 
-    return timeFilter === 'daily'
-      ? ''
-      : format(date, 'MMM');
-  }
+    data.forEach((item, index) => {
+      const date = new Date(item.date);
+      const firstItem = index === 0;
+      const lastItem = index === data.length - 1;
 
+      // Always include the first and last ticks
+      if (firstItem || lastItem) {
+        ticks.push(item.date);
+        return;
+      }
+
+      const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+      const day = date.getDate();
+
+      // Include the first data point of the month
+      if (!months.has(monthKey)) {
+        ticks.push(item.date);
+        months.add(monthKey);
+        monthCounts[monthKey] = 1;
+      } else {
+        // Limit to only one tick around the middle of the month
+        if (day === 15 && monthCounts[monthKey] < 2) {
+          ticks.push(item.date);
+          monthCounts[monthKey] += 1;
+        }
+      }
+    });
+
+    return ticks;
+  };
+
+  const getFormattedTicks = (ticks) => {
+    const formattedTicks = ticks.map((tick, index) => {
+      const date = new Date(tick);
+
+      // Check if this tick is the first tick of the year
+      const isFirstTickOfYear = index === 0 || (index > 0 && new Date(ticks[index - 1]).getFullYear() !== date.getFullYear());
+  
+      return {
+        tick,
+        isFirstTickOfYear
+      };
+    });
+  
+    return formattedTicks;
+  };
+  
   const formatYAxis = (tickItem) => {
     const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';
     const symbolRight = symbolLocation === 'right' ? chartYValueSymbol : '';
@@ -188,8 +247,7 @@ const BarChartCustom = ({
 
   const CustomTick = ({ x, y, payload }) => {
     const date = new Date(payload.value);
-    const isMonthOrYear = date.getDate() === 1;
-    const text = formatXAxis(payload.value);
+    const text = xAxisTickFormatter(date);
 
     return (
       <g transform={`translate(${x},${y})`}>
@@ -200,7 +258,7 @@ const BarChartCustom = ({
           textAnchor="middle"
           fill="var(--charts-supporting-colour)"
           transform="rotate(0)"
-          className={isMonthOrYear ? styles.largeTick : styles.smallTick}
+          className={styles.tickLabel}
         >
           {text}
         </text>
@@ -235,27 +293,59 @@ const BarChartCustom = ({
         </div>
       );
     }
+
+    if (timeFilter === 'daily') {
+      return (
+        <div className={styles.legend}>
+          <div className={styles.legendItem}>
+            <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)' }}></div>
+            <span className={styles.legendText}>Max</span>
+          </div>
+        </div>
+      );
+    }
     return null;
   };
 
   if (!data || data.length === 0) {
     return '';
   }
-console.log(data)
+
+  const xAxisTicks = getTicksToShow(chartData);
+  const formattedTicks = getFormattedTicks(xAxisTicks);
+
+  const xAxisTickFormatter = (tickItem) => {
+    const date = new Date(tickItem);
+
+    const isFirstTickOfYear = formattedTicks.find(
+      (obj) => {
+        return new Date(obj.tick).getTime() === new Date(tickItem).getTime() && obj.isFirstTickOfYear;
+      }
+    );    
+  
+    if (isFirstTickOfYear) {
+      return `${format(date, 'MMM d')},\n${format(date, 'yyyy')}`;
+    }
+  
+    return format(date, 'MMM d');
+  };
+  
   return (
     <li className={styles.container}>
       <div className={styles.chartHeader}>
         <div className={styles.titleContainer}>
           <h3 className={styles.chartTitle}>{chartTitle}</h3>
-          {renderFilters()}
+          <p className={styles.timeFilter}>{timeFilter}</p>
           <CustomLegend />
         </div>
-        <p className={styles.latestValue}>
-          {valueAndSymbol(highlightValue)}
+        <div className={styles.latestValueContainer}>
+          <p className={styles.latestValue}>
+            {valueAndSymbol(highlightValue)}
+          </p>
           <p className={styles.latestValueDate}>
             {format(new Date(latestDate), 'MMM d, yyyy')}
           </p>
-        </p>
+        </div>
       </div>
       <div className={styles.chartWrapper}>
         <ResponsiveContainer width="100%" height={300}>
@@ -276,13 +366,14 @@ console.log(data)
             </defs>
             <XAxis 
               dataKey="date" 
-              tickFormatter={formatXAxis} 
+              tickFormatter={xAxisTickFormatter} 
               stroke="var(--charts-supporting-colour)"
               angle={-45}
               textAnchor="end"
               height={60}
               tick={<CustomTick />}
-              interval={timeFilter === 'daily' ? 0 : 'preserveStartEnd'}
+              ticks={xAxisTicks}
+              interval={'preserveStartEnd'}
             />
             <YAxis 
               domain={[0, yAxisUpperLimit]}
@@ -297,11 +388,11 @@ console.log(data)
             />
             {timeFilter === 'monthly' ? (
               <>
-                <Bar dataKey="avg" fill="url(#colorBar)" stackId="a" />
-                <Bar dataKey="max" fill="url(#colorBar)" fillOpacity={0.4} stackId="a" />
+                <Bar dataKey="avg" fill="url(#patternStripe)" stackId="a" />
+                <Bar dataKey="max" fill="url(#colorAPY)" fillOpacity={0.4} stackId="a" />
               </>
             ) : (
-              <Bar dataKey="value" fill="url(#colorBar)" />
+              <Bar dataKey="value" fill="url(#patternStripe)" />
             )}
           </BarChart>
         </ResponsiveContainer>
