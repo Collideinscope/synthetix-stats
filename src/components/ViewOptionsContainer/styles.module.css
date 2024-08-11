@@ -34,6 +34,7 @@
   font-weight: bold;
   width: 150px;
   border: 1px solid var(--border-and-line-colour);
+  background-color: var(--whiteAlpha-100);
 }
 
 .filterSelect:hover {
@@ -86,7 +87,7 @@
 }
 
 .activeFilterOption .selectionBox {
-  background-color: var(--whiteAlpha-200);
+  background-color: var(--whiteAlpha-100);
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
