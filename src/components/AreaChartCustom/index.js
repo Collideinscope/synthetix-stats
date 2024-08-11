@@ -7,6 +7,9 @@ import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie, faChartBar, faCog, faExpand, faXmark } from '@fortawesome/free-solid-svg-icons';
 
+import ChartHeader from '../ChartHeader';
+import ChartFooter from '../ChartFooter';
+
 import { GlobalContext } from '../../context/GlobalContext';
 
 import { METRIC_METADATA } from '../../constants/metrics';
@@ -131,43 +134,68 @@ const AreaChartCustom = ({
   const maxYValue = Math.max(...data.map(d => d[chartYAxisDataKey]));
   const yAxisUpperLimit = Math.ceil(maxYValue * 1.1);
 
-  const formatXAxis = (tickItem) => {
+  const getTicksToShow = (data) => {
+    const ticks = [];
+    const months = new Set();
+    const monthCounts = {};
+  
+    data.forEach((item, index) => {
+      const date = new Date(item.timestamp);
+      const firstItem = index === 0;
+      const lastItem = index === data.length - 1;
+  
+      if (firstItem || lastItem) {
+        ticks.push(item.timestamp);
+        return;
+      }
+  
+      const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+      const day = date.getDate();
+  
+      if (!months.has(monthKey)) {
+        ticks.push(item.timestamp);
+        months.add(monthKey);
+        monthCounts[monthKey] = 1;
+      } else {
+        if (day === 15 && monthCounts[monthKey] < 2) {
+          ticks.push(item.timestamp);
+          monthCounts[monthKey] += 1;
+        }
+      }
+    });
+  
+    return ticks;
+  };
+  
+  const getFormattedTicks = (ticks) => {
+    const formattedTicks = ticks.map((tick, index) => {
+      const date = new Date(tick);
+
+      // Check if this tick is the first tick of the year
+      const isFirstTickOfYear = index === 0 || (index > 0 && new Date(ticks[index - 1]).getFullYear() !== date.getFullYear());
+  
+      return {
+        tick,
+        isFirstTickOfYear
+      };
+    });
+  
+    return formattedTicks;
+  };
+
+  const xAxisTickFormatter = (tickItem) => {
     const date = new Date(tickItem);
-
-    if (date.getMonth() === 0 && date.getDate() === 1) {
-      return format(date, 'yyyy');
-    }
-
-    if (date.getDate() === 1) {
-      return format(date, 'MMM');
-    }
-
-    return format(date, 'd');
-  }
-
-  const ticksXAxis = data.reduce((acc, item, index, arr) => {
-    const currentDate = new Date(item.timestamp);
-    const day = currentDate.getDate();
-    const len = arr.length;
-
-    // Always include the first data point
-    if (index === 0 || index === len - 1) {
-      acc.push(currentDate);
-      return acc;
+  
+    const isFirstTickOfYear = formattedTicks.find(
+      (obj) => new Date(obj.tick).getTime() === date.getTime() && obj.isFirstTickOfYear
+    );    
+  
+    if (isFirstTickOfYear) {
+      return `${format(date, 'MMM d')},\n${format(date, 'yyyy')}`;
     }
   
-    // Add first day of month, 8th, 16th, and 24th for hourly data
-    if (day === 1 || day === 8 || day === 16 || day === 24) {
-      if (!acc.some(date => date.getTime() === currentDate.getTime())) {
-        acc.push(currentDate);
-      }
-    }
-
-    return acc;
-  }, []);
-
-  // Sort the ticks chronologically
-  ticksXAxis.sort((a, b) => a.getTime() - b.getTime());
+    return format(date, 'MMM d');
+  };
 
   const formatYAxis = (tickItem) => {
     const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';
@@ -214,9 +242,8 @@ const AreaChartCustom = ({
 
   const CustomTick = ({ x, y, payload }) => {
     const date = new Date(payload.value);
-    const isMonthOrYear = date.getDate() === 1;
-    const text = formatXAxis(payload.value);
-
+    const text = xAxisTickFormatter(date);
+  
     return (
       <g transform={`translate(${x},${y})`}>
         <text 
@@ -226,13 +253,16 @@ const AreaChartCustom = ({
           textAnchor="middle"
           fill="var(--charts-supporting-colour)"
           transform="rotate(0)"
-          className={isMonthOrYear ? styles.largeTick : styles.smallTick}
+          className={styles.tickLabel}
         >
           {text}
         </text>
       </g>
     );
   };
+
+  const xAxisTicks = getTicksToShow(smoothedData);
+  const formattedTicks = getFormattedTicks(xAxisTicks);
 
   const valueAndSymbol = (val) => {
     const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
@@ -311,7 +341,7 @@ const AreaChartCustom = ({
         className={`${styles.exitFullScreen} ${styles.chartIcon}`} 
         onClick={toggleFullScreen}
       >
-        <FontAwesomeIcon icon={faXmark} />
+        <FontAwesomeIcon className={styles.exitIcon} icon={faXmark} />
       </div>
     ) : '';
 
@@ -319,23 +349,14 @@ const AreaChartCustom = ({
     <li className={`${styles.container} ${styles[fullScreenClass]}`}>
       {renderExitFullScreen}
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
-        <div className={styles.chartHeader}>
-          <div className={styles.titleContainer}>
-            <h3 
-              className={styles.chartTitle}
-              style={{ fontSize: getTitleSize() }}
-            >
-              {chartTitle}
-            </h3>
-            {renderFilters()}
-          </div>
-          <p className={styles.latestValue} style={{ fontSize: getLatestValueSize() }}>
-            {valueAndSymbol(highlightValue)}
-            <p className={styles.latestValueDate}>
-              {latestValueDate}
-            </p>
-          </p>
-        </div>
+        <ChartHeader 
+          chartTitle={chartTitle}
+          timeFilter={null}
+          highlightValue={highlightValue}
+          latestDate={latestValueDate}
+          valueAndSymbol={valueAndSymbol}
+          CustomLegend={null}
+        />
         <div className={`${styles.chartWrapper}`}>
           <ResponsiveContainer width="100%" height={isFullScreen ? "100%" : 300}>
             <AreaChart 
@@ -350,14 +371,14 @@ const AreaChartCustom = ({
               </defs>
               <XAxis 
                 dataKey="timestamp" 
-                tickFormatter={formatXAxis} 
+                tickFormatter={xAxisTickFormatter} 
                 stroke="var(--charts-supporting-colour)"
                 angle={-45}
                 textAnchor="end"
                 height={60}
                 tick={<CustomTick />}
-                ticks={ticksXAxis}
-                padding={{ bottom: 10 }}
+                ticks={xAxisTicks}
+                interval={'preserveStartEnd'}
               />
               <YAxis 
                 domain={[0, yAxisUpperLimit]}
@@ -399,36 +420,11 @@ const AreaChartCustom = ({
           </ResponsiveContainer>
         </div>
       </div>
-      <div className={styles.chartFooter}>
-        <div className={styles.chartIconsLeft}>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={toggleFullScreen}
-          >
-            <FontAwesomeIcon icon={faExpand} />
-          </div>
-        </div>
-        <div className={styles.chartIconsRight}>
-          <div
-            className={`${styles.chartIcon} ${styles.active}`}
-            onClick={() => onChartTypeChange('line')}
-          >
-            <FontAwesomeIcon icon={faChartLine} />
-          </div>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => onChartTypeChange('bar')}
-          >
-            <FontAwesomeIcon icon={faChartBar} />
-          </div>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => onChartTypeChange('radial')}
-          >
-            <FontAwesomeIcon icon={faChartPie} />
-          </div>
-        </div>
-      </div>
+      <ChartFooter 
+        onChartTypeChange={onChartTypeChange}
+        activeChartType="area"
+        toggleFullScreen={toggleFullScreen}
+      />
     </li>
   );
 };

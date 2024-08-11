@@ -5,7 +5,10 @@ import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartPie, faChartBar, faCog, faXmark } from '@fortawesome/free-solid-svg-icons';
+
+import ChartHeader from '../ChartHeader';
+import ChartFooter from '../ChartFooter';
 
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -27,6 +30,7 @@ const BarChartCustom = ({
   const { state } = useContext(GlobalContext);
 
   const [showSettings, setShowSettings] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const [apyPeriod, setApyPeriod] = useState('28d');
 
   const metricMetadata = METRIC_METADATA[metric];
@@ -44,9 +48,13 @@ const BarChartCustom = ({
     defaultChartType,
     dailyKey,
   } = metricMetadata;
-
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
   
+  const toggleFullScreen = () => {
+    console.log(isFullScreen)
+    setIsFullScreen(!isFullScreen);
+  };
+
   const startDate = new Date(
     dataStartDate
       ? dataStartDate 
@@ -73,7 +81,6 @@ const BarChartCustom = ({
   const latestDate = cumulativeData.length > 0
     ? new Date(cumulativeData[cumulativeData.length - 1].ts)
     : new Date();
-    console.log(latestCumulativeValue)
 
   useEffect(() => {
     setHighlightValue(latestCumulativeValue.toFixed(2));
@@ -278,6 +285,20 @@ const BarChartCustom = ({
     );
   }
 
+  const fullScreenClass = isFullScreen 
+  ? 'fullScreen'
+  : '';
+
+  const renderExitFullScreen = isFullScreen 
+    ? (
+      <div 
+        className={`${styles.exitFullScreen} ${styles.chartIcon}`} 
+        onClick={toggleFullScreen}
+      >
+        <FontAwesomeIcon className={styles.exitIcon} icon={faXmark} />
+      </div>
+    ) : '';
+
   const CustomLegend = () => {
     if (timeFilter === 'monthly') {
       return (
@@ -331,95 +352,73 @@ const BarChartCustom = ({
   };
   
   return (
-    <li className={styles.container}>
-      <div className={styles.chartHeader}>
-        <div className={styles.titleContainer}>
-          <h3 className={styles.chartTitle}>{chartTitle}</h3>
-          <p className={styles.timeFilter}>{timeFilter}</p>
-          <CustomLegend />
-        </div>
-        <div className={styles.latestValueContainer}>
-          <p className={styles.latestValue}>
-            {valueAndSymbol(highlightValue)}
-          </p>
-          <p className={styles.latestValueDate}>
-            {format(new Date(latestDate), 'MMM d, yyyy')}
-          </p>
-        </div>
-      </div>
-      <div className={styles.chartWrapper}>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart 
-            data={chartData} 
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            barSize={timeFilter === 'daily' ? 5 : 25}
-          >
-            <defs>
-              <pattern id="patternStripe" width="4" height="4" patternUnits="userSpaceOnUse">
-                <rect width="4" height="4" fill="var(--cyan-300)"/>
-                <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-300)" strokeWidth={1}/>
-              </pattern>
-              <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
-                <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
-              </linearGradient>
-            </defs>
-            <XAxis 
-              dataKey="date" 
-              tickFormatter={xAxisTickFormatter} 
-              stroke="var(--charts-supporting-colour)"
-              angle={-45}
-              textAnchor="end"
-              height={60}
-              tick={<CustomTick />}
-              ticks={xAxisTicks}
-              interval={'preserveStartEnd'}
-            />
-            <YAxis 
-              domain={[0, yAxisUpperLimit]}
-              tickFormatter={formatYAxis}
-              stroke="var(--charts-supporting-colour)"
-              tick={{fontSize: 'var(--charts-title-secondary)'}}
-              style={{ fontSize: '12px' }}
-            />
-            <Tooltip 
-              content={<CustomTooltip />}
-              cursor={<CustomCursor />}
-            />
-            {timeFilter === 'monthly' ? (
-              <>
-                <Bar dataKey="avg" fill="url(#patternStripe)" stackId="a" />
-                <Bar dataKey="max" fill="url(#colorAPY)" fillOpacity={0.4} stackId="a" />
-              </>
-            ) : (
-              <Bar dataKey="value" fill="url(#patternStripe)" />
-            )}
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-     
-      <div className={styles.chartFooter}>
-        <div className={styles.chartIconsRight}>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => onChartTypeChange('line')}
-          >
-            <FontAwesomeIcon icon={faChartLine} />
-          </div>
-          <div
-            className={`${styles.chartIcon} ${styles.active}`}
-            onClick={() => onChartTypeChange('bar')}
-          >
-            <FontAwesomeIcon icon={faChartBar} />
-          </div>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => onChartTypeChange('radial')}
-          >
-            <FontAwesomeIcon icon={faChartPie} />
-          </div>
+    <li className={`${styles.container} ${styles[fullScreenClass]}`}>
+      {renderExitFullScreen}
+      <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
+        <ChartHeader 
+          chartTitle={chartTitle}
+          timeFilter={timeFilter}
+          highlightValue={highlightValue}
+          latestDate={latestDate}
+          valueAndSymbol={valueAndSymbol}
+          CustomLegend={CustomLegend}
+        />
+        <div className={styles.chartWrapper}>
+          <ResponsiveContainer width="100%" height={isFullScreen ? "100%" : 300}>
+            <BarChart 
+              data={chartData} 
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              barSize={timeFilter === 'daily' ? 5 : 25}
+            >
+              <defs>
+                <pattern id="patternStripe" width="4" height="4" patternUnits="userSpaceOnUse">
+                  <rect width="4" height="4" fill="var(--cyan-300)"/>
+                  <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-300)" strokeWidth={1}/>
+                </pattern>
+                <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
+                  <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <XAxis 
+                dataKey="date" 
+                tickFormatter={xAxisTickFormatter} 
+                stroke="var(--charts-supporting-colour)"
+                angle={-45}
+                textAnchor="end"
+                height={60}
+                tick={<CustomTick />}
+                ticks={xAxisTicks}
+                interval={'preserveStartEnd'}
+              />
+              <YAxis 
+                domain={[0, yAxisUpperLimit]}
+                tickFormatter={formatYAxis}
+                stroke="var(--charts-supporting-colour)"
+                tick={{fontSize: 'var(--charts-title-secondary)'}}
+                style={{ fontSize: '12px' }}
+              />
+              <Tooltip 
+                content={<CustomTooltip />}
+                cursor={<CustomCursor />}
+              />
+              {timeFilter === 'monthly' ? (
+                <>
+                  <Bar dataKey="avg" fill="url(#patternStripe)" stackId="a" />
+                  <Bar dataKey="max" fill="url(#colorAPY)" fillOpacity={0.4} stackId="a" />
+                </>
+              ) : (
+                <Bar dataKey="value" fill="url(#patternStripe)" />
+              )}
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </div>
+      <ChartFooter 
+        onChartTypeChange={onChartTypeChange}
+        activeChartType="bar"
+        toggleFullScreen={toggleFullScreen}
+      />
     </li>
   );
 };

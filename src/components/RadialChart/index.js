@@ -12,6 +12,9 @@ import { abbreviateNumber } from "../../helpers";
 
 import { GlobalContext } from '../../context/GlobalContext';
 
+import ChartHeader from '../ChartHeader';
+import ChartFooter from '../ChartFooter';
+
 const RadialChart = ({
   metric,
   network,
@@ -171,20 +174,24 @@ const RadialChart = ({
     return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
+  const latestValueDate = new Date(data[data.length - 1].timestamp);
+
   return (
     <li className={styles.container}>
-      <div className={styles.chartHeader}>
-        <div className={styles.titleContainer}>
-          <h3 className={styles.chartTitle}>{chartTitle}</h3>
-          {renderFilters()}
-        </div>
-      </div>
+      <ChartHeader 
+        chartTitle={chartTitle}
+        timeFilter={null}
+        highlightValue={null}
+        latestDate={latestValueDate}
+        valueAndSymbol={valueAndSymbol}
+        CustomLegend={null}
+      />
       <div className={styles.radialChartWrapper}>
         <div className={styles.radialChartInner}>
           <div className={styles.centerBubble}>
             <span className={styles.centerValue}>{valueAndSymbol(latestValue)}</span>
             <p className={styles.latestValueDate}>
-              {format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')}
+              {format(latestValueDate, 'MMM d, yyyy')}
             </p>
           </div>
           <RadialBarChart
@@ -233,28 +240,10 @@ const RadialChart = ({
           </RadialBarChart>
         </div>
       </div>
-      <div className={styles.chartFooter}>
-        <div className={styles.chartIconsRight}>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => onChartTypeChange('line')}
-          >
-            <FontAwesomeIcon icon={faChartLine} />
-          </div>
-          <div
-            className={`${styles.chartIcon}`}
-            onClick={() => onChartTypeChange('bar')}
-          >
-            <FontAwesomeIcon icon={faChartBar} />
-          </div>
-          <div
-            className={`${styles.chartIcon} ${styles.active}`}
-            onClick={() => onChartTypeChange('radial')}
-          >
-            <FontAwesomeIcon icon={faChartPie} />
-          </div>
-        </div>
-      </div>
+      <ChartFooter 
+        onChartTypeChange={onChartTypeChange}
+        activeChartType="radial"
+      />
     </li>
   );
 };

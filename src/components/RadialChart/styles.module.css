@@ -21,26 +21,6 @@
   position: relative;
 }
 
-.chartHeader {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: var(--block-margin-internal);
-  position: relative;
-}
-
-.titleContainer {
-  padding: var(--charts-padding-inside-containers) var(--block-group-padding-internal);
-  display: flex;
-}
-
-.chartTitle {
-  color: var(--charts-title-colour);
-  font-size: var(--charts-figure-amount);
-  margin: 0;
-  margin-right: var(--charts-margin-between-blocks);
-}
-
 .titleMeta {
   display: flex;
 }
@@ -144,40 +124,6 @@
 .negative {
   fill: var(--red-500);
   font-size: var(--font-size-supporting);
-}
-
-.chartFooter {
-  width: 100%;
-  height: 40px;
-  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 var(--block-group-padding-internal);
-  position: relative;
-}
-
-.chartIconsRight {
-  display: flex;
-}
-
-.chartIcon {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.chartIcon svg {
-  color: var(--border-and-line-colour);
-  transition: color 0.2s ease;
-}
-
-.chartIcon:hover svg {
-  color: var(--title-colour);
-}
-
-.chartIcon.active svg {
-  color: var(--title-colour);
 }
 
 .customLabel {
