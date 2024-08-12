@@ -5,12 +5,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { globalReducer, globalInitialState } from '../../reducers/globalReducer';
 import { GlobalContext } from '../../context/GlobalContext';
+import { ChartPageProvider } from '../../context/ChartPageContext';
 
 import Header from '../Header';
 import Footer from '../Footer';
 import HighlightsContainer from '../HighlightsContainer';
-import AggregatedDataContainer from '../AggregatedDataContainer';
-import IndividualMetricContainer from '../IndividualMetricContainer';
+import ChartPageContainer from '../ChartPageContainer';
 
 import { getCachedData, setCachedData } from '../../utils/cache';
 
@@ -177,27 +177,37 @@ const App = () => {
     };
   }, []);
 
-
-  const generateMetricRoutes = () => {
-    const routes = [];
+  const generateRoutes = () => {
+    const routes = [
+      <Route 
+        key="/" 
+        exact 
+        path="/" 
+        element={
+          <ChartPageProvider>
+            <HighlightsContainer />
+          </ChartPageProvider>
+        } 
+      />,
+    ];
 
     Object.entries(NAV_MENU).forEach(([category, items]) => {
       Object.entries(items).forEach(([itemName, itemData]) => {
-        const {route, metricKey} = itemData;
+        const { route, metricKey } = itemData;
 
-        if (metricKey && route) {
+        if (route) {
           routes.push(
-            <Route 
-              exact
+            <Route
               key={route}
-              path={route} 
+              path={route}
               element={
-                <IndividualMetricContainer 
-                  filters={[]}
-                  category={false}
-                  metric={metricKey}
-                />
-              } 
+                <ChartPageProvider>
+                  <ChartPageContainer 
+                    category={itemName === 'Overview' ? category.toLowerCase() : null}
+                    metric={metricKey}
+                  />
+                </ChartPageProvider>
+              }
             />
           );
         }
@@ -215,10 +225,7 @@ const App = () => {
             <Header navRef={navRef} />
             <main>
               <Routes>
-                <Route exact path="/" element={<HighlightsContainer />} />
-                <Route exact path="/core/overview" element={<AggregatedDataContainer category="core" />} />
-                <Route exact path="/perps/overview" element={<AggregatedDataContainer category="perps" />} />
-                {generateMetricRoutes()}
+                {generateRoutes()}
               </Routes>
             </main>
           </div>

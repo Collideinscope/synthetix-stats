@@ -19,7 +19,6 @@ const AreaChartCustom = ({
     network,
     pool,
     collateral_type,
-    showFilters,
     onChartTypeChange,  
     onFilterChange,
     containerWidth,
@@ -297,8 +296,6 @@ const AreaChartCustom = ({
   }
 
   const renderFilters = () => {
-    if (!showFilters) return null;
-
     const filterTypeElements = ['network', 'pool', 'collateral_type']
       .map((filterType) => {
         const openFilterClass = openFilterMenu === filterType 

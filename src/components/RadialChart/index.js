@@ -20,7 +20,6 @@ const RadialChart = ({
   network,
   pool,
   collateral_type,
-  showFilters,
   onChartTypeChange,  
 }) => {
   const { state } = useContext(GlobalContext);
@@ -151,7 +150,6 @@ const RadialChart = ({
   };
 
   const renderFilters = () => {
-    if (!showFilters) return null;
     return (
       <div className={styles.titleMeta}>
         <p className={styles.chartSubtitle}>{network}</p>

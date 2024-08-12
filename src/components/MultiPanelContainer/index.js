@@ -1,46 +1,25 @@
 import styles from './styles.module.css';
-
 import React from 'react';
-
 import ChartContainer from '../ChartContainer';
-import { METRIC_METADATA } from '../../constants/metrics';
+import { useChartPage } from '../../context/ChartPageContext';
 
-const MultiPanel = ({ filters, category, metric }) => {
+const MultiPanel = ({ chartMetrics, pageFilters }) => {
+  const { state } = useChartPage();
 
-  // all metrics by category if category multipanel, otherwise indiv metric
-  const chartMetadata = category 
-    ? Object
-      .keys(METRIC_METADATA)
-      .filter(key => {
-        return METRIC_METADATA[key].category === category;
-      })
-    : [metric];
+  const generateChart = (metricKey) => (
+    <ChartContainer
+      key={metricKey}
+      metric={metricKey}
+      {...pageFilters}
+      chartSettings={state.charts[metricKey]}
+    />
+  );
 
-    const generateChart = (item) => {
-    return (
-      <ChartContainer
-        key={item}
-        metric={item} 
-        network={'base'} 
-        pool={1}
-        collateral_type={'USDC'}
-        showFilters={false}
-      />
-    )
-  }
-
-  const generateChartList = () => {
-    const chartItems = chartMetadata
-      .map(item => {
-        return generateChart(item);
-      })
-
-    return (
-      <ul className={styles.chartList}>
-        {chartItems}
-      </ul>
-    )
-  }
+  const generateChartList = () => (
+    <ul className={styles.chartList}>
+      {chartMetrics.map(generateChart)}
+    </ul>
+  );
 
   return (
     <div className={styles.multiPanel}>

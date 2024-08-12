@@ -2,6 +2,7 @@ const NAV_MENU = {
   Core: {
     'Overview': {
       route: '/core/overview',
+      metricKey: null,
     },
     'APY': {
       route: '/core/apy',

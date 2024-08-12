@@ -19,7 +19,6 @@ const BarChartCustom = ({
     network,
     pool,
     collateral_type,
-    showFilters,
     onChartTypeChange,  
     onDataTypeChange,
     timeFilter,
@@ -274,8 +273,6 @@ const BarChartCustom = ({
   };
 
   const renderFilters = () => {
-    if (!showFilters) return null;
-
     return (
       <div className={styles.titleMeta}>
         <p className={styles.chartSubtitle}>{network}</p>

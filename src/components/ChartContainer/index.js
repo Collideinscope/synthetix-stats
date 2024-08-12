@@ -3,9 +3,9 @@ import styles from './styles.module.css';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 
 import { GlobalContext } from '../../context/GlobalContext';
+import { useChartPage } from '../../context/ChartPageContext';
 
 import SummaryStatsPanel from '../SummaryStatsPanel';
-import SummaryStatsPanelVertical from '../SummaryStatsPanelVertical';
 import AreaChartCustom from '../AreaChartCustom';
 import RadialChart from '../RadialChart';
 import BarChartCustom from '../BarChartCustom'; 
@@ -17,19 +17,18 @@ const ChartContainer = ({
   network,
   pool,
   collateral_type,
-  showFilters,
 }) => {
-  const { state } = useContext(GlobalContext);
+  const { state: globalState } = useContext(GlobalContext);
+  const { state: pageState, dispatch } = useChartPage();
 
   const metricMetadata = METRIC_METADATA[metric];
-  const timeFilter = metricMetadata.defaultChartType === 'bar'
-    ? 'daily'
-    : 'cumulative';
-    
-  const [chartType, setChartType] = useState(metricMetadata.defaultChartType || 'area');
-  const [dataType, setDataType] = useState('cumulative');
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef(null);
+
+  const chartSettings = pageState.charts[metric] || {
+    chartType: metricMetadata.defaultChartType || 'area',
+    timeFilter: metricMetadata.defaultChartType === 'bar' ? 'daily' : 'cumulative'
+  };
 
   useEffect(() => {
     const updateWidth = () => {
@@ -45,21 +44,27 @@ const ChartContainer = ({
   }, []);
 
   const handleChartTypeChange = (newType) => {
-    setChartType(newType);
-
-    // reset data type if chart type is area
-    if (newType === 'area') {
-      setDataType('cumulative');
-    }
+    dispatch({
+      type: 'UPDATE_CHART_SETTINGS',
+      payload: {
+        metric,
+        settings: {
+          chartType: newType,
+          timeFilter: newType === 'bar' ? 'daily' : 'cumulative'
+        }
+      }
+    });
   };
 
-  const handleDataTypeChange = (newDataType) => {
-    setDataType(newDataType);
+  const handleTimeFilterChange = (newTimeFilter) => {
+    dispatch({
+      type: 'UPDATE_CHART_SETTINGS',
+      payload: {
+        metric,
+        settings: { timeFilter: newTimeFilter }
+      }
+    });
   };
-
-  const handleFilterChange = (type, option) => {
-    console.log('filter changed', type, option);
-  }
 
   const renderChart = () => {
     const commonProps = {
@@ -67,14 +72,12 @@ const ChartContainer = ({
       network,
       pool,
       collateral_type,
-      showFilters,
       onChartTypeChange: handleChartTypeChange,
-      onDataTypeChange: handleDataTypeChange,
-      timeFilter,
-      dataType,
+      onTimeFilterChange: handleTimeFilterChange,
+      timeFilter: chartSettings.timeFilter,
     };
 
-    switch (chartType) {
+    switch (chartSettings.chartType) {
       case 'bar':
         return <BarChartCustom {...commonProps} />;
       case 'radial':
@@ -85,15 +88,15 @@ const ChartContainer = ({
   };
 
   const renderSummaryStatsPanel = (
-    <SummaryStatsPanel 
-        timeFilter={timeFilter}
-        metric={metric} 
-        chartType={chartType}
-        chain={'base'}
-      />
-    );
+    <SummaryStatsPanel
+      timeFilter={chartSettings.timeFilter}
+      metric={metric}
+      chartType={chartSettings.chartType}
+      chain={'base'}
+    />
+  );
 
-  const containerClass = chartType === 'radial'
+  const containerClass = chartSettings.chartType === 'radial'
     ? 'radialContainer'
     : 'genericContainer';
 
