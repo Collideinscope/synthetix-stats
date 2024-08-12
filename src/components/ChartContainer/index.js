@@ -88,14 +88,9 @@ const ChartContainer = ({
   };
 
   const renderSummaryStatsPanel = (
-    <SummaryStatsPanel
-      timeFilter={chartSettings.timeFilter}
-      metric={metric}
-      chartType={chartSettings.chartType}
-      chain={'base'}
-    />
+    <SummaryStatsPanel metric={metric} />
   );
-
+  
   const containerClass = chartSettings.chartType === 'radial'
     ? 'radialContainer'
     : 'genericContainer';

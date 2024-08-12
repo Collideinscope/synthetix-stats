@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { GlobalContext } from '../../context/GlobalContext';
+import { useChartPage } from '../../context/ChartPageContext';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import { abbreviateNumber } from "../../helpers";
@@ -23,9 +24,10 @@ const timeFilterToSummaryKey = {
   'cumulative': 'summaryDataKey',
 }
 
-const SummaryStatsPanel = ({ timeFilter, metric, chartType, chain }) => {
-
+const SummaryStatsPanel = ({ metric }) => {
   const { state } = useContext(GlobalContext);
+  const { state: pageState } = useChartPage();
+  const chartSettings = pageState.charts[metric];
 
   const { 
     summaryDataType,
@@ -33,7 +35,7 @@ const SummaryStatsPanel = ({ timeFilter, metric, chartType, chain }) => {
     symbolLocation,
   } = METRIC_METADATA[metric];
 
-  const summaryDataKey = timeFilterToSummaryKey[timeFilter];
+  const summaryDataKey = timeFilterToSummaryKey[chartSettings.timeFilter];
   const data = state[METRIC_METADATA[metric][summaryDataKey]];
 
   if (!data || Object.keys(data).length === 0) {
@@ -65,7 +67,7 @@ const SummaryStatsPanel = ({ timeFilter, metric, chartType, chain }) => {
     return valueWithSymbol(abbreviatedValue, chartYValueSymbol, symbolLocation);
   };
 
-  const renderDeltas = chartType !== 'radial'
+  const renderDeltas = chartSettings.chartType !== 'radial'
     ? (
     <>
       <div className={styles.statItem}>

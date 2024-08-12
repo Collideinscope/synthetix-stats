@@ -15,15 +15,15 @@ import { GlobalContext } from '../../context/GlobalContext';
 import { METRIC_METADATA } from '../../constants/metrics';
 
 const BarChartCustom = ({ 
-    metric, 
-    network,
-    pool,
-    collateral_type,
-    onChartTypeChange,  
-    onDataTypeChange,
-    timeFilter,
-    dataType,
-  }) => {
+  metric, 
+  network,
+  pool,
+  collateral_type,
+  onChartTypeChange,
+  onTimeFilterChange,
+  timeFilter,
+  containerWidth,
+}) => {
   const [highlightValue, setHighlightValue] = useState(null);
 
   const { state } = useContext(GlobalContext);
@@ -133,23 +133,6 @@ const BarChartCustom = ({
     } else {
       return Math.ceil(Math.max(...chartData.map(d => d.value)) * 1.1);
     }
-  };
-
-  const formatXAxis = (tickItem, ticks) => {
-    const date = new Date(tickItem);
-  
-    // Find the first tick of each year
-    const isFirstTickOfYear = ticks.some(tick => {
-      const tickDate = new Date(tick);
-      return tickDate.getFullYear() === date.getFullYear() && tickDate.getTime() === tickItem.getTime();
-    });
-  
-    if (isFirstTickOfYear) {
-      return format(date, 'MMM d, yyyy');
-    }
-  
-    // For other ticks, return "Month Day"
-    return format(date, 'MMM d');
   };
 
   /*
@@ -271,16 +254,6 @@ const BarChartCustom = ({
       </g>
     );
   };
-
-  const renderFilters = () => {
-    return (
-      <div className={styles.titleMeta}>
-        <p className={styles.chartSubtitle}>{network}</p>
-        <p className={styles.chartSubtitle}>{pool}</p>
-        <p className={styles.chartSubtitle}>{collateral_type}</p>
-      </div>
-    );
-  }
 
   const fullScreenClass = isFullScreen 
   ? 'fullScreen'

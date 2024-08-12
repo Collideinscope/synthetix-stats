@@ -20,7 +20,8 @@ const RadialChart = ({
   network,
   pool,
   collateral_type,
-  onChartTypeChange,  
+  onChartTypeChange,
+  chartSettings,
 }) => {
   const { state } = useContext(GlobalContext);
 
@@ -63,11 +64,6 @@ const RadialChart = ({
   const latestValue = data.length > 0
   ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
   : '';
-
-  const handleApyPeriodChange = (period) => {
-    setApyPeriod(period);
-    setShowSettings(false);
-  };
 
   const ath = Math.max(...data.map(d => d[chartYAxisDataKey]));
   const atl = Math.min(...data.map(d => d[chartYAxisDataKey]));
@@ -148,16 +144,6 @@ const RadialChart = ({
       </g>
     );
   };
-
-  const renderFilters = () => {
-    return (
-      <div className={styles.titleMeta}>
-        <p className={styles.chartSubtitle}>{network}</p>
-        <p className={styles.chartSubtitle}>{pool}</p>
-        <p className={styles.chartSubtitle}>{collateral_type}</p>
-      </div>
-    );
-  }
 
   const valueAndSymbolSVG= (val) => {
     const symbolLeft = symbolLocation === 'left' ? chartYValueSymbol : '';

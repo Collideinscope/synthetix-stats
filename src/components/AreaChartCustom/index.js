@@ -15,19 +15,19 @@ import { GlobalContext } from '../../context/GlobalContext';
 import { METRIC_METADATA } from '../../constants/metrics';
 
 const AreaChartCustom = ({ 
-    metric, 
-    network,
-    pool,
-    collateral_type,
-    onChartTypeChange,  
-    onFilterChange,
-    containerWidth,
-  }) => {
+  metric, 
+  network,
+  pool,
+  collateral_type,
+  onChartTypeChange,
+  onTimeFilterChange,
+  timeFilter,
+  containerWidth,
+}) => {
   const [highlightValue, setHighlightValue] = useState(null);
   
   const { state } = useContext(GlobalContext);
 
-  const [showSettings, setShowSettings] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [openFilterMenu, setOpenFilterMenu] = useState(null);
   const [filterOptions, setFilterOptions] = useState({
@@ -270,64 +270,6 @@ const AreaChartCustom = ({
     return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
-  const renderFilterMenu = (filterType) => {
-    const renderFilterOptions = filterOptions[openFilterMenu].options
-      .map(option => {
-          const activeFilterOption = option === filterOptions[openFilterMenu].active
-            ? 'activeFilterOption'
-            : '';
-
-          return (
-            <div 
-              key={option}
-              className={`${styles.filterOption} ${styles[activeFilterOption]}`}
-              onClick={() => onFilterChange(filterType, option)}
-            >
-              {option}
-            </div>
-          );
-      });
-
-    return (
-      <div className={styles.filterMenu}>
-        {renderFilterOptions}
-      </div>
-    );
-  }
-
-  const renderFilters = () => {
-    const filterTypeElements = ['network', 'pool', 'collateral_type']
-      .map((filterType) => {
-        const openFilterClass = openFilterMenu === filterType 
-          ? styles.openFilterMenu 
-          : '';
-
-        const filterMenu = openFilterMenu === filterType 
-          ? renderFilterMenu(filterType)
-          : '';
-
-        return (
-          <div 
-            key={filterType}
-            className={styles.filterWrapper}
-            onMouseEnter={() => setOpenFilterMenu(filterType)}
-            onMouseLeave={() => setOpenFilterMenu(null)}
-          >
-            <p className={`${styles.chartSubtitle} ${openFilterClass}`}>
-              {filterOptions[filterType].active}
-            </p>
-            {filterMenu}
-          </div>
-        );
-      });
-
-    return (
-      <div className={styles.titleMeta}>
-        {filterTypeElements}
-      </div>
-    );
-  }
-
   const fullScreenClass = isFullScreen 
     ? 'fullScreen'
     : '';
@@ -348,7 +290,7 @@ const AreaChartCustom = ({
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
         <ChartHeader 
           chartTitle={chartTitle}
-          timeFilter={null}
+          timeFilter={timeFilter}
           highlightValue={highlightValue}
           latestDate={latestValueDate}
           valueAndSymbol={valueAndSymbol}
