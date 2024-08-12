@@ -1,9 +1,11 @@
 import styles from './styles.module.css';
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
+import { GlobalContext } from '../../context/GlobalContext';
 
 import { METRIC_METADATA } from '../../constants/metrics';
 import { abbreviateNumber } from "../../helpers";
@@ -15,16 +17,28 @@ const valueWithSymbol = (value, symbol, symbolLocation) => {
   return `${value}${symbol}`;
 };
 
-const SummaryStatsPanel = ({ data, metric, chartType }) => {
-  if (!data || Object.keys(data).length === 0) {
-    return null;
-  }
+const timeFilterToSummaryKey = {
+  'daily': 'summaryDataDailyKey',
+  'month': 'summaryDataMonthlyKey',
+  'cumulative': 'summaryDataKey',
+}
+
+const SummaryStatsPanel = ({ timeFilter, metric, chartType, chain }) => {
+
+  const { state } = useContext(GlobalContext);
 
   const { 
     summaryDataType,
     chartYValueSymbol,
     symbolLocation,
   } = METRIC_METADATA[metric];
+
+  const summaryDataKey = timeFilterToSummaryKey[timeFilter];
+  const data = state[METRIC_METADATA[metric][summaryDataKey]];
+
+  if (!data || Object.keys(data).length === 0) {
+    return null;
+  }
 
   const renderDelta = (value, label) => {
     const isPositive = value >= 0;

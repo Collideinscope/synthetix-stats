@@ -30,7 +30,7 @@ const NAV_MENU = {
     },
     'Volume': {
       route: '/perps/volume',
-      metricKey: 'cumulativePerpsVolume',
+      metricKey: 'perpsVolume',
     },
     'Open Interest': {
       route: '/perps/open-interest',
@@ -42,11 +42,11 @@ const NAV_MENU = {
     },
     'Exchange Fees': {
       route: '/perps/exchange-fees',
-      metricKey: 'cumulativeExchangeFees',
+      metricKey: 'exchangeFees',
     },
     'Collected Fees': {
       route: '/perps/collected-fees',
-      metricKey: 'cumulativeCollectedFees',
+      metricKey: 'collectedFees',
     },
   },
   Stakers: {

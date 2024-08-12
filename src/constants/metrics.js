@@ -103,6 +103,7 @@ const METRIC_METADATA = {
     dailyChartYAxisDataKey: 'daily_new_unique_stakers',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueStakers',
+    summaryDataDailyKey: 'summaryDataDailyUniqueStakers',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -119,16 +120,22 @@ const METRIC_METADATA = {
       return parseFloat(val).toFixed(0);
     }
   },
-  'cumulativePerpsVolume': {
-    key: 'cumulativePerpsVolume',
+  'perpsVolume': {
+    key: 'perpsVolume',
+    dailyKey: 'dailyPerpsVolume',
+    // modify to timeFilter later
+    hasDailyData: true,
     category: 'perps',
     chartTitle: 'Perps Volume',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_volume',
+    dailyChartYAxisDataKey: 'daily_volume',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativePerpsVolume',
+    summaryDataDailyKey: 'summaryDataDailyPerpsVolume',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -137,6 +144,9 @@ const METRIC_METADATA = {
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_volume);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_volume);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
@@ -186,16 +196,21 @@ const METRIC_METADATA = {
       return abbreviateNumber(val);
     }
   },
-  'cumulativeCollectedFees': {
-    key: 'cumulativeCollectedFees',
+  'collectedFees': {
+    key: 'collectedFees',
+    dailyKey: 'dailyCollectedFees',
+    hasDailyData: true,
     category: 'perps',
     chartTitle: 'Collected Fees',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_collected_fees',
+    dailyChartYAxisDataKey: 'daily_collected_fees',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativeCollectedFees',
+    summaryDataDailyKey: 'summaryDataDailyCollectedFees',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -205,20 +220,28 @@ const METRIC_METADATA = {
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_collected_fees);
     },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_collected_fees);
+    },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
     },
   },
-  'cumulativeExchangeFees': {
-    key: 'cumulativeExchangeFees',
+  'exchangeFees': {
+    key: 'exchangeFees',
+    dailyKey: 'dailyExchangeFees',
+    hasDailyData: true,
     category: 'perps',
     chartTitle: 'Exchange Fees',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_exchange_fees',
+    dailyChartYAxisDataKey: 'daily_exchange_fees',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativeExchangeFees',
+    summaryDataDailyKey: 'summaryDataDailyExchangeFees',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -227,6 +250,9 @@ const METRIC_METADATA = {
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_exchange_fees);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_exchange_fees);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);

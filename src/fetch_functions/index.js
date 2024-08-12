@@ -87,6 +87,12 @@ const API = {
   fetchSummaryDataCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees/summary', network),
   fetchCumulativeCollectedFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-collected-fees', network),
   fetchSummaryDataCumulativeCollectedFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-collected-fees/summary', network),
+  fetchDailyPerpsVolume: async (network) => API.fetchGeneralData('perp-stats/daily-volume', network),
+  fetchDailyCollectedFees: async (network) => API.fetchGeneralData('perp-stats/daily-collected-fees', network),
+  fetchDailyExchangeFees: async (network) => API.fetchGeneralData('perp-stats/daily-exchange-fees', network),
+  fetchSummaryDataDailyPerpsVolume: async (network) => API.fetchGeneralData('perp-stats/daily-volume/summary', network),
+  fetchSummaryDataDailyExchangeFees: async (network) => API.fetchGeneralData('perp-stats/daily-exchange-fees/summary', network),
+  fetchSummaryDataDailyCollectedFees: async (network) => API.fetchGeneralData('perp-stats/daily-collected-fees/summary', network),
 
   /* Perp Account Stats */
   fetchAllPerpAccountStats: async (network) => API.fetchGeneralData('perp-account-stats/all', network),

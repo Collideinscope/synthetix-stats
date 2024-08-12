@@ -12,7 +12,7 @@ const ChartHeader = ({
   valueAndSymbol, 
   CustomLegend 
 }) => {
-  console.log(latestDate)
+
   return (
     <div className={styles.chartHeader}>
       <div className={styles.titleContainer}>

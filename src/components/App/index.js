@@ -39,7 +39,7 @@ const App = () => {
             allPerpAccountStats,
             uniqueStakers,
             cumulativeUniqueTraders,
-            cumulativePerpsVolume,
+            perpsVolume,
             cumulativeExchangeFees,
             cumulativeCollectedFees,
             openInterest,
@@ -55,6 +55,12 @@ const App = () => {
             summaryDataOpenInterest,
             dailyUniqueStakers,
             summaryDataDailyUniqueStakers,
+            dailyPerpsVolume,
+            dailyCollectedFees,
+            dailyExchangeFees,
+            summaryDataDailyPerpsVolume,
+            summaryDataDailyCollectedFees,
+            summaryDataDailyExchangeFees,
           ] = await Promise.all([
             API.fetchAllAPY(),
             API.fetchAllTVL(),
@@ -80,6 +86,12 @@ const App = () => {
             API.fetchSummaryDataOpenInterest('base'),
             API.fetchDailyUniqueStakers('base'),
             API.fetchSummaryDataDailyUniqueStakers('base'),
+            API.fetchDailyPerpsVolume('base'),
+            API.fetchDailyCollectedFees('base'),
+            API.fetchDailyExchangeFees('base'),
+            API.fetchSummaryDataDailyPerpsVolume('base'),
+            API.fetchSummaryDataDailyExchangeFees('base'),
+            API.fetchSummaryDataDailyCollectedFees('base'),
           ]);
 
           const newData = {
@@ -91,7 +103,7 @@ const App = () => {
             allPerpAccountStats,
             uniqueStakers,
             cumulativeUniqueTraders,
-            cumulativePerpsVolume,
+            perpsVolume,
             cumulativeExchangeFees,
             cumulativeCollectedFees,
             openInterest,
@@ -107,6 +119,12 @@ const App = () => {
             summaryDataOpenInterest,
             dailyUniqueStakers,
             summaryDataDailyUniqueStakers,
+            dailyPerpsVolume,
+            dailyCollectedFees,
+            dailyExchangeFees,
+            summaryDataDailyPerpsVolume,
+            summaryDataDailyCollectedFees,
+            summaryDataDailyExchangeFees,
           };
 
           appDispatch({ type: 'SET_INITIAL_DATA', payload: newData });

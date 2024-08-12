@@ -22,8 +22,10 @@ const ChartContainer = ({
   const { state } = useContext(GlobalContext);
 
   const metricMetadata = METRIC_METADATA[metric];
-  const summaryData = state[metricMetadata.summaryDataKey]; 
-  const timeFilter = metricMetadata.hasDailyData ? 'daily' : 'monthly';
+  const timeFilter = metricMetadata.defaultChartType === 'bar'
+    ? 'daily'
+    : 'cumulative';
+    
   const [chartType, setChartType] = useState(metricMetadata.defaultChartType || 'area');
   const [dataType, setDataType] = useState('cumulative');
   const [containerWidth, setContainerWidth] = useState(0);
@@ -84,9 +86,10 @@ const ChartContainer = ({
 
   const renderSummaryStatsPanel = (
     <SummaryStatsPanel 
-        data={summaryData} 
+        timeFilter={timeFilter}
         metric={metric} 
         chartType={chartType}
+        chain={'base'}
       />
     );
 
