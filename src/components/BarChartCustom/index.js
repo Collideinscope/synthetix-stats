@@ -344,7 +344,7 @@ const BarChartCustom = ({
           <ResponsiveContainer width="100%" height={isFullScreen ? "100%" : 300}>
             <BarChart 
               data={chartData} 
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              margin={{ top: 20, right: 30, left: 20, bottom: -10 }}
               barSize={timeFilter === 'daily' ? 5 : 25}
             >
               <defs>

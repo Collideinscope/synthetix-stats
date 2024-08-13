@@ -74,7 +74,7 @@ const SummaryStatsPanel = ({ metric }) => {
     return valueWithSymbol(abbreviatedValue, chartYValueSymbol, symbolLocation);
   };
 
-  const renderDeltas = chartSettings.chartType !== 'radial'
+  const renderDeltas = chartSettings && chartSettings.chartType !== 'radial'
     ? (
     <>
       <div className={styles.statItem}>
@@ -100,19 +100,27 @@ const SummaryStatsPanel = ({ metric }) => {
 
   return (
     <div className={styles.container}>
-          {renderDelta(data.delta_24h, '24h')}
-          {renderDelta(data.delta_7d, '7d')}
-          {renderDelta(data.delta_28d, '28d')}
-          {renderDelta(data.delta_ytd, 'YTD')}
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>stdev</span>
-            <span className={styles.statValue}>{
-              summaryDataType === '%' 
-                ? renderValueWithSymbol(data.standard_deviation * 100)
-                : renderValueWithSymbol(data.standard_deviation)
-            }</span>
-          </div>
-          {renderDeltas}
+      <div className={styles.summaryTitleContainer}>
+        <p className={styles.summaryTitle}>
+          summary stats <span className={styles.point}>&#x2022;</span>
+        </p>
+        <p className={styles.summaryTime}>{timeFilter}</p>
+      </div>
+      <div className={styles.summaryData}>
+        {renderDelta(data.delta_24h, '24h')}
+        {renderDelta(data.delta_7d, '7d')}
+        {renderDelta(data.delta_28d, '28d')}
+        {renderDelta(data.delta_ytd, 'YTD')}
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>stdev</span>
+          <span className={styles.statValue}>{
+            summaryDataType === '%' 
+              ? renderValueWithSymbol(data.standard_deviation * 100)
+              : renderValueWithSymbol(data.standard_deviation)
+          }</span>
+        </div>
+        {renderDeltas}
+      </div>
     </div>
   );
 };

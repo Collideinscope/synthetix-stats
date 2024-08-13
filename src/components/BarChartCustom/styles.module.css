@@ -110,6 +110,12 @@
   margin-bottom: 2px;
 }
 
+.tickLabel {
+  white-space: pre-line;
+  font-size: 10px;
+  font-weight: 300;
+}
+
 .statDelta {
   display: flex;
   align-items: center;

@@ -22,6 +22,9 @@ const ChartPageContainer = ({ category, metric }) => {
 
   // Initialize charts
   useEffect(() => {
+    // reset chart context (on navigation)
+    dispatch({ type: 'RESET_CHARTS' });
+
     chartMetadata.forEach(metricKey => {
       dispatch({
         type: 'INITIALIZE_CHART',

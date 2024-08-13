@@ -13,6 +13,8 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'RESET_CHARTS':
+      return { ...initialState };
     case 'INITIALIZE_CHART':
       return {
         ...state,

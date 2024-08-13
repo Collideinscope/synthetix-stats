@@ -100,8 +100,8 @@ const ChartContainer = ({
       ref={containerRef}
       className={`${styles.container} ${styles[containerClass]}`}
     >
-      {renderSummaryStatsPanel}
       {renderChart()}
+      {renderSummaryStatsPanel}
     </div>
   );
 };
