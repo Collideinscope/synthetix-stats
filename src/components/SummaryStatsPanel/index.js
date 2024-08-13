@@ -27,15 +27,22 @@ const timeFilterToSummaryKey = {
 const SummaryStatsPanel = ({ metric }) => {
   const { state } = useContext(GlobalContext);
   const { state: pageState } = useChartPage();
-  const chartSettings = pageState.charts[metric];
 
   const { 
     summaryDataType,
     chartYValueSymbol,
     symbolLocation,
+    defaultChartType,
   } = METRIC_METADATA[metric];
 
-  const summaryDataKey = timeFilterToSummaryKey[chartSettings.timeFilter];
+  const getDefaultTimeFilter = (chartType) => {
+    return chartType === 'bar' ? 'daily' : 'cumulative';
+  };
+
+  const chartSettings = pageState.charts && pageState.charts[metric];
+  const timeFilter = chartSettings ? chartSettings.timeFilter : getDefaultTimeFilter(defaultChartType);
+
+  const summaryDataKey = timeFilterToSummaryKey[timeFilter];
   const data = state[METRIC_METADATA[metric][summaryDataKey]];
 
   if (!data || Object.keys(data).length === 0) {

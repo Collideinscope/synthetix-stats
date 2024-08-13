@@ -6,14 +6,14 @@ import ChartContainer from '../ChartContainer';
 
 import { useChartPage } from '../../context/ChartPageContext';
 
-const MultiPanel = ({ chartMetrics, pageFilters }) => {
+const MultiPanel = ({ chartMetrics }) => {
   const { state } = useChartPage();
 
   const generateChart = (metricKey) => (
     <ChartContainer
       key={metricKey}
       metric={metricKey}
-      {...pageFilters}
+      {...state.pageFilters}
       chartSettings={state.charts[metricKey]}
     />
   );

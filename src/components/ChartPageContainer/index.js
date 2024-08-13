@@ -33,22 +33,11 @@ const ChartPageContainer = ({ category, metric }) => {
     });
   }, [chartMetadata, dispatch]);
 
-  const handleFilterChange = (filter, value) => {
-    dispatch({
-      type: 'UPDATE_PAGE_FILTERS',
-      payload: { [filter]: value }
-    });
-  };
-
   return (
     <div className={styles.chartPageContainer}>
-      <ViewOptionsContainer
-        filters={state.pageFilters}
-        handleFilterChange={handleFilterChange}
-      />
+      <ViewOptionsContainer />
       <MultiPanelContainer 
         chartMetrics={chartMetadata}
-        pageFilters={state.pageFilters}
       />
     </div>
   );
