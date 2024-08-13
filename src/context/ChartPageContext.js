@@ -7,7 +7,7 @@ const initialState = {
   pageFilters: {
     network: 'base',
     pool: '1',
-    collateral_type: 'USDC'
+    collateralType: 'USDC'
   }
 };
 

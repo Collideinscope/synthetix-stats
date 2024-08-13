@@ -22,7 +22,6 @@ const AreaChartCustom = ({
   onChartTypeChange,
   onTimeFilterChange,
   timeFilter,
-  containerWidth,
 }) => {
   const [highlightValue, setHighlightValue] = useState(null);
   
@@ -62,18 +61,6 @@ const AreaChartCustom = ({
   const toggleFullScreen = () => {
     console.log(isFullScreen)
     setIsFullScreen(!isFullScreen);
-  };
-
-  const getTitleSize = () => {
-    return containerWidth < 564 
-      ? '16px'
-      : '24px';
-  };
-
-  const getLatestValueSize = () => {
-    return containerWidth < 564 
-      ? '24px'
-      : '36px';
   };
 
   const startDate = new Date(
@@ -206,17 +193,18 @@ const AreaChartCustom = ({
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       const value = payload[0].value.toFixed(2);
-      onHighlightValueChange(value);
 
       return (
         <div className={styles.tooltip}>
-          <p>{format(new Date(label), 'MMM dd, yyyy')}</p>
+          <p className={styles.tooltipDate}>
+            {format(new Date(label), 'MMM dd, yyyy')}
+          </p>
+          <p className={styles.tooltipValue}>
+            {valueAndSymbol(value)}
+          </p>
         </div>
       );
     }
-
-    onHighlightValueChange(latestValue);
-
     return null;
   };
 
@@ -291,7 +279,7 @@ const AreaChartCustom = ({
         <ChartHeader 
           chartTitle={chartTitle}
           timeFilter={timeFilter}
-          highlightValue={highlightValue}
+          highlightValue={latestValue}
           latestDate={latestValueDate}
           valueAndSymbol={valueAndSymbol}
           CustomLegend={null}
@@ -329,11 +317,6 @@ const AreaChartCustom = ({
               <Tooltip 
                 content={<CustomTooltip />}
                 cursor={<CustomCursor />}
-                onMouseMove={(e) => {
-                  if (e.activePayload && e.activePayload.length > 0) {
-                    onHighlightValueChange(e.activePayload[0].value);
-                  }
-                }}
               />
               <Area 
                 type="monotone" 

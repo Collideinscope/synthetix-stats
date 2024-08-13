@@ -41,8 +41,22 @@
   border: 1px solid var(--charts-border-and-line-colour);
   border-radius: var(--border-radius-sm);
   padding: 0 var(--block-group-padding-minimum);
-  color: var(--charts-main-cta-colour);
+  color: var(--cyan-300);
   font-size: var(--charts-title-secondary);
+}
+
+.tooltipDate {
+  color: var(--supporting-text-colour);
+  font-size: var(--font-size-supporting);
+} 
+
+.tooltipValue {
+  color: var(--cyan-300);
+  font-size: var(--font-size-copy);
+}
+
+.tooltipValue .symbol {
+  font-size: var(--font-size-supporting);
 }
 
 .largeTick {

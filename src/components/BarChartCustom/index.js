@@ -28,9 +28,7 @@ const BarChartCustom = ({
 
   const { state } = useContext(GlobalContext);
 
-  const [showSettings, setShowSettings] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [apyPeriod, setApyPeriod] = useState('28d');
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -209,17 +207,26 @@ const BarChartCustom = ({
     
         return (
           <div className={styles.tooltip}>
-            <p>{format(date, 'MMMM yyyy')}</p>
-            <p>Avg: {yValueFormatter(avgValue)}</p>
-            <p>Max: {yValueFormatter(maxValue)}</p>
+            <p className={styles.tooltipDate}>{format(date, 'MMMM yyyy')}</p>
+            <p className={styles.tooltipValue}>
+              <span className={styles.tooltipValueType}>Avg:</span> 
+              {yValueFormatter(avgValue)}
+            </p>
+            <p className={styles.tooltipValue}>
+            <span className={styles.tooltipValueType}>Max:</span> 
+            {yValueFormatter(maxValue)}
+            </p>
           </div>
         );
       } else {
         const value = payload[0].value.toFixed(2);
         return (
           <div className={styles.tooltip}>
-            <p>{format(date, 'MMMM d, yyyy')}</p>
-            <p>Value: {yValueFormatter(value)}</p>
+            <p className={styles.tooltipDate}>{format(date, 'MMMM d, yyyy')}</p>
+            <p className={styles.tooltipValue}>
+            <span className={styles.tooltipValueType}>Max:</span> 
+            {yValueFormatter(value)}
+            </p>
           </div>
         );
       }
