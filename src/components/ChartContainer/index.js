@@ -24,7 +24,7 @@ const ChartContainer = ({
   const metricMetadata = METRIC_METADATA[metric];
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef(null);
-
+console.log(metric)
   const chartSettings = pageState.charts[metric] || {
     chartType: metricMetadata.defaultChartType || 'area',
     timeFilter: metricMetadata.defaultChartType === 'bar' 
@@ -33,7 +33,7 @@ const ChartContainer = ({
         ? 'daily'
         : 'cumulative'
   };
-console.log(chartSettings)
+
   useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current) {

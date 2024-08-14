@@ -10,15 +10,15 @@ const NAV_MENU = {
     },
     'TVL': {
       route: '/core/tvl',
-      metricKey: 'allTVL'
+      metricKey: 'tvl'
     },
     'Core Delegations': {
       route: '/core/core-delegations',
-      metricKey: 'allCoreDelegations',
+      metricKey: 'coreDelegations',
     },
     'Pool Rewards': {
       route: '/core/pool-rewards',
-      metricKey: 'allPoolRewards',
+      metricKey: 'poolRewards',
     },
     'Unique Stakers': {
       route: '/core/unique-stakers',
@@ -39,7 +39,7 @@ const NAV_MENU = {
     },
     'Unique Traders': {
       route: '/perps/unique-traders',
-      metricKey: 'cumulativeUniqueTraders',
+      metricKey: 'uniqueTraders',
     },
     'Exchange Fees': {
       route: '/perps/exchange-fees',

@@ -29,7 +29,7 @@ nav {
   text-align: left; 
   color: var(--supporting-text-colour);
   font-size: var(--font-size-supporting);
-  padding-left: 16px;
+  padding-left: 36px;
 }
 
 .navItem:hover .navItemTitle {

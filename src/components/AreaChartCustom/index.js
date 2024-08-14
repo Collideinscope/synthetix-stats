@@ -43,7 +43,7 @@ const AreaChartCustom = ({
   } = metricMetadata;
   
   const dataChainFiltered = dataChainFilter(state[metric], network);
-
+  console.log(state, metric)
   const toggleFullScreen = () => {
     console.log(isFullScreen)
     setIsFullScreen(!isFullScreen);

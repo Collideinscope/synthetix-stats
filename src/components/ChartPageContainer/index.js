@@ -11,7 +11,7 @@ import { METRIC_METADATA } from '../../constants/metrics';
 
 const ChartPageContainer = ({ category, metric }) => {
   const { state, dispatch } = useChartPage();
-
+  
   // Determine which charts to display
   const chartMetadata = useMemo(() => {
     return category

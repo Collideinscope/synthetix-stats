@@ -18,15 +18,15 @@ const valueWithSymbol = (value, symbol, symbolLocation) => {
   return `${value}${symbol}`;
 };
 
-const timeFilterToSummaryKey = {
-  'daily': 'summaryDataDailyKey',
-  'month': 'summaryDataMonthlyKey',
-  'cumulative': 'summaryDataKey',
-}
-
 const SummaryStatsPanel = ({ metric }) => {
   const { state } = useContext(GlobalContext);
   const { state: pageState } = useChartPage();
+
+  const timeFilterToSummaryKey = {
+    'daily': metric === 'openInterest' ? 'summaryDataKey' : 'summaryDataDailyKey',
+    'month': 'summaryDataMonthlyKey',
+    'cumulative': 'summaryDataKey',
+  }
 
   const { 
     summaryDataType,

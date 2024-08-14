@@ -25,24 +25,33 @@ const METRIC_METADATA = {
       return parseFloat(val).toFixed(2);
     },
   },
-  'allTVL': {
-    key: 'allTVL',
+  'tvl': {
+    key: 'tvl',
+    dailyKey: 'dailyTVL',
+    hasDailyData: true,
     category: 'core',
     chartTitle: 'TVL',
-    defaultChartType: 'area',
+    defaultChartType: 'bar',
     chartType: 'radial',
     chartYValueSymbol: '$',
-    dataStartDate: null,
+    dataStartDate: '2024-01-15',
     chartYAxisDataKey: 'collateral_value',
+    dailyChartYAxisDataKey: 'daily_tvl_change',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataTVL',
+    summaryDataDailyKey: 'summaryDataDailyTVL',
     summaryDataType: 'num',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
+      return data[chain]
+        ? data[chain]
+        : [];
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.collateral_value);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_tvl_change);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
@@ -61,8 +70,9 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataPoolRewards',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data
-        .filter(item => item.chain === chain)
+      return data[chain]
+        ? data[chain]
+        : [];
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_rewards_usd);
@@ -84,7 +94,9 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataCoreDelegations',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
+      return data[chain]
+        ? data[chain]
+        : [];
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.amount_delegated);
@@ -158,37 +170,51 @@ const METRIC_METADATA = {
   },
   'openInterest': {
     key: 'openInterest',
+    dailyKey: 'dailyOpenInterest',
+    hasDailyData: true,
     category: 'perps',
     chartTitle: 'Open Interest',
-    defaultChartType: 'area',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'daily_oi',
+    // include min, max already available
+    dailyChartYAxisDataKey: 'avg_daily_oi',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataOpenInterest',
+    summaryDataDailyKey: 'summaryDataOpenInterest',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
+      return data[chain]
+        ? data[chain]
+        : [];
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.daily_oi);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.avg_daily_oi);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
     }
   },
-  'cumulativeUniqueTraders': {
-    key: 'cumulativeUniqueTraders',
+  'uniqueTraders': {
+    key: 'uniqueTraders',
+    dailyKey: 'dailyUniqueTraders',
+    hasDailyData: true,
     category: 'perps',
     chartTitle: 'Unique Traders',
-    defaultChartType: 'area',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_trader_count',
+    dailyChartYAxisDataKey: 'daily_new_unique_traders',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueTraders',
+    summaryDataDailyKey: 'summaryDataDailyUniqueTraders',
     smoothData: false,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -197,6 +223,9 @@ const METRIC_METADATA = {
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_trader_count);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_new_unique_traders);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);

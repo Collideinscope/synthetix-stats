@@ -45,6 +45,7 @@ const BarChartCustom = ({
     defaultChartType,
     dailyKey,
   } = metricMetadata;
+  console.log(dailyKey)
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
   
   const toggleFullScreen = () => {
@@ -385,7 +386,7 @@ const BarChartCustom = ({
                   <Bar dataKey="max" fill="url(#colorAPY)" fillOpacity={0.4} stackId="a" />
                 </>
               ) : (
-                <Bar dataKey="value" fill="url(#patternStripe)" />
+                <Bar dataKey="value" fill="url(#patternStripe)" stroke="black" strokeWidth={1}/>
               )}
             </BarChart>
           </ResponsiveContainer>

@@ -1,6 +1,6 @@
 const HIGHLIGHTS_METRICS = [
   'allAPY',
-  'allTVL',
+  'tvl',
   'perpsVolume',
   'openInterest',
 ];

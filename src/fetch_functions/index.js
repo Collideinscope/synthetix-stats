@@ -49,6 +49,8 @@ const API = {
   fetchLatestTVL: async (network) => API.fetchGeneralData('tvl/latest', network),
   fetchAllTVL: async (network) => API.fetchGeneralData('tvl/all', network),
   fetchSummaryDataTVL: async (network) => API.fetchGeneralData('tvl/summary', network),
+  fetchDailyTVL: async (network) => API.fetchGeneralData('tvl/daily', network),
+  fetchSummaryDataDailyTVL: async (network) => API.fetchGeneralData('tvl/daily/summary', network),
 
   /*
     Core Delegations
@@ -98,10 +100,13 @@ const API = {
   fetchAllPerpAccountStats: async (network) => API.fetchGeneralData('perp-account-stats/all', network),
   fetchCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders', network),
   fetchSummaryDataCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders/summary', network),
-
+  fetchDailyUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/daily-new-unique-traders', network),
+  fetchSummaryDataDailyUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/daily-new-unique-traders/summary', network),
+  
   /* Perp Market History */
-  fetchOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest', network),
-  fetchSummaryDataOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/summary', network),
+  fetchOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-avg', network),
+  fetchSummaryDataOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-avg/summary', network),
+  fetchDailyOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-stats', network),
 };
 
 export default API;
