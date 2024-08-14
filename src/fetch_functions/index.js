@@ -58,6 +58,8 @@ const API = {
   fetchLatestCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/latest', network),
   fetchAllCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/all', network),
   fetchSummaryDataCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/summary', network),
+  fetchDailyCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/daily', network),
+  fetchSummaryDataDailyCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/daily/summary', network),
 
   /*
     Pool Rewards
@@ -65,6 +67,8 @@ const API = {
   fetchLatestPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/latest', network),
   fetchAllPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/all', network),
   fetchSummaryDataPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/summary', network),
+  fetchDailyPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/daily', network),
+  fetchSummaryDataDailyPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/daily/summary', network),
 
   /*
     Core Account Delegations

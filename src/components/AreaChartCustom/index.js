@@ -41,11 +41,9 @@ const AreaChartCustom = ({
     dataChainFilter,
     smoothData,
   } = metricMetadata;
-  
   const dataChainFiltered = dataChainFilter(state[metric], network);
-  console.log(state, metric)
+
   const toggleFullScreen = () => {
-    console.log(isFullScreen)
     setIsFullScreen(!isFullScreen);
   };
 
@@ -87,14 +85,13 @@ const AreaChartCustom = ({
       }
       const window = array.slice(index - windowSize + 1, index + 1);
       const sum = window.reduce((acc, curr) => acc + curr[chartYAxisDataKey], 0);
-
       return {
         ...point,
         [chartYAxisDataKey]: sum / windowSize
       };
     });
   };
-    
+
   const smoothedData = smoothData
     ? smoothenData(data)
     : data;
@@ -254,7 +251,7 @@ const AreaChartCustom = ({
       </div>
     ) : '';
 
-  return (
+    return (
     <li className={`${styles.container} ${styles[fullScreenClass]}`}>
       {renderExitFullScreen}
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>

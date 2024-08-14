@@ -55,6 +55,7 @@
 
 .tooltipValueType {
   font-size: var(--font-size-supporting);
+  color: var(--supporting-text-colour) !important;
   margin-right: 4px;
 }
 
@@ -197,4 +198,8 @@
 
 .fullScreenChart .recharts-responsive-container {
   height: 100% !important;
+}
+
+.negativeValue {
+  color: var(--cyan-300) !important;
 }

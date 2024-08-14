@@ -57,17 +57,22 @@ const METRIC_METADATA = {
       return abbreviateNumber(val);
     },
   },
-  'allPoolRewards': {
-    key: 'allPoolRewards',
+  'poolRewards': {
+    key: 'poolRewards',
+    dailyKey: 'dailyPoolRewards',
+    hasDailyData: true,
     category: 'core',
     chartTitle: 'Pool Rewards',
-    defaultChartType: 'area',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_rewards_usd',
+    dailyChartYAxisDataKey: 'daily_rewards',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataPoolRewards',
+    summaryDataDailyKey: 'summaryDataDailyPoolRewards',
+    summaryDataType: 'num',
     smoothData: true,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -77,21 +82,28 @@ const METRIC_METADATA = {
     getYAxisDataPoint: (item) => {
       return parseFloat(item.cumulative_rewards_usd);
     },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_rewards);
+    },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
     }
   },
-  'allCoreDelegations': {
-    key: 'allCoreDelegations',
+  'coreDelegations': {
+    key: 'coreDelegations',
+    dailyKey: 'dailyCoreDelegations',
+    hasDailyData: true,
     category: 'core',
     chartTitle: 'Core Delegations',
-    defaultChartType: 'area',
+    defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
-    dataStartDate: null,
+    dataStartDate: '2024-03-05',
     chartYAxisDataKey: 'amount_delegated',
+    dailyChartYAxisDataKey: 'daily_delegations_change',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCoreDelegations',
+    summaryDataDailyKey: 'summaryDataDailyCoreDelegations',
     smoothData: true,
     dataChainFilter: (data, chain) => {
       return data[chain]
@@ -100,6 +112,9 @@ const METRIC_METADATA = {
     },
     getYAxisDataPoint: (item) => {
       return parseFloat(item.amount_delegated);
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_delegations_change);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);

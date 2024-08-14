@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
+import { ReferenceLine, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 import { format, parseISO, startOfMonth } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie, faChartBar, faCog, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -45,11 +45,9 @@ const BarChartCustom = ({
     defaultChartType,
     dailyKey,
   } = metricMetadata;
-  console.log(dailyKey)
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
   
   const toggleFullScreen = () => {
-    console.log(isFullScreen)
     setIsFullScreen(!isFullScreen);
   };
 
@@ -126,13 +124,14 @@ const BarChartCustom = ({
    ? getMonthlyData() 
    : getDailyData();
 
-   const yAxisUpperLimit = () => {
-    if (timeFilter === 'monthly') {
-      return Math.ceil(Math.max(...chartData.map(d => d.max)) * 1.1);
-    } else {
-      return Math.ceil(Math.max(...chartData.map(d => d.value)) * 1.1);
-    }
-  };
+  const yAxisDomain = useMemo(() => {
+    const allValues = chartData.flatMap(d => 
+      timeFilter === 'monthly' ? [d.avg, d.max] : [d.value]
+    );
+    const minValue = Math.min(0, ...allValues);
+    const maxValue = Math.max(0, ...allValues);
+    return [minValue * 1.1, maxValue * 1.1];
+  }, [chartData, timeFilter]);
 
   /*
     - first and last always display
@@ -200,33 +199,43 @@ const BarChartCustom = ({
   }
 
   const CustomTooltip = ({ active, payload }) => {
+    const isNegativeClass = val => {
+      return val < 0
+        ? 'negativeValue'
+        : '';
+    }
+
     if (active && payload && payload.length) {
       const date = payload[0].payload.date;
       if (timeFilter === 'monthly') {
         const avgValue = payload.find(p => p.dataKey === 'avg')?.value.toFixed(2);
         const maxValue = payload.find(p => p.dataKey === 'max')?.value.toFixed(2);
-    
+
         return (
           <div className={styles.tooltip}>
             <p className={styles.tooltipDate}>{format(date, 'MMMM yyyy')}</p>
             <p className={styles.tooltipValue}>
               <span className={styles.tooltipValueType}>Avg:</span> 
-              {yValueFormatter(avgValue)}
+              {valueAndSymbol(avgValue)}
             </p>
             <p className={styles.tooltipValue}>
-            <span className={styles.tooltipValueType}>Max:</span> 
-            {yValueFormatter(maxValue)}
+              <span className={styles.tooltipValueType}>Max:</span> 
+              {valueAndSymbol(maxValue)}
             </p>
           </div>
         );
       } else {
         const value = payload[0].value.toFixed(2);
+        const negativeClass = isNegativeClass(value);
+
         return (
           <div className={styles.tooltip}>
             <p className={styles.tooltipDate}>{format(date, 'MMMM d, yyyy')}</p>
-            <p className={styles.tooltipValue}>
-            <span className={styles.tooltipValueType}>Max:</span> 
-            {yValueFormatter(value)}
+            <p className={`${styles.tooltipValue} ${styles[negativeClass]}`}>
+              <span className={styles.tooltipValueType}>Max:</span> 
+              <span className={`${styles.tooltipFigure} ${styles[negativeClass]}`}>
+                {valueAndSymbol(value)}
+              </span>
             </p>
           </div>
         );
@@ -328,7 +337,8 @@ const BarChartCustom = ({
   
     return format(date, 'MMM d');
   };
-  
+
+
   return (
     <li className={`${styles.container} ${styles[fullScreenClass]}`}>
       {renderExitFullScreen}
@@ -349,13 +359,21 @@ const BarChartCustom = ({
               barSize={timeFilter === 'daily' ? 5 : 25}
             >
               <defs>
-                <pattern id="patternStripe" width="4" height="4" patternUnits="userSpaceOnUse">
+                <pattern id="patternStripePositive" width="4" height="4" patternUnits="userSpaceOnUse">
                   <rect width="4" height="4" fill="var(--cyan-300)"/>
                   <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-300)" strokeWidth={1}/>
                 </pattern>
-                <linearGradient id="colorAPY" x1="0" y1="0" x2="0" y2="1">
+                <pattern id="patternStripeNegative" width="4" height="4" patternUnits="userSpaceOnUse">
+                  <rect width="4" height="4" fill="var(--cyan-300)"/>
+                  <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-900)" strokeWidth={1}/>
+                </pattern>
+                <linearGradient id="colorAPYPositive" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
                   <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="colorAPYNegative" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--cyan-900)" stopOpacity={0.4}/>
+                  <stop offset="95%" stopColor="var(--cyan-900)" stopOpacity={0.1}/>
                 </linearGradient>
               </defs>
               <XAxis 
@@ -370,7 +388,7 @@ const BarChartCustom = ({
                 interval={'preserveStartEnd'}
               />
               <YAxis 
-                domain={[0, yAxisUpperLimit]}
+                domain={yAxisDomain}
                 tickFormatter={formatYAxis}
                 stroke="var(--charts-supporting-colour)"
                 tick={{fontSize: 'var(--charts-title-secondary)'}}
@@ -382,11 +400,35 @@ const BarChartCustom = ({
               />
               {timeFilter === 'monthly' ? (
                 <>
-                  <Bar dataKey="avg" fill="url(#patternStripe)" stackId="a" />
-                  <Bar dataKey="max" fill="url(#colorAPY)" fillOpacity={0.4} stackId="a" />
+                  <Bar dataKey="avg" fill="url(#patternStripePositive)" stackId="a">
+                    {chartData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={entry.avg >= 0 ? "url(#patternStripePositive)" : "url(#patternStripeNegative)"}
+                        fillOpacity={entry.avg >= 0 ? 1 : 0.8}
+                      />
+                    ))}
+                  </Bar>
+                  <Bar dataKey="max" fill="url(#colorAPYPositive)" fillOpacity={0.4} stackId="a">
+                    {chartData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={entry.max >= 0 ? "url(#colorAPYPositive)" : "url(#colorAPYNegative)"}
+                        fillOpacity={entry.max >= 0 ? 0.4 : 0.6}
+                      />
+                    ))}
+                  </Bar>
                 </>
               ) : (
-                <Bar dataKey="value" fill="url(#patternStripe)" stroke="black" strokeWidth={1}/>
+                <Bar dataKey="value" stroke="black" strokeWidth={1}>
+                  {chartData.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={entry.value >= 0 ? "url(#patternStripePositive)" : "url(#patternStripeNegative)"}
+                      fillOpacity={entry.value >= 0 ? 1 : 0.8}
+                    />
+                  ))}
+                </Bar>
               )}
             </BarChart>
           </ResponsiveContainer>
