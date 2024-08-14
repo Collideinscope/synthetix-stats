@@ -66,7 +66,7 @@ const BarChartCustom = ({
       [dailyChartYAxisDataKey]: getDailyChartYAxisDataPoint(item),
     }));
 
-  // Get the cumulative data
+    // Get the cumulative data
   const cumulativeData = dataChainFilter(state[metric], network);
 
   // Calculate the latest cumulative value

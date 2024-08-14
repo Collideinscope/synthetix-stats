@@ -43,7 +43,7 @@ const METRIC_METADATA = {
     defaultChartType: 'bar',
     chartType: 'radial',
     chartYValueSymbol: '$',
-    dataStartDate: '2024-01-15',
+    dataStartDate: '2024-03-26',
     chartYAxisDataKey: 'collateral_value',
     dailyChartYAxisDataKey: 'daily_tvl_change',
     symbolLocation: 'left',
