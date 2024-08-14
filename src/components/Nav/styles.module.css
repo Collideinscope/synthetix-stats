@@ -37,7 +37,7 @@ nav {
 }
 
 .navItemTitle {
-  padding: var(--block-padding-between) 0;
+  padding: var(--block-padding-internal) 0;
   margin: 0;
   border-right: 0;
   font-weight: bold;

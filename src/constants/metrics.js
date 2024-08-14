@@ -198,7 +198,7 @@ const METRIC_METADATA = {
     hasDailyData: true,
     category: 'perps',
     chartTitle: 'Open Interest',
-    defaultChartType: 'bar',
+    defaultChartType: 'area',
     chartType: 'area',
     chartYValueSymbol: '$',
     dataStartDate: null,

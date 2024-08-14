@@ -46,7 +46,6 @@ const BarChartCustom = ({
     dailyKey,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
-  console.log(metric, chartYAxisDataKey,dailyChartYAxisDataKey, timeFilter)
 
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen);
@@ -76,7 +75,6 @@ const BarChartCustom = ({
       ? getYAxisDataPoint(cumulativeData[cumulativeData.length - 1])
       : parseFloat(cumulativeData[cumulativeData.length - 1][chartYAxisDataKey])
     : 0;
-    console.log(latestCumulativeValue)
 
   const latestDate = cumulativeData.length > 0
     ? new Date(cumulativeData[cumulativeData.length - 1].ts)
