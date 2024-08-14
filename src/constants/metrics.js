@@ -107,7 +107,7 @@ const METRIC_METADATA = {
     defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
-    dataStartDate: '2024-03-05',
+    dataStartDate: '2024-03-25',
     chartYAxisDataKey: 'amount_delegated',
     dailyChartYAxisDataKey: 'daily_delegations_change',
     symbolLocation: 'left',
@@ -201,10 +201,10 @@ const METRIC_METADATA = {
     defaultChartType: 'area',
     chartType: 'area',
     chartYValueSymbol: '$',
-    dataStartDate: null,
+    dataStartDate: '2024-02-03',
     chartYAxisDataKey: 'daily_oi',
     // include min, max already available
-    dailyChartYAxisDataKey: 'avg_daily_oi',
+    dailyChartYAxisDataKey: 'daily_oi_change',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataOpenInterest',
     summaryDataDailyKey: 'summaryDataOpenInterest',
@@ -218,7 +218,7 @@ const METRIC_METADATA = {
       return parseFloat(item.daily_oi);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.avg_daily_oi);
+      return parseFloat(item.daily_oi_change);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
