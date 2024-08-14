@@ -6,7 +6,7 @@ const NAV_MENU = {
     },
     'APY': {
       route: '/core/apy',
-      metricKey: 'allAPY',
+      metricKey: 'apy',
     },
     'TVL': {
       route: '/core/tvl',

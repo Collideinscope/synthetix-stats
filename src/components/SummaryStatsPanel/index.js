@@ -36,7 +36,11 @@ const SummaryStatsPanel = ({ metric }) => {
   } = METRIC_METADATA[metric];
 
   const getDefaultTimeFilter = (chartType) => {
-    return chartType === 'bar' ? 'daily' : 'cumulative';
+    return chartType === 'bar' 
+            ? 'daily' 
+            : metric === 'apy'
+              ? 'daily' 
+              : 'cumulative';
   };
 
   const chartSettings = pageState.charts && pageState.charts[metric];

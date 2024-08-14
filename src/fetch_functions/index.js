@@ -42,6 +42,8 @@ const API = {
   fetchLatestAPY: async (network) => API.fetchGeneralData('apy/latest', network),
   fetchAllAPY: async (network) => API.fetchGeneralData('apy/all', network),
   fetchSummaryDataAPY: async (network) => API.fetchGeneralData('apy/summary', network),
+  fetchDailyAPY: async (network) => API.fetchGeneralData('apy/daily', network),
+  fetchSummaryDataDailyAPY: async (network) => API.fetchGeneralData('apy/daily/summary', network),
 
   /*
     TVL

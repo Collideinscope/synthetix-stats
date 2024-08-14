@@ -17,7 +17,8 @@ export const setCachedData = (data) => {
 
 export const getInitialState = () => {
   const defaultState = {
-    allAPY: [],
+    apy: [],
+    dailyAPY: {},
     tvl: [],
     dailyTVL: {},
     coreDelegations: [],
@@ -40,6 +41,7 @@ export const getInitialState = () => {
     openInterest: {},
     dailyOpenInterest: {},
     summaryDataAPY: {},
+    summaryDataDailyAPY: {},
     summaryDataTVL: {},
     summaryDataDailyTVL: {},
     summaryDataPoolRewards: {},

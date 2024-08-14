@@ -46,7 +46,8 @@ const BarChartCustom = ({
     dailyKey,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
-  
+  console.log(metric, chartYAxisDataKey,dailyChartYAxisDataKey, timeFilter)
+
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen);
   };
@@ -71,8 +72,11 @@ const BarChartCustom = ({
 
   // Calculate the latest cumulative value
   const latestCumulativeValue = cumulativeData.length > 0
-    ? parseFloat(cumulativeData[cumulativeData.length - 1][chartYAxisDataKey])
+    ? metric === 'apy'
+      ? getYAxisDataPoint(cumulativeData[cumulativeData.length - 1])
+      : parseFloat(cumulativeData[cumulativeData.length - 1][chartYAxisDataKey])
     : 0;
+    console.log(latestCumulativeValue)
 
   const latestDate = cumulativeData.length > 0
     ? new Date(cumulativeData[cumulativeData.length - 1].ts)
@@ -303,11 +307,15 @@ const BarChartCustom = ({
     }
 
     if (timeFilter === 'daily') {
+      const legendText = metric === 'apy'
+        ? 'Avg % Δ':
+        'Max';
+
       return (
         <div className={styles.legend}>
           <div className={styles.legendItem}>
             <div className={styles.legendColor} style={{ backgroundColor: 'var(--cyan-300)' }}></div>
-            <span className={styles.legendText}>Max</span>
+            <span className={styles.legendText}>{legendText}</span>
           </div>
         </div>
       );

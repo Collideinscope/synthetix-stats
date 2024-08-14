@@ -2,8 +2,10 @@ import { abbreviateNumber } from "../helpers";
 
 // [state metric key]: { ...metadata }
 const METRIC_METADATA = {
-  'allAPY': {
-    key: 'allAPY',
+  'apy': {
+    key: 'apy',
+    dailyKey: 'dailyAPY',
+    hasDailyData: true,
     category: 'core',
     chartTitle: 'APY',
     defaultChartType: 'area',
@@ -11,15 +13,22 @@ const METRIC_METADATA = {
     chartYValueSymbol: '%',
     dataStartDate: '2024-05-01',
     chartYAxisDataKey: 'apy_28d',
+    dailyChartYAxisDataKey: 'daily_apy_percentage_delta',
     symbolLocation: 'right',
     summaryDataKey: 'summaryDataAPY',
+    summaryDataDailyKey: 'summaryDataAPY',
     summaryDataType: '%',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data.filter(item => item.chain === chain);
+      return data[chain]
+        ? data[chain]
+        : [];
     },
     getYAxisDataPoint: (item) => {
       return item.apys['apy_28d'].year * 100;
+    },
+    getDailyChartYAxisDataPoint: (item) => {
+      return parseFloat(item.daily_apy_percentage_delta) * 100;
     },
     yValueFormatter: (val) => {
       return parseFloat(val).toFixed(2);

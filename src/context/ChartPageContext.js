@@ -3,6 +3,7 @@ import React, { createContext, useReducer, useContext } from 'react';
 const ChartPageContext = createContext();
 
 const initialState = {
+  // chart defaults here from metadata
   charts: {},
   pageFilters: {
     network: 'base',
@@ -24,7 +25,7 @@ const reducer = (state = initialState, action) => {
             chartType: action.payload.defaultChartType,
             timeFilter: action.payload.defaultChartType === 'bar' 
               ? 'daily' 
-              : action.payload.metric === 'openInterest'
+              : action.payload.metric === 'openInterest' || action.payload.metric === 'apy'
                ? 'daily'
                : 'cumulative'
           }

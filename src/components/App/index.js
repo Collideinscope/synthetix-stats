@@ -31,7 +31,8 @@ const App = () => {
           appDispatch({ type: 'SET_INITIAL_DATA', payload: cachedData });
         } else {
           const [
-            allAPY,
+            apy,
+            dailyAPY,
             tvl,
             dailyTVL,
             poolRewards,
@@ -48,6 +49,7 @@ const App = () => {
             openInterest,
             dailyOpenInterest,
             summaryDataAPY,
+            summaryDataDailyAPY,
             summaryDataTVL,
             summaryDataDailyTVL,
             summaryDataPoolRewards,
@@ -71,7 +73,8 @@ const App = () => {
             summaryDataDailyCollectedFees,
             summaryDataDailyExchangeFees,
           ] = await Promise.all([
-            API.fetchAllAPY(),
+            API.fetchAllAPY('base'),
+            API.fetchDailyAPY('base'),
             API.fetchAllTVL(),
             API.fetchDailyTVL('base'),
             API.fetchAllPoolRewards('base'),
@@ -88,6 +91,7 @@ const App = () => {
             API.fetchOpenInterest('base'),
             API.fetchDailyOpenInterest('base'),
             API.fetchSummaryDataAPY('base'),
+            API.fetchSummaryDataDailyAPY('base'),
             API.fetchSummaryDataTVL('base'),
             API.fetchSummaryDataDailyTVL('base'),
             API.fetchSummaryDataPoolRewards('base'),
@@ -113,7 +117,8 @@ const App = () => {
           ]);
 
           const newData = {
-            allAPY,
+            apy,
+            dailyAPY,
             tvl,
             dailyTVL,
             poolRewards,
@@ -130,6 +135,7 @@ const App = () => {
             openInterest,
             dailyOpenInterest,
             summaryDataAPY,
+            summaryDataDailyAPY,
             summaryDataTVL,
             summaryDataDailyTVL,
             summaryDataPoolRewards,

@@ -25,7 +25,6 @@ const RadialChart = ({
 }) => {
   const { state } = useContext(GlobalContext);
 
-  const [showSettings, setShowSettings] = useState(false);
   const [apyPeriod, setApyPeriod] = useState('28d');
 
   const metricMetadata = METRIC_METADATA[metric];
