@@ -26,9 +26,10 @@ nav {
 
 .navItem {
   width: 100%;
-  text-align: center; 
+  text-align: left; 
   color: var(--supporting-text-colour);
   font-size: var(--font-size-supporting);
+  padding-left: 16px;
 }
 
 .navItem:hover .navItemTitle {
@@ -47,7 +48,6 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--navy-800);
   width: 100%;
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
   color: var(--supporting-text-colour);

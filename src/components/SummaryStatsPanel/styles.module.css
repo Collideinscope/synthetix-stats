@@ -16,7 +16,7 @@
 .summaryTitleContainer {
   padding: 0 24px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
 }
@@ -29,7 +29,7 @@
 
 .summaryTitle {
   padding: 0;
-  color: var(--supporting-text-colour);
+  color: var(--title-colour);
   font-size: var(--font-size-supporting);
 }
 

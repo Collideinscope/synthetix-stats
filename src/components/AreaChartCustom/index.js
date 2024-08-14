@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AreaChart, Area, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, parseISO } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar, faCog, faExpand, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import ChartHeader from '../ChartHeader';
 import ChartFooter from '../ChartFooter';
@@ -28,21 +28,6 @@ const AreaChartCustom = ({
   const { state } = useContext(GlobalContext);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [openFilterMenu, setOpenFilterMenu] = useState(null);
-  const [filterOptions, setFilterOptions] = useState({
-    network: {
-      active: network,
-      options: ['base', 'ethereum', 'all'],
-    },
-    pool: {
-      active: pool,
-      options: [1, 'all'],
-    }, 
-    collateral_type: {
-      active: collateral_type,
-      options: ['USDC', 'all']
-    },
-  });
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -56,6 +41,7 @@ const AreaChartCustom = ({
     dataChainFilter,
     smoothData,
   } = metricMetadata;
+  
   const dataChainFiltered = dataChainFilter(state[metric], network);
 
   const toggleFullScreen = () => {
@@ -91,10 +77,6 @@ const AreaChartCustom = ({
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);
-
-  const onHighlightValueChange = (value) => {
-    setHighlightValue(value);
-  }
 
   // 7day moving average expecting hourly data
   const smoothenData = (data, windowSize = 168) => {

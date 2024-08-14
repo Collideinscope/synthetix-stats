@@ -22,7 +22,11 @@ const reducer = (state = initialState, action) => {
           ...state.charts,
           [action.payload.metric]: {
             chartType: action.payload.defaultChartType,
-            timeFilter: action.payload.defaultChartType === 'bar' ? 'daily' : 'cumulative'
+            timeFilter: action.payload.defaultChartType === 'bar' 
+              ? 'daily' 
+              : action.payload.metric === 'openInterest'
+               ? 'daily'
+               : 'cumulative'
           }
         }
       };
