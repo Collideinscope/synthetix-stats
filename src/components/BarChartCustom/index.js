@@ -67,7 +67,7 @@ const BarChartCustom = ({
     }));
 
     const latestValue = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
-    ? parseFloat(cumulativeDataFiltered[cumulativeDataFiltered.length - 1][chartYAxisDataKey]).toFixed(2)
+    ? getYAxisDataPoint(cumulativeDataFiltered[cumulativeDataFiltered.length - 1]).toFixed(2)
     : '';
 
   const latestDate = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
