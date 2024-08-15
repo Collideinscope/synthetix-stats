@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +21,8 @@ const valueWithSymbol = (value, symbol, symbolLocation) => {
 const SummaryStatsPanel = ({ metric }) => {
   const { state } = useContext(GlobalContext);
   const { state: pageState } = useChartPage();
+
+
 
   const timeFilterToSummaryKey = {
     'daily': metric === 'openInterest' ? 'summaryDataKey' : 'summaryDataDailyKey',
@@ -51,7 +53,7 @@ const SummaryStatsPanel = ({ metric }) => {
     ? state[METRIC_METADATA[metric][summaryDataKey]]
     : [];
 
-    const renderDelta = (value, label) => {
+  const renderDelta = (value, label) => {
     if (!value) { return ''; }
 
     const isPositive = value >= 0;
@@ -83,7 +85,7 @@ const SummaryStatsPanel = ({ metric }) => {
 
   const renderDeltas = () => {
     if (!chartSettings || chartSettings.chartType === 'radial'
-        || !data.atl || !data.ath || !data.ath_percentage
+        || (!data.atl && data.atl !== 0) || (!data.ath && data.ath !== 0)
     ) {
       return '';
     }
