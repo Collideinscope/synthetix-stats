@@ -43,8 +43,13 @@ const BarChartCustom = ({
     dataChainFilter,
     defaultChartType,
     dailyKey,
+    key,
   } = metricMetadata;
+  // daily dailyData
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
+
+  // cumulative dailyData
+  const cumulativeDataFiltered = dataChainFilter(state[key], network);
 
   const startDate = new Date(
     dataStartDate
@@ -54,30 +59,24 @@ const BarChartCustom = ({
         : '2024-01-01' // default start date
   );
 
-  const data = dataChainFiltered
+  const dailyData = dataChainFiltered
     .filter(item => new Date(item.ts) >= startDate) 
     .map(item => ({
       timestamp: parseISO(item.ts),
       [dailyChartYAxisDataKey]: getDailyChartYAxisDataPoint(item),
     }));
 
-    // Get the cumulative data
-  const cumulativeData = dataChainFilter(state[metric], network);
+    const latestValue = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
+    ? parseFloat(cumulativeDataFiltered[cumulativeDataFiltered.length - 1][chartYAxisDataKey]).toFixed(2)
+    : '';
 
-  // Calculate the latest cumulative value
-  const latestCumulativeValue = cumulativeData.length > 0
-    ? metric === 'apy'
-      ? getYAxisDataPoint(cumulativeData[cumulativeData.length - 1])
-      : parseFloat(cumulativeData[cumulativeData.length - 1][chartYAxisDataKey])
-    : 0;
-
-  const latestDate = cumulativeData.length > 0
-    ? new Date(cumulativeData[cumulativeData.length - 1].ts)
+  const latestDate = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
+    ? new Date(cumulativeDataFiltered[cumulativeDataFiltered.length - 1].ts)
     : new Date();
 
   useEffect(() => {
-    setHighlightValue(latestCumulativeValue.toFixed(2));
-  }, [latestCumulativeValue]);
+    setHighlightValue(latestValue);
+  }, [latestValue]);
 
   const valueAndSymbol = (val) => {
     const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
@@ -87,7 +86,7 @@ const BarChartCustom = ({
   }
 
   const getDailyData = () => {
-    return data.map(item => ({
+    return dailyData.map(item => ({
       date: item.timestamp,
       value: item[metricMetadata.dailyChartYAxisDataKey],
     }));
@@ -96,7 +95,7 @@ const BarChartCustom = ({
   const getMonthlyData = () => {
     const monthlyData = {};
     
-    data.forEach(item => {
+    dailyData.forEach(item => {
       const monthStart = startOfMonth(item.timestamp);
       const monthKey = format(monthStart, 'yyyy-MM');
   
@@ -136,15 +135,15 @@ const BarChartCustom = ({
     - then first and middle of every month with month day
     - if jan then month day, year
   */
-  const getTicksToShow = (data) => {
+  const getTicksToShow = (dailyData) => {
     const ticks = [];
     const months = new Set();
     const monthCounts = {};
 
-    data.forEach((item, index) => {
+    dailyData.forEach((item, index) => {
       const date = new Date(item.date);
       const firstItem = index === 0;
-      const lastItem = index === data.length - 1;
+      const lastItem = index === dailyData.length - 1;
 
       // Always include the first and last ticks
       if (firstItem || lastItem) {
@@ -155,7 +154,7 @@ const BarChartCustom = ({
       const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
       const day = date.getDate();
 
-      // Include the first data point of the month
+      // Include the first dailyData point of the month
       if (!months.has(monthKey)) {
         ticks.push(item.date);
         months.add(monthKey);

@@ -60,14 +60,14 @@ const AreaChartCustom = ({
       }
     });
 
-    const latestValue = data.length > 0
+  const latestValue = data && data.length > 0
     ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
     : '';
 
-  const latestValueDate = data.length > 0
+  const latestValueDate = data && data.length > 0
     ? format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')
     : '';
-  
+
   useEffect(() => {
     setHighlightValue(latestValue);
   }, [latestValue]);
@@ -258,7 +258,7 @@ const AreaChartCustom = ({
         <ChartHeader 
           chartTitle={chartTitle}
           timeFilter={timeFilter}
-          highlightValue={latestValue}
+          highlightValue={highlightValue}
           latestDate={latestValueDate}
           valueAndSymbol={valueAndSymbol}
           CustomLegend={null}
