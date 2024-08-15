@@ -21,7 +21,10 @@ const RadialChart = ({
   pool,
   collateral_type,
   onChartTypeChange,
-  chartSettings,
+  onTimeFilterChange,
+  timeFilter,
+  isFullScreen,
+  toggleFullScreen,
 }) => {
   const { state } = useContext(GlobalContext);
 
@@ -165,7 +168,7 @@ const RadialChart = ({
     <li className={styles.container}>
       <ChartHeader 
         chartTitle={chartTitle}
-        timeFilter={null}
+        timeFilter={timeFilter}
         highlightValue={null}
         latestDate={latestValueDate}
         valueAndSymbol={valueAndSymbol}
