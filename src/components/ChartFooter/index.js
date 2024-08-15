@@ -24,8 +24,8 @@ const ChartFooter = ({
         <FontAwesomeIcon icon={faExpand} />
       </div>
     ) : '';
-console.log(isFullScreen)
-  return (
+
+    return (
     <div className={styles.chartFooter}>
       <div className={styles.chartIconsLeft}>
         {expandIcon}
