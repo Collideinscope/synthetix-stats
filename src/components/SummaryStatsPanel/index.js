@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState, } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -21,8 +21,7 @@ const valueWithSymbol = (value, symbol, symbolLocation) => {
 const SummaryStatsPanel = ({ metric }) => {
   const { state } = useContext(GlobalContext);
   const { state: pageState } = useChartPage();
-
-
+  const [summaryData, setSummaryData] = useState({});
 
   const timeFilterToSummaryKey = {
     'daily': metric === 'openInterest' ? 'summaryDataKey' : 'summaryDataDailyKey',
@@ -48,10 +47,12 @@ const SummaryStatsPanel = ({ metric }) => {
   const chartSettings = pageState.charts && pageState.charts[metric];
   const timeFilter = chartSettings ? chartSettings.timeFilter : getDefaultTimeFilter(defaultChartType);
 
-  const summaryDataKey = timeFilterToSummaryKey[timeFilter];
-  const data = state[METRIC_METADATA[metric][summaryDataKey]] 
-    ? state[METRIC_METADATA[metric][summaryDataKey]]
-    : [];
+  useEffect(() => {
+    const summaryDataKey = timeFilterToSummaryKey[timeFilter];
+    const data = state[METRIC_METADATA[metric][summaryDataKey]] || {};
+
+    setSummaryData(data);
+  }, [state, metric, timeFilter]);
 
   const renderDelta = (value, label) => {
     if (!value) { return ''; }
@@ -85,7 +86,7 @@ const SummaryStatsPanel = ({ metric }) => {
 
   const renderDeltas = () => {
     if (!chartSettings || chartSettings.chartType === 'radial'
-        || (!data.atl && data.atl !== 0) || (!data.ath && data.ath !== 0)
+        || (!summaryData.atl && summaryData.atl !== 0) || (!summaryData.ath && summaryData.ath !== 0)
     ) {
       return '';
     }
@@ -96,34 +97,34 @@ const SummaryStatsPanel = ({ metric }) => {
           <span className={styles.statLabel}>ATL</span>
           <span className={styles.statValue}>{
             summaryDataType === '%' 
-              ? renderValueWithSymbol(data.atl * 100)
-              : renderValueWithSymbol(data.atl)
+              ? renderValueWithSymbol(summaryData.atl * 100)
+              : renderValueWithSymbol(summaryData.atl)
           }</span>
-          <span className={styles.statDelta}>{renderDelta(data.atl_percentage)}</span>
+          <span className={styles.statDelta}>{renderDelta(summaryData.atl_percentage)}</span>
         </div>
         <div className={styles.statItem}>
           <span className={styles.statLabel}>ATH</span>
           <span className={styles.statValue}>{
             summaryDataType === '%' 
-              ? renderValueWithSymbol(data.ath * 100)
-              : renderValueWithSymbol(data.ath)
+              ? renderValueWithSymbol(summaryData.ath * 100)
+              : renderValueWithSymbol(summaryData.ath)
           }</span>
-          <span className={styles.statDelta}>{renderDelta(data.ath_percentage)}</span>
+          <span className={styles.statDelta}>{renderDelta(summaryData.ath_percentage)}</span>
         </div>
       </>
     );
   }
 
   const renderStdDev = () => {
-    if (!data.standard_deviation) { return ''; }
+    if (!summaryData.standard_deviation) { return ''; }
 
     return (
       <div className={styles.statItem}>
         <span className={styles.statLabel}>stdev</span>
         <span className={styles.statValue}>{
           summaryDataType === '%' 
-            ? renderValueWithSymbol(data.standard_deviation * 100)
-            : renderValueWithSymbol(data.standard_deviation)
+            ? renderValueWithSymbol(summaryData.standard_deviation * 100)
+            : renderValueWithSymbol(summaryData.standard_deviation)
         }</span>
       </div>
     )
@@ -138,10 +139,10 @@ const SummaryStatsPanel = ({ metric }) => {
         <p className={styles.summaryTime}>{timeFilter}</p>
       </div>
       <div className={styles.summaryData}>
-        {renderDelta(data.delta_24h, '24h')}
-        {renderDelta(data.delta_7d, '7d')}
-        {renderDelta(data.delta_28d, '28d')}
-        {renderDelta(data.delta_ytd, 'YTD')}
+        {renderDelta(summaryData.delta_24h, '24h')}
+        {renderDelta(summaryData.delta_7d, '7d')}
+        {renderDelta(summaryData.delta_28d, '28d')}
+        {renderDelta(summaryData.delta_ytd, 'YTD')}
         {renderStdDev()}
         {renderDeltas()}
       </div>

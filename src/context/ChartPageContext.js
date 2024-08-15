@@ -6,15 +6,7 @@ const ChartPageContext = createContext();
 
 const initialState = {
   // chart defaults here from metadata
-  charts: Object.entries(METRIC_METADATA)
-    .reduce((acc, [key, obj]) => {
-      acc[key] = {
-        summaryDataKey: '',
-        summaryDataDailyKey: '',
-      }
-
-      return acc;
-    }, {}),
+  charts: {},
   pageFilters: {
     network: 'base',
     pool: '1',
