@@ -1,10 +1,20 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
+import { METRIC_METADATA } from '../constants/metrics';
+
 const ChartPageContext = createContext();
 
 const initialState = {
   // chart defaults here from metadata
-  charts: {},
+  charts: Object.entries(METRIC_METADATA)
+    .reduce((acc, [key, obj]) => {
+      acc[key] = {
+        summaryDataKey: '',
+        summaryDataDailyKey: '',
+      }
+
+      return acc;
+    }, {}),
   pageFilters: {
     network: 'base',
     pool: '1',

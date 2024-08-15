@@ -157,7 +157,9 @@ const RadialChart = ({
     return <>{symbolLeft}{yValueFormatter(val)}{symbolRight}</>;
   }
 
-  const latestValueDate = new Date(data[data.length - 1].timestamp);
+  const latestValueDate = data.length > 0
+    ? format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')
+    : '';
 
   return (
     <li className={styles.container}>
@@ -174,7 +176,7 @@ const RadialChart = ({
           <div className={styles.centerBubble}>
             <span className={styles.centerValue}>{valueAndSymbol(latestValue)}</span>
             <p className={styles.latestValueDate}>
-              {format(latestValueDate, 'MMM d, yyyy')}
+              {latestValueDate}
             </p>
           </div>
           <RadialBarChart

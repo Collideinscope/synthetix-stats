@@ -47,13 +47,13 @@ const SummaryStatsPanel = ({ metric }) => {
   const timeFilter = chartSettings ? chartSettings.timeFilter : getDefaultTimeFilter(defaultChartType);
 
   const summaryDataKey = timeFilterToSummaryKey[timeFilter];
-  const data = state[METRIC_METADATA[metric][summaryDataKey]];
+  const data = state[METRIC_METADATA[metric][summaryDataKey]] 
+    ? state[METRIC_METADATA[metric][summaryDataKey]]
+    : [];
 
-  if (!data || Object.keys(data).length === 0) {
-    return null;
-  }
+    const renderDelta = (value, label) => {
+    if (!value) { return ''; }
 
-  const renderDelta = (value, label) => {
     const isPositive = value >= 0;
     const icon = isPositive ? faCaretUp : faCaretDown;
     const colorClass = isPositive ? styles.positive : styles.negative;
@@ -74,33 +74,58 @@ const SummaryStatsPanel = ({ metric }) => {
   };
 
   const renderValueWithSymbol = (value) => {
+    if (!value) { return ''; }
+
     const abbreviatedValue = abbreviateNumber(value);
+
     return valueWithSymbol(abbreviatedValue, chartYValueSymbol, symbolLocation);
   };
 
-  const renderDeltas = chartSettings && chartSettings.chartType !== 'radial'
-    ? (
-    <>
+  const renderDeltas = () => {
+    if (!chartSettings || chartSettings.chartType === 'radial'
+        || !data.atl || !data.ath || !data.ath_percentage
+    ) {
+      return '';
+    }
+
+    return (
+      <>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>ATL</span>
+          <span className={styles.statValue}>{
+            summaryDataType === '%' 
+              ? renderValueWithSymbol(data.atl * 100)
+              : renderValueWithSymbol(data.atl)
+          }</span>
+          <span className={styles.statDelta}>{renderDelta(data.atl_percentage)}</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>ATH</span>
+          <span className={styles.statValue}>{
+            summaryDataType === '%' 
+              ? renderValueWithSymbol(data.ath * 100)
+              : renderValueWithSymbol(data.ath)
+          }</span>
+          <span className={styles.statDelta}>{renderDelta(data.ath_percentage)}</span>
+        </div>
+      </>
+    );
+  }
+
+  const renderStdDev = () => {
+    if (!data.standard_deviation) { return ''; }
+
+    return (
       <div className={styles.statItem}>
-        <span className={styles.statLabel}>ATL</span>
+        <span className={styles.statLabel}>stdev</span>
         <span className={styles.statValue}>{
           summaryDataType === '%' 
-            ? renderValueWithSymbol(data.atl * 100)
-            : renderValueWithSymbol(data.atl)
+            ? renderValueWithSymbol(data.standard_deviation * 100)
+            : renderValueWithSymbol(data.standard_deviation)
         }</span>
-        <span className={styles.statDelta}>{renderDelta(data.atl_percentage)}</span>
       </div>
-      <div className={styles.statItem}>
-        <span className={styles.statLabel}>ATH</span>
-        <span className={styles.statValue}>{
-          summaryDataType === '%' 
-            ? renderValueWithSymbol(data.ath * 100)
-            : renderValueWithSymbol(data.ath)
-        }</span>
-        <span className={styles.statDelta}>{renderDelta(data.ath_percentage)}</span>
-      </div>
-    </>
-    ) : '';
+    )
+  }
 
   return (
     <div className={styles.container}>
@@ -115,15 +140,8 @@ const SummaryStatsPanel = ({ metric }) => {
         {renderDelta(data.delta_7d, '7d')}
         {renderDelta(data.delta_28d, '28d')}
         {renderDelta(data.delta_ytd, 'YTD')}
-        <div className={styles.statItem}>
-          <span className={styles.statLabel}>stdev</span>
-          <span className={styles.statValue}>{
-            summaryDataType === '%' 
-              ? renderValueWithSymbol(data.standard_deviation * 100)
-              : renderValueWithSymbol(data.standard_deviation)
-          }</span>
-        </div>
-        {renderDeltas}
+        {renderStdDev()}
+        {renderDeltas()}
       </div>
     </div>
   );
