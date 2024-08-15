@@ -45,10 +45,12 @@ const Header = ({ navRef }) => {
         />;
     
     return (
-      <section className={styles.navIconSection}>
+      <section 
+        className={styles.navIconSection} 
+        onClick={handleNavOpen}
+      >
         <span 
           className={styles.navIcon}
-          onClick={handleNavOpen}
         >
           {navIcon}
         </span>

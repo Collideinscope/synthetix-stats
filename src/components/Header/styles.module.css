@@ -50,16 +50,7 @@ h1 {
 }
 
 .navIcon {
-  cursor: pointer;
   color: var(--supporting-text-colour);
-}
-
-.navIcon:hover {
-  color: var(--title-colour);
-}
-
-.navIconSection .fa-bars:hover {
-  color: var(--title-colour);
 }
 
 .icons {
@@ -120,5 +111,10 @@ h1 {
     border: 1px solid var(--border-and-line-colour);
     padding: var(--block-group-padding-minimum) var(--block-padding-between);
     border-radius: var(--border-radius-sm);
+    cursor: pointer;
   }
+
+  .navIconSection:hover {
+    background-color: var(--whiteAlpha-50);
+  } 
 }
