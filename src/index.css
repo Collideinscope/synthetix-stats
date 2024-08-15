@@ -25,8 +25,10 @@ html, body {
   padding: 0;
   margin: 0;
   box-sizing: border-box !important;
+  min-width: 480px !important;
   min-height: 100vh;
   height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -102,4 +104,10 @@ FontAwesomeIcon {
 /* For extra small screens (sm) */
 @media (min-width: 480) and (max-width: 991px) {
 
+}
+
+@media (max-width: 480px) {
+  body {
+    width: 480px;
+  }
 }
