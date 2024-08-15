@@ -316,10 +316,6 @@ const BarChartCustom = ({
     return null;
   };
 
-  if (!data || data.length === 0) {
-    return '';
-  }
-
   const xAxisTicks = getTicksToShow(chartData);
   const formattedTicks = getFormattedTicks(xAxisTicks);
 
