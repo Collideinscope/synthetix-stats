@@ -169,10 +169,14 @@ const AreaChartCustom = ({
     if (active && payload && payload.length) {
       const value = payload[0].value.toFixed(2);
 
+      const dateLabel = !label 
+        ? ''
+        : format(new Date(label), 'MMM dd, yyyy');
+
       return (
         <div className={styles.tooltip}>
           <p className={styles.tooltipDate}>
-            {format(new Date(label), 'MMM dd, yyyy')}
+            {dateLabel}
           </p>
           <p className={styles.tooltipValue}>
             {valueAndSymbol(value)}
