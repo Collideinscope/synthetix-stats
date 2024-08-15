@@ -251,7 +251,7 @@ const AreaChartCustom = ({
       </div>
     ) : '';
 
-    return (
+  return (
     <li className={`${styles.container} ${styles[fullScreenClass]}`}>
       {renderExitFullScreen}
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>

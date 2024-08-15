@@ -382,13 +382,15 @@ const BarChartCustom = ({
                 ticks={xAxisTicks}
                 interval={'preserveStartEnd'}
               />
-              <YAxis 
-                domain={yAxisDomain}
-                tickFormatter={formatYAxis}
-                stroke="var(--charts-supporting-colour)"
-                tick={{fontSize: 'var(--charts-title-secondary)'}}
-                style={{ fontSize: '12px' }}
-              />
+              {chartData.length > 0 && (
+                <YAxis 
+                  domain={yAxisDomain}
+                  tickFormatter={formatYAxis}
+                  stroke="var(--charts-supporting-colour)"
+                  tick={{fontSize: 'var(--charts-title-secondary)'}}
+                  style={{ fontSize: '12px' }}
+                />
+              )}
               <Tooltip 
                 content={<CustomTooltip />}
                 cursor={<CustomCursor />}
