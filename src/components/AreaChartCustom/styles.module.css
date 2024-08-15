@@ -207,6 +207,7 @@
   cursor: pointer;
   z-index: 1001;
   padding-right: var(--block-padding-between);
+  padding-top: var(--block-padding-internal);
 }
 
 .exitIcon:hover {

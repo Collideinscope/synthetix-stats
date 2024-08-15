@@ -22,12 +22,12 @@ const AreaChartCustom = ({
   onChartTypeChange,
   onTimeFilterChange,
   timeFilter,
+  isFullScreen,
+  toggleFullScreen,
 }) => {
   const [highlightValue, setHighlightValue] = useState(null);
   
   const { state } = useContext(GlobalContext);
-
-  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -42,10 +42,6 @@ const AreaChartCustom = ({
     smoothData,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[metric], network);
-
-  const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
-  };
 
   const startDate = new Date(
     dataStartDate
@@ -325,6 +321,7 @@ const AreaChartCustom = ({
         onChartTypeChange={onChartTypeChange}
         activeChartType="area"
         toggleFullScreen={toggleFullScreen}
+        isFullScreen={isFullScreen}
       />
     </li>
   );

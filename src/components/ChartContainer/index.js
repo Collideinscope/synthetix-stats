@@ -23,6 +23,7 @@ const ChartContainer = ({
 
   const metricMetadata = METRIC_METADATA[metric];
   const [containerWidth, setContainerWidth] = useState(0);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const containerRef = useRef(null);
 
   const chartSettings = pageState.charts[metric] || {
@@ -47,7 +48,7 @@ const ChartContainer = ({
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const handleChartTypeChange = (newType) => {
+  const handleChartTypeChange = (newType, isFullScreen) => {
     dispatch({
       type: 'UPDATE_CHART_SETTINGS',
       payload: {
@@ -58,6 +59,8 @@ const ChartContainer = ({
         }
       }
     });
+
+    setIsFullScreen(isFullScreen)
   };
 
   const handleTimeFilterChange = (newTimeFilter) => {
@@ -70,6 +73,10 @@ const ChartContainer = ({
     });
   };
 
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
+  };
+
   const renderChart = () => {
     const commonProps = {
       metric,
@@ -79,6 +86,8 @@ const ChartContainer = ({
       onChartTypeChange: handleChartTypeChange,
       onTimeFilterChange: handleTimeFilterChange,
       timeFilter: chartSettings.timeFilter,
+      isFullScreen: isFullScreen,
+      toggleFullScreen: toggleFullScreen,
     };
 
     switch (chartSettings.chartType) {
@@ -105,7 +114,7 @@ const ChartContainer = ({
       className={`${styles.container} ${styles[containerClass]}`}
     >
       {renderChart()}
-      {renderSummaryStatsPanel}
+      {!isFullScreen && renderSummaryStatsPanel}
     </div>
   );
 };

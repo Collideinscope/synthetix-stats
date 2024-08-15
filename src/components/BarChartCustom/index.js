@@ -22,13 +22,12 @@ const BarChartCustom = ({
   onChartTypeChange,
   onTimeFilterChange,
   timeFilter,
-  containerWidth,
+  isFullScreen,
+  toggleFullScreen,
 }) => {
   const [highlightValue, setHighlightValue] = useState(null);
 
   const { state } = useContext(GlobalContext);
-
-  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const metricMetadata = METRIC_METADATA[metric];
   const {
@@ -46,10 +45,6 @@ const BarChartCustom = ({
     dailyKey,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
-
-  const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
-  };
 
   const startDate = new Date(
     dataStartDate
@@ -275,8 +270,8 @@ const BarChartCustom = ({
   };
 
   const fullScreenClass = isFullScreen 
-  ? 'fullScreen'
-  : '';
+    ? 'fullScreen'
+    : '';
 
   const renderExitFullScreen = isFullScreen 
     ? (
@@ -343,7 +338,6 @@ const BarChartCustom = ({
   
     return format(date, 'MMM d');
   };
-
 
   return (
     <li className={`${styles.container} ${styles[fullScreenClass]}`}>
@@ -444,6 +438,7 @@ const BarChartCustom = ({
         onChartTypeChange={onChartTypeChange}
         activeChartType="bar"
         toggleFullScreen={toggleFullScreen}
+        isFullScreen={isFullScreen}      
       />
     </li>
   );

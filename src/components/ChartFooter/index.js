@@ -5,12 +5,17 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie, faChartBar, faExpand } from '@fortawesome/free-solid-svg-icons';
 
-const ChartFooter = ({ onChartTypeChange, activeChartType, toggleFullScreen }) => {
+const ChartFooter = ({ 
+  onChartTypeChange, 
+  activeChartType, 
+  toggleFullScreen,
+  isFullScreen 
+}) => {
   const handleToggleFullScreen = () => {
     toggleFullScreen()
   };
 
-  const expandIcon = activeChartType !== 'radial'
+  const expandIcon = activeChartType !== 'radial' && !isFullScreen
     ? (
       <div
         className={`${styles.chartIcon}`}
@@ -19,7 +24,7 @@ const ChartFooter = ({ onChartTypeChange, activeChartType, toggleFullScreen }) =
         <FontAwesomeIcon icon={faExpand} />
       </div>
     ) : '';
-
+console.log(isFullScreen)
   return (
     <div className={styles.chartFooter}>
       <div className={styles.chartIconsLeft}>
@@ -28,13 +33,13 @@ const ChartFooter = ({ onChartTypeChange, activeChartType, toggleFullScreen }) =
       <div className={styles.chartIconsRight}>
         <div
           className={`${styles.chartIcon} ${activeChartType === 'area' ? styles.active : ''}`}
-          onClick={() => onChartTypeChange('area')}
+          onClick={() => onChartTypeChange('area', isFullScreen)}
         >
           <FontAwesomeIcon icon={faChartLine} />
         </div>
         <div
           className={`${styles.chartIcon} ${activeChartType === 'bar' ? styles.active : ''}`}
-          onClick={() => onChartTypeChange('bar')}
+          onClick={() => onChartTypeChange('bar', isFullScreen)}
         >
           <FontAwesomeIcon icon={faChartBar} />
         </div>
