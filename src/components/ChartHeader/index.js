@@ -12,7 +12,7 @@ const ChartHeader = ({
   valueAndSymbol, 
   CustomLegend 
 }) => {
-if (chartTitle === 'APY') { console.log(highlightValue)}
+
   const renderTimeFilter = chartTitle === 'APY'
     ? 'daily'
     : timeFilter;
