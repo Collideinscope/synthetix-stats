@@ -1,175 +1,28 @@
 import styles from './styles.module.css';
 
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useState, useEffect, useReducer, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { globalReducer, globalInitialState } from '../../reducers/globalReducer';
 import { GlobalContext } from '../../context/GlobalContext';
 import { ChartPageProvider } from '../../context/ChartPageContext';
+import useInitialDataFetch from '../../hooks/useInitialDataFetch';
 
 import Header from '../Header';
 import Footer from '../Footer';
 import HighlightsContainer from '../HighlightsContainer';
 import ChartPageContainer from '../ChartPageContainer';
 
-import { getCachedData, setCachedData } from '../../utils/cache';
-
-import API from '../../fetch_functions';
 import { NAV_MENU } from '../../constants';
 
 const App = () => {
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
   const navRef = useRef(null);
   const footerRef = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const cachedData = getCachedData();
-
-        if (cachedData) {
-          appDispatch({ type: 'SET_INITIAL_DATA', payload: cachedData });
-        } else {
-          const [
-            apy,
-            dailyAPY,
-            tvl,
-            dailyTVL,
-            poolRewards,
-            dailyPoolRewards,
-            coreDelegations,
-            dailyCoreDelegations,
-            allPerpStats,
-            allPerpAccountStats,
-            uniqueStakers,
-            uniqueTraders,
-            perpsVolume,
-            exchangeFees,
-            collectedFees,
-            openInterest,
-            dailyOpenInterest,
-            summaryDataAPY,
-            summaryDataDailyAPY,
-            summaryDataTVL,
-            summaryDataDailyTVL,
-            summaryDataPoolRewards,
-            summaryDataDailyPoolRewards,
-            summaryDataCoreDelegations,
-            summaryDataDailyCoreDelegations,
-            summaryDataUniqueStakers,
-            summaryDataUniqueTraders,
-            summaryDataCumulativePerpsVolume,
-            summaryDataCumulativeExchangeFees,
-            summaryDataCumulativeCollectedFees,
-            summaryDataOpenInterest,
-            dailyUniqueStakers,
-            summaryDataDailyUniqueStakers,
-            dailyUniqueTraders,
-            summaryDataDailyUniqueTraders,
-            dailyPerpsVolume,
-            dailyCollectedFees,
-            dailyExchangeFees,
-            summaryDataDailyPerpsVolume,
-            summaryDataDailyCollectedFees,
-            summaryDataDailyExchangeFees,
-          ] = await Promise.all([
-            API.fetchAllAPY('base'),
-            API.fetchDailyAPY('base'),
-            API.fetchAllTVL(),
-            API.fetchDailyTVL('base'),
-            API.fetchAllPoolRewards('base'),
-            API.fetchDailyPoolRewards('base'),
-            API.fetchAllCoreDelegations(),
-            API.fetchDailyCoreDelegations('base'),
-            API.fetchAllPerpStats('base'),
-            API.fetchAllPerpAccountStats('base'),
-            API.fetchCumulativeUniqueStakers(),
-            API.fetchCumulativeUniqueTraders('base'),
-            API.fetchCumulativePerpsVolume('base'),
-            API.fetchCumulativeExchangeFees('base'),
-            API.fetchCumulativeCollectedFees('base'),
-            API.fetchOpenInterest('base'),
-            API.fetchDailyOpenInterest('base'),
-            API.fetchSummaryDataAPY('base'),
-            API.fetchSummaryDataDailyAPY('base'),
-            API.fetchSummaryDataTVL('base'),
-            API.fetchSummaryDataDailyTVL('base'),
-            API.fetchSummaryDataPoolRewards('base'),
-            API.fetchSummaryDataDailyPoolRewards('base'),
-            API.fetchSummaryDataCoreDelegations('base'),
-            API.fetchSummaryDataDailyCoreDelegations('base'),
-            API.fetchSummaryDataUniqueStakers('base'),
-            API.fetchSummaryDataCumulativeUniqueTraders('base'),
-            API.fetchSummaryDataCumulativePerpsVolume('base'),
-            API.fetchSummaryDataCumulativeExchangeFees('base'),
-            API.fetchSummaryDataCumulativeCollectedFees('base'),
-            API.fetchSummaryDataOpenInterest('base'),
-            API.fetchDailyUniqueStakers('base'),
-            API.fetchSummaryDataDailyUniqueStakers('base'),
-            API.fetchDailyUniqueTraders('base'),
-            API.fetchSummaryDataDailyUniqueTraders('base'),
-            API.fetchDailyPerpsVolume('base'),
-            API.fetchDailyCollectedFees('base'),
-            API.fetchDailyExchangeFees('base'),
-            API.fetchSummaryDataDailyPerpsVolume('base'),
-            API.fetchSummaryDataDailyExchangeFees('base'),
-            API.fetchSummaryDataDailyCollectedFees('base'),
-          ]);
-
-          const newData = {
-            apy,
-            dailyAPY,
-            tvl,
-            dailyTVL,
-            poolRewards,
-            dailyPoolRewards,
-            coreDelegations,
-            dailyCoreDelegations,
-            allPerpStats,
-            allPerpAccountStats,
-            uniqueStakers,
-            uniqueTraders,
-            perpsVolume,
-            exchangeFees,
-            collectedFees,
-            openInterest,
-            dailyOpenInterest,
-            summaryDataAPY,
-            summaryDataDailyAPY,
-            summaryDataTVL,
-            summaryDataDailyTVL,
-            summaryDataPoolRewards,
-            summaryDataDailyPoolRewards,
-            summaryDataCoreDelegations,
-            summaryDataDailyCoreDelegations,
-            summaryDataUniqueStakers,
-            summaryDataUniqueTraders,
-            summaryDataCumulativePerpsVolume,
-            summaryDataCumulativeExchangeFees,
-            summaryDataCumulativeCollectedFees,
-            summaryDataOpenInterest,
-            dailyUniqueStakers,
-            summaryDataDailyUniqueStakers,
-            dailyUniqueTraders,
-            summaryDataDailyUniqueTraders,
-            dailyPerpsVolume,
-            dailyCollectedFees,
-            dailyExchangeFees,
-            summaryDataDailyPerpsVolume,
-            summaryDataDailyCollectedFees,
-            summaryDataDailyExchangeFees,
-          };
-
-          appDispatch({ type: 'SET_INITIAL_DATA', payload: newData });
-          //setCachedData(newData);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // fetch all iniital data
+  useInitialDataFetch(appDispatch, setIsLoading);
 
   useEffect(() => {
     const handleIntersection = ([entry]) => {
