@@ -105,13 +105,26 @@ nav {
     height: calc(100% - 64px); /* header */
     overflow-y: auto; 
     border-top-right-radius: var(--border-radius-sm);
-    border: 1px solid var(--border-and-line-colour);
     background: var(--navy-900);
     z-index: 1;
+    padding: 0 8px;
   }
 
   .navList {
     background: var(--navy-900);
+  }
+
+  .navItem {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .navItemTitle {
+    border-top: 1px solid var(--border-and-line-colour);
+  }
+
+  .activeNav {
+    border-bottom: 0 !important;
   }
 
   .navClosed {
@@ -120,9 +133,4 @@ nav {
 }
 
 @media (max-width: 767px) {
-
-  .subNav {
-    font-size: var(--font-size-copy);
-  }
-
 }
