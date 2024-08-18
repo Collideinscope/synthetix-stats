@@ -43,17 +43,21 @@
 
 .filterMenu {
   position: absolute;
-  top: 100%;
+  top: calc(100% - 8px);
   left: 0;
   background-color: var(--navy-900);
   border: 1px solid var(--border-and-line-colour);
-  border-radius: var(--border-radius-sm);
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   z-index: 10;
   padding: 2px;
   width: 100%;
+}
+
+.openFilterMenu {
+  border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
 }
 
 .filterOption {

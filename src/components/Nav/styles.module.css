@@ -105,6 +105,7 @@ nav {
     height: calc(100% - 64px); /* header */
     overflow-y: auto; 
     border-top-right-radius: var(--border-radius-sm);
+    border-top: 1px solid var(--border-and-line-colour);
     background: var(--navy-900);
     z-index: 1;
     padding: 0 8px;

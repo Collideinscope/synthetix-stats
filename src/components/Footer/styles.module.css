@@ -5,6 +5,7 @@
   margin-top: var(--block-margin-between);
   width: 100%;
   border-top: 1px solid var(--border-and-line-colour);
+  margin-bottom: 0;
 }
 
 .footerContent {
@@ -53,7 +54,7 @@
 
 .footerColumn li:last-child {
   margin: 0;
-  padding-bottom: 0;
+  padding-bottom: 8px;
 }
 
 .footerColumn a {
