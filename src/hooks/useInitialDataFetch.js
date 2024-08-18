@@ -15,6 +15,7 @@ const useInitialDataFetch = (appDispatch, setIsLoading) => {
 
         if (cachedData) {
           appDispatch({ type: 'SET_INITIAL_DATA', payload: cachedData });
+          setIsLoading(false);
         } else {
           const [
             apy,
@@ -151,6 +152,7 @@ const useInitialDataFetch = (appDispatch, setIsLoading) => {
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }

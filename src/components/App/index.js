@@ -12,6 +12,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import HighlightsContainer from '../HighlightsContainer';
 import ChartPageContainer from '../ChartPageContainer';
+import LoadingBar from '../LoadingBar';
 
 import { NAV_MENU } from '../../constants';
 
@@ -109,6 +110,7 @@ const App = () => {
         <div className={styles['app-container']}>
           <div className={styles.contentWrapper}>
             <Header navRef={navRef} />
+            <LoadingBar isLoading={isLoading} />
             <main>
               <Routes>
                 {generateRoutes()}
