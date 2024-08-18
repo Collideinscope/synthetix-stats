@@ -13,7 +13,7 @@ import Nav from '../Nav';
 const Header = ({ navRef }) => {
 
   const [navOpen, setNavOpen] = useState(false);
-
+  console.log(navOpen)
   const handleNavOpen = () => {
     setNavOpen(!navOpen);
   }
