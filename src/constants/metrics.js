@@ -40,7 +40,7 @@ const METRIC_METADATA = {
     hasDailyData: true,
     category: 'core',
     chartTitle: 'TVL',
-    defaultChartType: 'bar',
+    defaultChartType: 'area',
     chartType: 'radial',
     chartYValueSymbol: '$',
     dataStartDate: '2024-03-26',
@@ -189,6 +189,7 @@ const METRIC_METADATA = {
       return parseFloat(item.daily_volume);
     },
     yValueFormatter: (val) => {
+      console.log(val)
       return abbreviateNumber(val);
     }
   },
@@ -252,39 +253,8 @@ const METRIC_METADATA = {
       return parseFloat(item.daily_new_unique_traders);
     },
     yValueFormatter: (val) => {
-      return abbreviateNumber(val);
+      return abbreviateNumber(val, 0);
     }
-  },
-  'collectedFees': {
-    key: 'collectedFees',
-    dailyKey: 'dailyCollectedFees',
-    hasDailyData: true,
-    category: 'perps',
-    chartTitle: 'Collected Fees',
-    defaultChartType: 'bar',
-    chartType: 'area',
-    chartYValueSymbol: '$',
-    dataStartDate: null,
-    chartYAxisDataKey: 'cumulative_collected_fees',
-    dailyChartYAxisDataKey: 'daily_collected_fees',
-    symbolLocation: 'left',
-    summaryDataKey: 'summaryDataCumulativeCollectedFees',
-    summaryDataDailyKey: 'summaryDataDailyCollectedFees',
-    smoothData: false,
-    dataChainFilter: (data, chain) => {
-      return data[chain]
-        ? data[chain]
-        : [];
-    },
-    getYAxisDataPoint: (item) => {
-      return parseFloat(item.cumulative_collected_fees);
-    },
-    getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_collected_fees);
-    },
-    yValueFormatter: (val) => {
-      return abbreviateNumber(val);
-    },
   },
   'exchangeFees': {
     key: 'exchangeFees',

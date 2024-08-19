@@ -45,10 +45,6 @@ const NAV_MENU = {
       route: '/perps/exchange-fees',
       metricKey: 'exchangeFees',
     },
-    'Collected Fees': {
-      route: '/perps/collected-fees',
-      metricKey: 'collectedFees',
-    },
   },
   Stakers: {
     stakersA: {

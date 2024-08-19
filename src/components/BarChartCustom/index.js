@@ -47,7 +47,7 @@ const BarChartCustom = ({
   } = metricMetadata;
   // daily dailyData
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
-
+console.log(state[dailyKey])
   // cumulative dailyData
   const cumulativeDataFiltered = dataChainFilter(state[key], network);
 
@@ -381,6 +381,7 @@ const BarChartCustom = ({
                 tick={<CustomTick />}
                 ticks={xAxisTicks}
                 interval={'preserveStartEnd'}
+                axisLine={{ stroke: 'var(--charts-supporting-colour)', strokeWidth: 2 }}
               />
               {chartData.length > 0 && (
                 <YAxis 

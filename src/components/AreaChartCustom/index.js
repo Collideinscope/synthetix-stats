@@ -42,6 +42,7 @@ const AreaChartCustom = ({
     smoothData,
   } = metricMetadata;
   const dataChainFiltered = dataChainFilter(state[metric], network);
+  console.log(dataChainFiltered, state, metric, network)
 
   const startDate = new Date(
     dataStartDate

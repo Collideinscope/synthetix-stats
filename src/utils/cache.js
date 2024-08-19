@@ -17,6 +17,10 @@ export const setCachedData = (data) => {
 
 export const getInitialState = () => {
   const defaultState = {
+    uniqueStakers: {},
+    summaryDataDailyUniqueStakers: {},
+    dailyUniqueStakers: {},
+    summaryDataUniqueStakers: {},
     apy: [],
     dailyAPY: {},
     tvl: [],
@@ -28,15 +32,11 @@ export const getInitialState = () => {
     allCoreAccountDelegations: [],
     allPerpStats: [],
     allPerpAccountStats: [],
-    uniqueStakers: {},
-    dailyUniqueStakers: {},
     uniqueTraders: {},
     dailyUniqueTraders: {},
     perpsVolume: {},
     dailyPerpsVolume: {},
     exchangeFees: {},
-    collectedFees: {},
-    dailyCollectedFees: {},
     dailyExchangeFees: {},
     openInterest: {},
     dailyOpenInterest: {},
@@ -48,16 +48,12 @@ export const getInitialState = () => {
     summaryDataDailyPoolRewards: {},
     summaryDataCoreDelegations: {},
     summaryDataDailyCoreDelegations: {},
-    summaryDataUniqueStakers: {},
     summaryDataPerpsVolume: {},
     summaryDataUniqueTraders: {},
     summaryDataExchangeFees: {},
-    summaryDataCollectedFees: {},
     summaryDataOpenInterest: {},
-    summaryDataDailyUniqueStakers: {},
     summaryDataDailyUniqueTraders: {},
     summaryDataDailyPerpsVolume: {},
-    summaryDataDailyCollectedFees: {},
     summaryDataDailyExchangeFees: {},
   };
 
