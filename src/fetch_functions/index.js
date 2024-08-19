@@ -40,11 +40,11 @@ const API = {
   /*
     APY
   */
-  fetchLatestAPY: async (network) => API.fetchGeneralData('apy/latest', network),
-  fetchAllAPY: async (network) => API.fetchGeneralData('apy/all', network),
-  fetchSummaryDataAPY: async (network) => API.fetchGeneralData('apy/summary', network),
-  fetchDailyAPY: async (network) => API.fetchGeneralData('apy/daily', network),
-  fetchSummaryDataDailyAPY: async (network) => API.fetchGeneralData('apy/daily/summary', network),
+  fetchLatestAPY: async (network, collateralType) => API.fetchGeneralData('apy/latest', network, collateralType),
+  fetchAllAPY: async (network, collateralType) => API.fetchGeneralData('apy/all', network, collateralType),
+  fetchSummaryDataAPY: async (network, collateralType) => API.fetchGeneralData('apy/summary', network, collateralType),
+  fetchDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily', network, collateralType),
+  fetchSummaryDataDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily/summary', network, collateralType),
 
   /*
     TVL
