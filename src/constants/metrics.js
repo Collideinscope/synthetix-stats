@@ -189,7 +189,6 @@ const METRIC_METADATA = {
       return parseFloat(item.daily_volume);
     },
     yValueFormatter: (val) => {
-      console.log(val)
       return abbreviateNumber(val);
     }
   },
