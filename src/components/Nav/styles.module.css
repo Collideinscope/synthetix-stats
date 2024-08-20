@@ -107,7 +107,7 @@ nav {
     border-top-right-radius: var(--border-radius-sm);
     border-top: 1px solid var(--border-and-line-colour);
     background: var(--navy-900);
-    z-index: 10002;
+    z-index: 1000000 !important;
     padding: 0 8px;
   }
 

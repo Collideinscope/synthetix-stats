@@ -80,6 +80,7 @@ const ViewOptionsContainer = () => {
       <div className={styles.filterPanel}>
         {renderFilters()}
       </div>
+      <div className={styles.bottomPadding}></div>
     </div>
   );
 };

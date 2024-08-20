@@ -1,12 +1,15 @@
 .container {
   border: 1px solid var(--border-and-line-colour);
   border-radius: var(--border-radius-sm);
-  margin: var(--block-margin-between) 0;
-  width: calc(100% - 32px);
+  background: var(--navy-900);
+  width: calc(100% - 288px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
+  position: fixed;
+  top: 65px;
+  z-index: 10000;
 }
 
 .filterPanel {
@@ -15,6 +18,16 @@
   align-items: center;
   flex-wrap: wrap;
   position: relative;
+}
+
+.bottomPadding {
+  position: absolute;
+  width: 101%;
+  left: -1px;
+  background: var(--navy-900);
+  height: 16px;
+  top: 101%;
+  z-index: 100005 !important;
 }
 
 .filterWrapper {
@@ -94,15 +107,22 @@
   background-color: var(--whiteAlpha-100);
 }
 
+@media (max-width: 1280px) {
+  .container {
+    width: calc(100% - 280px);
+  }
+}
+
 @media (min-width: 768px) and (max-width: 991px) {
   .container {
-    width: calc(100%);
+    width: calc(100% - 48px);
   }
 }
 
 @media (max-width: 767px) {
   .container {
     justify-content: center;
+    width: calc(100% - 24px);
   }
 
   .filterSelect, .filterOption {
@@ -111,10 +131,6 @@
 
   .filterSelect {
     width: 130px;
-  }
-
-  .container {
-    width: 100%;
   }
 
   .filterPanel {

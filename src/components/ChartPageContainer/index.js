@@ -39,7 +39,7 @@ const ChartPageContainer = ({ category, metric }) => {
   return (
     <div className={styles.chartPageContainer}>
       <ViewOptionsContainer />
-      <MultiPanelContainer 
+      <MultiPanelContainer
         chartMetrics={chartMetadata}
       />
     </div>

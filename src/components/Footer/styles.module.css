@@ -1,7 +1,7 @@
 .footer {
   background-color: var(--navy-800);
   color: var(--title-colour);
-  padding: 16px;
+  padding: var(--block-margin-between) 16px;
   margin-top: var(--block-margin-between);
   width: 100%;
   border-top: 1px solid var(--border-and-line-colour);

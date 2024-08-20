@@ -12,6 +12,7 @@
 main {
   padding-right: 24px;
   padding-left: 216px !important; /* nav width + 32px */
+  padding-top: 59.5px; /* fixed view options */
   text-align: center;
   width: 100%;
   min-width: 480px !important;
@@ -78,7 +79,8 @@ main:hover {
 /* For medium screens (lg) */
 @media (min-width: 992px) and (max-width: 1279px) {
   main {
-    padding: 0 16px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
