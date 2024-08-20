@@ -21,8 +21,9 @@ function abbreviateNumber(number, decimals = 2) {
     result += abbreviation.symbol;
   } else {
     result = num.toFixed(decimals);
+    result = result.endsWith('.00') ? result.slice(0, -3) : result;
   }
-  
+
   return result;
 }
 
