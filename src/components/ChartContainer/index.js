@@ -114,7 +114,6 @@ const ChartContainer = ({
       className={`${styles.container} ${styles[containerClass]}`}
     >
       {renderChart()}
-      {!isFullScreen && renderSummaryStatsPanel}
     </div>
   );
 };

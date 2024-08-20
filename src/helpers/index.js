@@ -22,6 +22,7 @@ function abbreviateNumber(number, decimals = 2) {
   } else {
     result = num.toFixed(decimals);
   }
+  
   return result;
 }
 

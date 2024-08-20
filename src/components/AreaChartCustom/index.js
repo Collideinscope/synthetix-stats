@@ -256,6 +256,7 @@ const AreaChartCustom = ({
       {renderExitFullScreen}
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
         <ChartHeader 
+          metric={metric}
           chartTitle={chartTitle}
           timeFilter={timeFilter}
           highlightValue={highlightValue}
