@@ -88,7 +88,7 @@ const ChartHeader = ({
               {valueAndSymbol(highlightValue)}
             </p>
             <p className={styles.latestValueDate}>
-              {latestDate && format(new Date(latestDate), 'MMM d, yyyy')}
+              {latestDate && format(new Date(latestDate), 'MMM d, yyyy, HH:mm')}
             </p>
           </div>
         </div>

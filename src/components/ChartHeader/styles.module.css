@@ -45,6 +45,10 @@
   font-size: var(--charts-title-primary);
   margin: 0;
   padding: 0;
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
 }
 
 .latestValueDate {
@@ -67,7 +71,7 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-top: 4px;
+  margin-top: 12px;
 }
 
 .statItem {
@@ -119,4 +123,30 @@
 
 .icon {
   margin-right: 2px;
+}
+
+@media (max-width: 767px) {
+  .chartTitle {
+    font-size: 16px;
+  }
+
+  .latestValue {
+    font-size: 24px;
+  }
+
+  .latestValueContainer {
+    padding-right: 20px;
+  }
+
+  .titleContainer {
+    padding-left: 16px;
+  }
+
+  .statLabel {
+    font-size: var(--font-size-small-details);
+  }
+  
+  .statValue {
+    font-size: var(--font-size-small-details);
+  }
 }
