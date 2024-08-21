@@ -117,12 +117,12 @@
 }
 
 .positive {
-  fill: var(--green-500);
+  fill: var(--cyan-300);
   font-size: var(--font-size-supporting);
 }
 
 .negative {
-  fill: var(--red-500);
+  fill: var(--cyan-800);
   font-size: var(--font-size-supporting);
 }
 

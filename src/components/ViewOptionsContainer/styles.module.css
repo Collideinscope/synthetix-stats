@@ -2,7 +2,7 @@
   border: 1px solid var(--border-and-line-colour);
   border-radius: var(--border-radius-sm);
   background: var(--navy-900);
-  width: calc(100% - 282px);
+  width: calc(100% - 266px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
