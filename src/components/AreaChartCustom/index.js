@@ -287,6 +287,7 @@ const AreaChartCustom = ({
                 height={60}
                 tick={<CustomTick />}
                 ticks={xAxisTicks}
+                padding={{ left: 4 }}
                 interval={'preserveStartEnd'}
               />
               <YAxis 

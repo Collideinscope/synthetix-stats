@@ -382,6 +382,7 @@ const BarChartCustom = ({
                 tick={<CustomTick />}
                 ticks={xAxisTicks}
                 interval={'preserveStartEnd'}
+                padding={{ left: 4 }}
                 axisLine={{ stroke: 'var(--charts-supporting-colour)', strokeWidth: 2 }}
               />
               {chartData.length > 0 && (
