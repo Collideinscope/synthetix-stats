@@ -107,7 +107,7 @@ FontAwesomeIcon {
 }
 
 @media (max-width: 480px) {
-  body {
+  html, body {
     width: 480px;
   }
 }

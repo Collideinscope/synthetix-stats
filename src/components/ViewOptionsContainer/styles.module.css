@@ -29,7 +29,7 @@
   left: -1px;
   background: var(--navy-900);
   height: 16px;
-  top: 101%;
+  top: 100%;
   z-index: 100005 !important;
 }
 
@@ -112,20 +112,24 @@
 
 @media (max-width: 1280px) {
   .container {
-    width: calc(100% - 280px);
+    width: calc(100% - 260px);
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .container {
-    width: calc(100% - 48px);
+    width: calc(100% - 28px);
+  }
+
+  .bottomPadding {
+    width: 99%;
   }
 }
 
 @media (max-width: 767px) {
   .container {
     justify-content: center;
-    width: calc(100% - 20px);
+    width: calc(100% - 6px);
     padding-right: 0;
     min-width: 460px;
   }

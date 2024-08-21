@@ -99,3 +99,12 @@ main:hover {
     padding-right: 6px !important;
   }
 }
+
+@media (max-width: 480px) {
+  main, .app-container {
+      zoom: calc(100vw / 480);
+      -moz-transform: scale(calc(100vw / 480));
+      -moz-transform-origin: 0 0;
+      width: 480px;
+  }
+}
