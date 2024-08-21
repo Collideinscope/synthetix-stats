@@ -2,13 +2,14 @@
   border: 1px solid var(--border-and-line-colour);
   border-radius: var(--border-radius-sm);
   background: var(--navy-900);
-  width: calc(100% - 288px);
+  width: calc(100% - 282px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
   position: fixed;
   top: 65px;
+  margin-left: -3px;
   z-index: 10000;
 }
 
@@ -122,7 +123,7 @@
 @media (max-width: 767px) {
   .container {
     justify-content: center;
-    width: calc(100% - 24px);
+    width: calc(100% - 20px);
   }
 
   .filterSelect, .filterOption {
