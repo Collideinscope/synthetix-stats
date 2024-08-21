@@ -31,7 +31,7 @@ const METRIC_METADATA = {
       return parseFloat(item.daily_apy_percentage_delta) * 100;
     },
     yValueFormatter: (val) => {
-      return parseFloat(val).toFixed(2);
+      return abbreviateNumber(parseFloat(val));
     },
   },
   'tvl': {
@@ -157,7 +157,7 @@ const METRIC_METADATA = {
       return parseFloat(item.daily_new_unique_stakers);
     },
     yValueFormatter: (val) => {
-      return parseFloat(val).toFixed(0);
+      return abbreviateNumber(val, 0);
     }
   },
   'perpsVolume': {
