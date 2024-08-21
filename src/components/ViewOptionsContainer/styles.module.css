@@ -1,8 +1,6 @@
 .container {
-  border: 1px solid var(--border-and-line-colour);
-  border-radius: var(--border-radius-sm);
   background: var(--navy-900);
-  width: calc(100% - 266px);
+  width: calc(100vw - 266px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -11,6 +9,7 @@
   top: 65px;
   margin-left: -3px;
   z-index: 10000;
+  padding-right: 16px;
 }
 
 .filterPanel {
@@ -19,6 +18,9 @@
   align-items: center;
   flex-wrap: wrap;
   position: relative;
+  width: 100%;
+  border: 1px solid var(--border-and-line-colour);
+  border-radius: var(--border-radius-sm);
 }
 
 .bottomPadding {
@@ -124,6 +126,12 @@
   .container {
     justify-content: center;
     width: calc(100% - 20px);
+    padding-right: 0;
+    min-width: 460px;
+  }
+
+  .bottomPadding {
+    width: 100%;
   }
 
   .filterSelect, .filterOption {
