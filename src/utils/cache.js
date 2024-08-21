@@ -7,13 +7,13 @@ localforage.config({
 })
 
 export const getCachedData = async () => {
-  const cachedData = localforage.getItem('appState');
-  const cachedTimestamp = localforage.getItem('appStateTimestamp');
+  const cachedData = await localforage.getItem('appState');
+  const cachedTimestamp = await localforage.getItem('appStateTimestamp');
   const currentTime = new Date().getTime();
   const oneHour = 60 * 60 * 1000; 
 
   if (cachedData && cachedTimestamp && (currentTime - parseInt(cachedTimestamp) < oneHour)) {
-    return JSON.parse(cachedData);
+    return cachedData;
   }
   return null;
 };
