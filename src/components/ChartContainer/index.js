@@ -108,10 +108,14 @@ const ChartContainer = ({
     ? 'radialContainer'
     : 'genericContainer';
 
+  const fullScreenClass = isFullScreen 
+    ? 'fullScreen'
+    : '';
+
   return (
     <div 
       ref={containerRef}
-      className={`${styles.container} ${styles[containerClass]}`}
+      className={`${styles.container} ${styles[containerClass]} ${styles[fullScreenClass]}`}
     >
       {renderChart()}
     </div>
