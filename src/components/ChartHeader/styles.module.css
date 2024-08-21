@@ -1,5 +1,6 @@
 .chartHeader {
   width: 100%;
+  height: 113.5px;
   display: flex;
   justify-content: space-between;
   margin-bottom: var(--block-margin-internal);
@@ -136,6 +137,13 @@
 
   .latestValueContainer {
     padding-right: 20px;
+  }
+
+  .latestValueDate {
+    margin: 0;
+    color: var(--supporting-text-colour);
+    align-self: flex-end;
+    font-size: var(--font-size-small-details);
   }
 
   .titleContainer {

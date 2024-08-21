@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 448px;
   width: 100%;
   align-items: center;
   justify-content: space-between;
@@ -59,18 +58,18 @@
 
 .centerBubble {
   position: absolute;
-  top: 50%;
-  left: 45%;
+  top: 40%;
+  left: 47%;
   transform: translate(-50%, -50%);
   text-align: center;
   background: transparent;
   border-radius: 50%;
   width: 210px;
-  height: 210px;
+  height: 205px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid var(--charts-border-and-line-colour);
+  border: 1px solid var(--charts-border-and-line-colour);
   border-right: 0;
   border-top: 0;
   border-bottom: 0;

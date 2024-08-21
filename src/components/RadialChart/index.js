@@ -184,9 +184,9 @@ const RadialChart = ({
           </div>
           <RadialBarChart
             width={320}
-            height={366.58}
+            height={387.58}
             cx="55%"
-            cy="50%"
+            cy="40%"
             innerRadius={110}
             outerRadius={160}
             barSize={16}
@@ -218,8 +218,8 @@ const RadialChart = ({
             />
             <path
               d={`
-                M ${300 * 0.59} ${300 / 2 - 95}
-                A 100 100 0 0 1 ${300 * 0.59} ${300 / 2 + 160}
+                M ${300 * 0.59} ${300 / 2 - 124}
+                A 100 100 0 0 1 ${300 * 0.59} ${300 / 2 + 132}
               `}
               fill="none"
               stroke="var(--charts-border-and-line-colour)"
