@@ -54,7 +54,7 @@ const BarChartCustom = ({
   const startDate = new Date(
     dataStartDate
       ? dataStartDate 
-      : state[metric].length > 0 
+      : state[metric] && state[metric].length > 0 
         ? dataChainFiltered[0].ts
         : '2024-01-01' // default start date
   );

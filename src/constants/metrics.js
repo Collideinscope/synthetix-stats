@@ -20,7 +20,7 @@ const METRIC_METADATA = {
     summaryDataType: '%',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -52,7 +52,7 @@ const METRIC_METADATA = {
     summaryDataType: 'num',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -84,7 +84,7 @@ const METRIC_METADATA = {
     summaryDataType: 'num',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -115,7 +115,7 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyCoreDelegations',
     smoothData: true,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -146,7 +146,7 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyUniqueStakers',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -178,7 +178,7 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyPerpsVolume',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -210,7 +210,7 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataOpenInterest',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -241,7 +241,7 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyUniqueTraders',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
         ? data[chain]
         : [];
     },
@@ -272,7 +272,7 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyExchangeFees',
     smoothData: false,
     dataChainFilter: (data, chain) => {
-      return data[chain]
+      return data && data[chain]
       ? data[chain]
       : [];
     },

@@ -1,8 +1,16 @@
-export const getCachedData = () => {
-  const cachedData = localStorage.getItem('appState');
-  const cachedTimestamp = localStorage.getItem('appStateTimestamp');
+import localforage from 'localforage';
+
+// Configure localforage
+localforage.config({
+    name: 'initialStats',
+    storeName: 'appState'
+})
+
+export const getCachedData = async () => {
+  const cachedData = localforage.getItem('appState');
+  const cachedTimestamp = localforage.getItem('appStateTimestamp');
   const currentTime = new Date().getTime();
-  const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+  const oneHour = 60 * 60 * 1000; 
 
   if (cachedData && cachedTimestamp && (currentTime - parseInt(cachedTimestamp) < oneHour)) {
     return JSON.parse(cachedData);
@@ -10,12 +18,16 @@ export const getCachedData = () => {
   return null;
 };
 
-export const setCachedData = (data) => {
-  localStorage.setItem('appState', JSON.stringify(data));
-  localStorage.setItem('appStateTimestamp', new Date().getTime().toString());
+export const setCachedData = async (data) => {
+  try {
+    await localforage.setItem('appState', data);
+    await localforage.setItem('appStateTimestamp', new Date().getTime());
+  } catch (error) {
+      console.error('Error caching data:', error);
+  }
 };
 
-export const getInitialState = () => {
+export const getInitialState = async () => {
   const defaultState = {
     uniqueStakers: {},
     summaryDataDailyUniqueStakers: {},
@@ -57,6 +69,12 @@ export const getInitialState = () => {
     summaryDataDailyExchangeFees: {},
   };
 
-  const cachedData = getCachedData();
-  return cachedData ? { ...defaultState, ...cachedData } : defaultState;
+  try {
+    const cachedData = await getCachedData();
+
+    return cachedData ? { ...defaultState, ...cachedData } : defaultState;
+  } catch (error) {
+      console.error('Error getting initial state:', error);
+      return defaultState;
+  }
 };
