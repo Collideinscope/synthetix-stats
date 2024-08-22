@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import API from '../fetch_functions';
 import { getCachedData, setCachedData } from '../utils/cache';
 
+import { getMetricsForRoute } from '../constants/metrics_by_route';
+import metricToFetchFunction from '../constants/metrics_to_fetch';
 
-const useInitialDataFetch = (appDispatch, setIsLoading) => {
-
+const useInitialDataFetch = (appDispatch, setIsLoading, currentPath) => {
   useEffect(() => {
     const fetchData = async () => {
 
@@ -17,127 +17,34 @@ const useInitialDataFetch = (appDispatch, setIsLoading) => {
         if (cachedData) {
           appDispatch({ type: 'SET_INITIAL_DATA', payload: cachedData });
         }
+
+        // fetch the current page's data
+        const routeMetrics = getMetricsForRoute(currentPath);
+
+        const fetchPromises = routeMetrics.map(metric => metricToFetchFunction[metric]());
+
+        const results = await Promise.all(fetchPromises);
+        const newData = Object.fromEntries(routeMetrics.map((key, index) => [key, results[index]]));
         
-        const [
-          uniqueStakers,
-          summaryDataUniqueStakers,
-          dailyUniqueStakers,
-          summaryDataDailyUniqueStakers,
-          uniqueTraders,
-          summaryDataUniqueTraders,
-          dailyUniqueTraders,
-          summaryDataDailyUniqueTraders,
-          perpsVolume,
-          summaryDataCumulativePerpsVolume,
-          dailyPerpsVolume,
-          summaryDataDailyPerpsVolume,
-          openInterest,
-          summaryDataOpenInterest,
-          dailyOpenInterest,
-          apy,
-          dailyAPY,
-          tvl,
-          dailyTVL,
-          poolRewards,
-          dailyPoolRewards,
-          coreDelegations,
-          dailyCoreDelegations,
-          allPerpStats,
-          allPerpAccountStats,
-          exchangeFees,
-          summaryDataAPY,
-          summaryDataDailyAPY,
-          summaryDataTVL,
-          summaryDataDailyTVL,
-          summaryDataPoolRewards,
-          summaryDataDailyPoolRewards,
-          summaryDataCoreDelegations,
-          summaryDataDailyCoreDelegations,
-          summaryDataCumulativeExchangeFees,
-          dailyExchangeFees,
-          summaryDataDailyExchangeFees,
-        ] = await Promise.all([
-          API.fetchCumulativeUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
-          API.fetchSummaryDataUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
-          API.fetchDailyUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
-          API.fetchSummaryDataDailyUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
-          API.fetchCumulativeUniqueTraders('base'),
-          API.fetchSummaryDataCumulativeUniqueTraders('base'),
-          API.fetchDailyUniqueTraders('base'),
-          API.fetchSummaryDataDailyUniqueTraders('base'),
-          API.fetchCumulativePerpsVolume('base'),
-          API.fetchSummaryDataCumulativePerpsVolume('base'),
-          API.fetchDailyPerpsVolume('base'),
-          API.fetchSummaryDataDailyPerpsVolume('base'),
-          API.fetchOpenInterest('base'),
-          API.fetchSummaryDataOpenInterest('base'),
-          API.fetchDailyOpenInterest('base'),
-          API.fetchAllAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
-          API.fetchDailyAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
-          API.fetchAllTVL(),
-          API.fetchDailyTVL('base'),
-          API.fetchAllPoolRewards('base'),
-          API.fetchDailyPoolRewards('base'),
-          API.fetchAllCoreDelegations(),
-          API.fetchDailyCoreDelegations('base'),
-          API.fetchAllPerpStats('base'),
-          API.fetchAllPerpAccountStats('base'),
-          API.fetchCumulativeExchangeFees('base'),
-          API.fetchSummaryDataAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
-          API.fetchSummaryDataDailyAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
-          API.fetchSummaryDataTVL('base'),
-          API.fetchSummaryDataDailyTVL('base'),
-          API.fetchSummaryDataPoolRewards('base'),
-          API.fetchSummaryDataDailyPoolRewards('base'),
-          API.fetchSummaryDataCoreDelegations('base'),
-          API.fetchSummaryDataDailyCoreDelegations('base'),
-          API.fetchSummaryDataCumulativeExchangeFees('base'),
-          API.fetchDailyExchangeFees('base'),
-          API.fetchSummaryDataDailyExchangeFees('base'),
-        ]);
+        // dispatch
+        appDispatch({ type: 'SET_PAGE_DATA', payload: newData });
+        await setCachedData({ ...cachedData, ...newData });
 
-        const newData = {
-          uniqueStakers,
-          summaryDataUniqueStakers,
-          dailyUniqueStakers,
-          summaryDataDailyUniqueStakers,
-          uniqueTraders,
-          summaryDataUniqueTraders,
-          dailyUniqueTraders,
-          summaryDataDailyUniqueTraders,
-          perpsVolume,
-          summaryDataCumulativePerpsVolume,
-          dailyPerpsVolume,
-          summaryDataDailyPerpsVolume,
-          openInterest,
-          summaryDataOpenInterest,
-          dailyOpenInterest,
-          apy,
-          dailyAPY,
-          tvl,
-          dailyTVL,
-          poolRewards,
-          dailyPoolRewards,
-          coreDelegations,
-          dailyCoreDelegations,
-          allPerpStats,
-          allPerpAccountStats,
-          exchangeFees,
-          summaryDataAPY,
-          summaryDataDailyAPY,
-          summaryDataTVL,
-          summaryDataDailyTVL,
-          summaryDataPoolRewards,
-          summaryDataDailyPoolRewards,
-          summaryDataCoreDelegations,
-          summaryDataDailyCoreDelegations,
-          summaryDataCumulativeExchangeFees,
-          dailyExchangeFees,
-          summaryDataDailyExchangeFees,
-        };
+        // fetch remainder of data
+        const allMetrics = Object.keys(metricToFetchFunction);
+        const remainingMetrics = allMetrics.filter(metric => !routeMetrics.includes(metric));
+        
+        const remainingFetchPromises = remainingMetrics.map(metric => metricToFetchFunction[metric]());
 
-        appDispatch({ type: 'SET_INITIAL_DATA', payload: newData });
-        await setCachedData(newData);
+        // run and dispatch 
+        Promise.all(remainingFetchPromises)
+          .then(backgroundResults => {
+            const remainingData = Object.fromEntries(remainingMetrics.map((key, index) => [key, backgroundResults[index]]));
+            appDispatch({ type: 'SET_ALL_REMAINING_DATA', payload: remainingData });
+            setCachedData({ ...cachedData, ...newData, ...remainingData });
+          })
+          .catch(error => console.error('Error fetching background data:', error));
+        
       } catch (error) {
         console.error('Error fetching data:', error);
         setIsLoading(false);

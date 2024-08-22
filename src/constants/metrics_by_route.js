@@ -1,19 +1,10 @@
-const metricsByMetric = {
-  'apy': [
-    'apy',
-    'dailyAPY',
-    'summaryDataAPY',
-    'summaryDataDailyAPY'
-  ],
-  
-}
+import metrics_by_key from './metrics_by_key';
+import HIGHLIGHT_METRICS from './highlights_metrics';
 
 const metricsByRoute = {
-  // Root route (Highlights)
-  '/': [
-    'apy',
-    'summaryData'
-  ]
+
+  // index
+  '/': Object.keys(HIGHLIGHT_METRICS),
 
   // Core routes
   '/core/overview': ['apy', 'tvl', 'coreDelegations', 'poolRewards', 'uniqueStakers'],
@@ -35,46 +26,12 @@ const metricsByRoute = {
 
   // Traders routes (placeholder)
   '/traders/overview': ['uniqueTraders'],
-
-  // Add more routes as needed
 };
 
-// Additional metrics that might be needed globally or for multiple routes
-const globalMetrics = [
-  'summaryDataUniqueStakers',
-  'dailyUniqueStakers',
-  'summaryDataDailyUniqueStakers',
-  'summaryDataUniqueTraders',
-  'dailyUniqueTraders',
-  'summaryDataDailyUniqueTraders',
-  'summaryDataCumulativePerpsVolume',
-  'dailyPerpsVolume',
-  'summaryDataDailyPerpsVolume',
-  'summaryDataOpenInterest',
-  'dailyOpenInterest',
-  'dailyAPY',
-  'dailyTVL',
-  'dailyPoolRewards',
-  'dailyCoreDelegations',
-  'allPerpStats',
-  'allPerpAccountStats',
-  'summaryDataAPY',
-  'summaryDataDailyAPY',
-  'summaryDataTVL',
-  'summaryDataDailyTVL',
-  'summaryDataPoolRewards',
-  'summaryDataDailyPoolRewards',
-  'summaryDataCoreDelegations',
-  'summaryDataDailyCoreDelegations',
-  'summaryDataCumulativeExchangeFees',
-  'dailyExchangeFees',
-  'summaryDataDailyExchangeFees',
-];
-
-// Function to get metrics for a route
 const getMetricsForRoute = (route) => {
-  const routeMetrics = metricsByRoute[route] || [];
-  return [...new Set([...routeMetrics, ...globalMetrics])];
+  const baseMetrics = metricsByRoute[route] || [];
+
+  return baseMetrics.flatMap(metric => metrics_by_key[metric] || []);
 };
 
 export { metricsByRoute, getMetricsForRoute };
