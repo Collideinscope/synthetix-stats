@@ -42,6 +42,7 @@ const useInitialDataFetch = (appDispatch, setIsLoading, currentPath) => {
             const remainingData = Object.fromEntries(remainingMetrics.map((key, index) => [key, backgroundResults[index]]));
             appDispatch({ type: 'SET_ALL_REMAINING_DATA', payload: remainingData });
             setCachedData({ ...cachedData, ...newData, ...remainingData });
+            setIsLoading(false);
           })
           .catch(error => console.error('Error fetching background data:', error));
         
@@ -49,7 +50,6 @@ const useInitialDataFetch = (appDispatch, setIsLoading, currentPath) => {
         console.error('Error fetching data:', error);
         setIsLoading(false);
       } finally {
-        setIsLoading(false);
       }
     };
 
