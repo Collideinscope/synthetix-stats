@@ -9,6 +9,16 @@ export const globalReducer = (state = globalInitialState, action) => {
         ...state,
         ...action.payload,
       };
+    case 'SET_PAGE_DATA':
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case 'SET_ALL_REMAINING_DATA':
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }

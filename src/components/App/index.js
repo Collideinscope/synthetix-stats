@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
 
 import React, { useState, useEffect, useReducer, useRef } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 import { globalReducer, globalInitialState } from '../../reducers/globalReducer';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -20,10 +20,11 @@ const App = () => {
   const [state, appDispatch] = useReducer(globalReducer, globalInitialState);
   const navRef = useRef(null);
   const footerRef = useRef(null);
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   
   // fetch all iniital data
-  useInitialDataFetch(appDispatch, setIsLoading);
+  useInitialDataFetch(appDispatch, setIsLoading, location.pathname);
 
   useEffect(() => {
     const handleIntersection = ([entry]) => {
@@ -105,7 +106,6 @@ const App = () => {
   };
 
   return (
-    <Router>
       <GlobalContext.Provider value={{ state, appDispatch }}>
         <div className={styles['app-container']}>
           <div className={styles.contentWrapper}>
@@ -120,7 +120,6 @@ const App = () => {
           <Footer footerRef={footerRef} />
         </div>
       </GlobalContext.Provider>
-    </Router>
   );
 };
 
