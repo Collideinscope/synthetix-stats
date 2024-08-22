@@ -100,6 +100,9 @@ main:hover {
   }
 }
 
-@media (max-width: 480px) {
-
+@media (max-width: 479px) {
+  .app-container {
+    transform: scale(97%, 100%);
+    transform-origin: top left;
+  }
 }

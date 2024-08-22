@@ -113,10 +113,3 @@ FontAwesomeIcon {
 @media (min-width: 480) and (max-width: 991px) {
 
 }
-
-@media (max-width: 480px) {
-  #root {
-    transform: scale(96%);
-    transform-origin: top left;
-  }
-}
