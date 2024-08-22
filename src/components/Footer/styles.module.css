@@ -118,6 +118,10 @@
     height: 100% !important;
   }
 
+  .footerColumn:nth-child(2) {
+    margin-right: 50px;
+  }
+
   .mobileDropdownToggle {
     cursor: default;
     padding: 0;
