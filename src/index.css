@@ -115,7 +115,8 @@ FontAwesomeIcon {
 }
 
 @media (max-width: 480px) {
-  html, body {
-
+  #root {
+    transform: scale(96%);
+    transform-origin: top left;
   }
 }
