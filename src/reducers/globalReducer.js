@@ -5,6 +5,8 @@ export const globalInitialState = getInitialState();
 export const globalReducer = (state = globalInitialState, action) => {
   switch (action.type) {
     case 'SET_INITIAL_DATA':
+      console.log('initial', action.payload)
+      
       return {
         ...state,
         ...action.payload,
