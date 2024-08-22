@@ -100,12 +100,12 @@ nav {
     align-items: flex-start;
     position: absolute;
     left: 0;
-    top: 64px;
+    top: 65px;
     width: 100%;
     height: calc(100vh - 64px); /* header */
     overflow-y: auto; 
-    border-top-right-radius: var(--border-radius-sm);
-    border-top: 1px solid var(--border-and-line-colour);
+    border-top-right-radius: 0;
+    border-top: 0;
     background: var(--navy-900);
     z-index: 1000000 !important;
     padding: 0 8px;
