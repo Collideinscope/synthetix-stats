@@ -109,5 +109,8 @@ FontAwesomeIcon {
 @media (max-width: 480px) {
   html, body {
     width: 480px;
+    zoom: calc(100vw / 480);
+    -moz-transform: scale(calc(100vw / 480));
+    -moz-transform-origin: 0 0;
   }
 }
