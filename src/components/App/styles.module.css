@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 main {
@@ -14,12 +14,12 @@ main {
   padding-left: 216px !important; /* nav width + 32px */
   padding-top: 60.5px; /* fixed view options */
   text-align: center;
-  width: 100%;
+  width: 100% !important;
   min-width: 480px !important;
   min-height: calc(100vh - 72px);
   height: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   margin-top: 64px; /* header */
 
   /* Scrollbar styles for Firefox */
@@ -102,9 +102,6 @@ main:hover {
 
 @media (max-width: 480px) {
   main, .app-container {
-      zoom: calc(100vw / 480);
-      -moz-transform: scale(calc(100vw / 480));
-      -moz-transform-origin: 0 0;
-      width: 480px;
+
   }
 }

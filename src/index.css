@@ -28,7 +28,7 @@ html, body {
   min-width: 480px !important;
   min-height: 100vh;
   height: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 body {
@@ -80,6 +80,14 @@ FontAwesomeIcon {
   background: var(--gradient-primary);
 }
 
+#root {
+  width: 100%;
+  min-height: 100vh;
+  min-width: 480px;
+  overflow-x: hidden;
+}
+
+
 /* Responsive gutters and padding */
 /* For extra large screens (2xl) */
 @media (min-width: 1536px) {
@@ -108,9 +116,6 @@ FontAwesomeIcon {
 
 @media (max-width: 480px) {
   html, body {
-    width: 480px;
-    zoom: calc(100vw / 480);
-    -moz-transform: scale(calc(100vw / 480));
-    -moz-transform-origin: 0 0;
+
   }
 }
