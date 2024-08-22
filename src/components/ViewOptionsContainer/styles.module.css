@@ -12,6 +12,12 @@
   padding-right: 16px;
 }
 
+@-moz-document url-prefix() {
+  .container {
+    width: calc(100vw - 252px);
+  }
+}
+
 .filterPanel {
   display: flex;
   justify-content: flex-start;
@@ -114,11 +120,23 @@
   .container {
     width: calc(100% - 260px);
   }
+
+  @-moz-document url-prefix() {
+    .container {
+      width: calc(100vw - 242px);
+    }
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .container {
     width: calc(100% - 28px);
+  }
+
+  @-moz-document url-prefix() {
+    .container {
+      width: calc(100vw - 12px);
+    }
   }
 
   .bottomPadding {
