@@ -44,7 +44,10 @@ const useInitialDataFetch = (appDispatch, setIsLoading, currentPath) => {
             setCachedData({ ...cachedData, ...newData, ...remainingData });
             setIsLoading(false);
           })
-          .catch(error => console.error('Error fetching background data:', error));
+          .catch(error => {
+            console.error('Error fetching background data:', error);
+            setIsLoading(false);
+          });
         
       } catch (error) {
         console.error('Error fetching data:', error);
