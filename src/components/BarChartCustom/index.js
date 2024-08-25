@@ -43,13 +43,13 @@ const BarChartCustom = ({
     dataChainFilter,
     defaultChartType,
     dailyKey,
-    key,
+    lineKey,
   } = metricMetadata;
   // daily dailyData
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
 
   // cumulative dailyData
-  const cumulativeDataFiltered = dataChainFilter(state[key], network);
+  const cumulativeDataFiltered = dataChainFilter(state[lineKey], network);
 
   const startDate = new Date(
     dataStartDate
@@ -339,6 +339,7 @@ const BarChartCustom = ({
       {renderExitFullScreen}
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
         <ChartHeader 
+          network={network}
           metric={metric}
           chartTitle={chartTitle}
           timeFilter={timeFilter}
@@ -403,7 +404,7 @@ const BarChartCustom = ({
                   <Bar dataKey="avg" fill="url(#patternStripePositive)" stackId="a">
                     {chartData.map((entry, index) => (
                       <Cell 
-                        key={`cell-${index}`} 
+                        lineKey={`cell-${index}`} 
                         fill={entry.avg >= 0 ? "url(#patternStripePositive)" : "url(#patternStripeNegative)"}
                         fillOpacity={entry.avg >= 0 ? 1 : 0.8}
                       />
@@ -412,7 +413,7 @@ const BarChartCustom = ({
                   <Bar dataKey="max" fill="url(#colorAPYPositive)" fillOpacity={0.4} stackId="a">
                     {chartData.map((entry, index) => (
                       <Cell 
-                        key={`cell-${index}`} 
+                        lineKey={`cell-${index}`} 
                         fill={entry.max >= 0 ? "url(#colorAPYPositive)" : "url(#colorAPYNegative)"}
                         fillOpacity={entry.max >= 0 ? 0.4 : 0.6}
                       />
@@ -423,7 +424,7 @@ const BarChartCustom = ({
                 <Bar dataKey="value" stroke="black" strokeWidth={1}>
                   {chartData.map((entry, index) => (
                     <Cell 
-                      key={`cell-${index}`} 
+                      lineKey={`cell-${index}`} 
                       fill={entry.value >= 0 ? "url(#patternStripePositive)" : "url(#patternStripeNegative)"}
                       fillOpacity={entry.value >= 0 ? 1 : 0.8}
                     />

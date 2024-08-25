@@ -21,15 +21,14 @@ const fetchData = async (URL) => {
 };
 
 const API = {
-  /*
-    Generalized Fetcher
-  */
-  fetchGeneralData: async (endpoint, network, collateralType) => {
+  fetchGeneralData: async (endpoint, queryParams = null) => {
     try {
-      const networkParam = network ? network : '';
-      const collateralTypeParam = collateralType ? '/'+collateralType : '';
-      const URL = `${BASE_URL}/${endpoint}/${networkParam}${collateralTypeParam}`;
+      const entries = Object.entries(queryParams || {});
+      const queryParamsString = entries.length
+        ? '?' + entries.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&')
+        : '';
 
+      const URL = `${BASE_URL}/${endpoint}${queryParamsString}`;
       return fetchData(URL);
     } catch (error) {
       console.error(`Error fetching ${endpoint}:`, error);
@@ -37,79 +36,53 @@ const API = {
     }
   },
 
-  /*
-    APY
-  */
-  fetchLatestAPY: async (network, collateralType) => API.fetchGeneralData('apy/latest', network, collateralType),
-  fetchAllAPY: async (network, collateralType) => API.fetchGeneralData('apy/all', network, collateralType),
-  fetchSummaryDataAPY: async (network, collateralType) => API.fetchGeneralData('apy/summary', network, collateralType),
-  fetchDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily', network, collateralType),
-  fetchSummaryDataDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily/summary', network, collateralType),
+  // APY
+  fetchLatestAPY: async (network, collateralType) => API.fetchGeneralData('apy/latest', { chain: network, collateralType }),
+  fetchAllAPY: async (network, collateralType) => API.fetchGeneralData('apy/all', { chain: network, collateralType }),
+  fetchSummaryDataAPY: async (network, collateralType) => API.fetchGeneralData('apy/summary', { chain: network, collateralType }),
+  fetchDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily', { chain: network, collateralType }),
 
-  /*
-    TVL
-  */
-  fetchLatestTVL: async (network) => API.fetchGeneralData('tvl/latest', network),
-  fetchAllTVL: async (network) => API.fetchGeneralData('tvl/all', network),
-  fetchSummaryDataTVL: async (network) => API.fetchGeneralData('tvl/summary', network),
-  fetchDailyTVL: async (network) => API.fetchGeneralData('tvl/daily', network),
-  fetchSummaryDataDailyTVL: async (network) => API.fetchGeneralData('tvl/daily/summary', network),
+  // TVL
+  fetchLatestTVL: async (network) => API.fetchGeneralData('tvl/latest', { chain: network }),
+  fetchCumulativeTVL: async (network) => API.fetchGeneralData('tvl/cumulative', { chain: network }),
+  fetchSummaryDataTVL: async (network) => API.fetchGeneralData('tvl/summary', { chain: network }),
+  fetchDailyTVL: async (network) => API.fetchGeneralData('tvl/daily', { chain: network }),
 
-  /*
-    Core Delegations
-  */
-  fetchLatestCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/latest', network),
-  fetchAllCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/all', network),
-  fetchSummaryDataCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/summary', network),
-  fetchDailyCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/daily', network),
-  fetchSummaryDataDailyCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/daily/summary', network),
+  // Core Delegations
+  fetchLatestCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/latest', { chain: network }),
+  fetchAllCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/cumulative', { chain: network }),
+  fetchSummaryDataCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/summary', { chain: network }),
+  fetchDailyCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/daily', { chain: network }),
 
-  /*
-    Pool Rewards
-  */
-  fetchLatestPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/latest', network),
-  fetchAllPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/all', network),
-  fetchSummaryDataPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/summary', network),
-  fetchDailyPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/daily', network),
-  fetchSummaryDataDailyPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/daily/summary', network),
+  // Pool Rewards
+  fetchLatestPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/latest', { chain: network }),
+  fetchCumulativePoolRewards: async (network) => API.fetchGeneralData('pool-rewards/cumulative', { chain: network }),
+  fetchSummaryDataPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/summary', { chain: network }),
+  fetchDailyPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/daily', { chain: network }),
 
-  /*
-    Core Account Delegations
-  */
-  fetchStakerCount: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/staker-count', network, collateralType),
-  fetchCumulativeUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers', network, collateralType),
-  fetchAllCoreAccountDelegations: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/all', network, collateralType),
-  fetchCoreAccountDelegationsByAccount: async (accountId) => API.fetchGeneralData(`core-account-delegations/account/${accountId}`),
-  fetchCoreAccountDelegationsOrderedByAccount: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/ordered-by-account', network, collateralType),
-  fetchSummaryDataUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/cumulative-unique-stakers/summary', network, collateralType),
-  fetchDailyUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/daily-new-unique-stakers', network, collateralType),
-  fetchSummaryDataDailyUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/daily-new-unique-stakers/summary', network, collateralType),
-  
-  /* 
-    Perp Stats 
-  */
-  fetchLatestPerpStats: async (network) => API.fetchGeneralData('perp-stats/latest', network),
-  fetchAllPerpStats: async (network) => API.fetchGeneralData('perp-stats/all', network),
-  fetchCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/cumulative-volume', network),
-  fetchSummaryDataCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/cumulative-volume/summary', network),
-  fetchCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees', network),
-  fetchSummaryDataCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/cumulative-exchange-fees/summary', network),
-  fetchDailyPerpsVolume: async (network) => API.fetchGeneralData('perp-stats/daily-volume', network),
-  fetchDailyExchangeFees: async (network) => API.fetchGeneralData('perp-stats/daily-exchange-fees', network),
-  fetchSummaryDataDailyPerpsVolume: async (network) => API.fetchGeneralData('perp-stats/daily-volume/summary', network),
-  fetchSummaryDataDailyExchangeFees: async (network) => API.fetchGeneralData('perp-stats/daily-exchange-fees/summary', network),
+  // Core Account Delegations (Unique Stakers)
+  fetchCumulativeUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/stakers/cumulative', { chain: network, collateralType }),
+  fetchSummaryDataUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/stakers/summary', { chain: network, collateralType }),
+  fetchDailyUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/stakers/daily', { chain: network, collateralType }),
 
-  /* Perp Account Stats */
-  fetchAllPerpAccountStats: async (network) => API.fetchGeneralData('perp-account-stats/all', network),
-  fetchCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders', network),
-  fetchSummaryDataCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/cumulative-unique-traders/summary', network),
-  fetchDailyUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/daily-new-unique-traders', network),
-  fetchSummaryDataDailyUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/daily-new-unique-traders/summary', network),
-  
-  /* Perp Market History */
-  fetchOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-avg', network),
-  fetchSummaryDataOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-avg/summary', network),
-  fetchDailyOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-stats', network),
+  // Perp Stats
+  fetchLatestPerpStats: async (network) => API.fetchGeneralData('perp-stats/latest', { chain: network }),
+  fetchCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/volume/cumulative', { chain: network }),
+  fetchSummaryDataCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/volume/summary', { chain: network }),
+  fetchDailyPerpsVolume: async (network) => API.fetchGeneralData('perp-stats/volume/daily', { chain: network }),
+  fetchCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/exchange-fees/cumulative', { chain: network }),
+  fetchSummaryDataCumulativeExchangeFees: async (network) => API.fetchGeneralData('perp-stats/exchange-fees/summary', { chain: network }),
+  fetchDailyExchangeFees: async (network) => API.fetchGeneralData('perp-stats/exchange-fees/daily', { chain: network }),
+
+  // Perp Account Stats (Unique Traders)
+  fetchCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/traders/cumulative', { chain: network }),
+  fetchSummaryDataCumulativeUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/traders/summary', { chain: network }),
+  fetchDailyUniqueTraders: async (network) => API.fetchGeneralData('perp-account-stats/traders/daily', { chain: network }),
+
+  // Perp Market History (Open Interest)
+  fetchOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily', { chain: network }),
+  fetchSummaryDataOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily/summary', { chain: network }),
+  fetchDailyChangeOpenInterest: async (network) => API.fetchGeneralData('perp-market-history/open-interest/daily-change', { chain: network }),
 };
 
 export default API;

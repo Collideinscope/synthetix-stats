@@ -46,22 +46,6 @@ const NAV_MENU = {
       metricKey: 'exchangeFees',
     },
   },
-  Stakers: {
-    stakersA: {
-      route: '',
-    },
-    stakersB: {
-      route: '',
-    }
-  },
-  Traders: {
-    tradersA: {
-      route: '',
-    },
-    tradersB: {
-      route: '',
-    }
-  },
 }
 
 export {

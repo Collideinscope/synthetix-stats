@@ -1,9 +1,9 @@
 import { abbreviateNumber } from "../helpers";
 
-// [state metric key]: { ...metadata }
+// [state metric lineKey]: { ...metadata }
 const METRIC_METADATA = {
   'apy': {
-    key: 'apy',
+    lineKey: 'allAPY',
     dailyKey: 'dailyAPY',
     hasDailyData: true,
     category: 'core',
@@ -35,7 +35,7 @@ const METRIC_METADATA = {
     },
   },
   'tvl': {
-    key: 'tvl',
+    lineKey: 'cumulativeTVL',
     dailyKey: 'dailyTVL',
     hasDailyData: true,
     category: 'core',
@@ -67,7 +67,7 @@ const METRIC_METADATA = {
     },
   },
   'poolRewards': {
-    key: 'poolRewards',
+    lineKey: 'cumulativePoolRewards',
     dailyKey: 'dailyPoolRewards',
     hasDailyData: true,
     category: 'core',
@@ -99,7 +99,7 @@ const METRIC_METADATA = {
     }
   },
   'coreDelegations': {
-    key: 'coreDelegations',
+    lineKey: 'cumulativeCoreDelegations',
     dailyKey: 'dailyCoreDelegations',
     hasDailyData: true,
     category: 'core',
@@ -130,7 +130,7 @@ const METRIC_METADATA = {
     }
   },
   'uniqueStakers': {
-    key: 'uniqueStakers',
+    lineKey: 'cumulativeUniqueStakers',
     dailyKey: 'dailyUniqueStakers',
     hasDailyData: true,
     defaultChartType: 'bar',
@@ -161,7 +161,7 @@ const METRIC_METADATA = {
     }
   },
   'perpsVolume': {
-    key: 'perpsVolume',
+    lineKey: 'cumulativePerpsVolume',
     dailyKey: 'dailyPerpsVolume',
     // modify to timeFilter later
     hasDailyData: true,
@@ -172,7 +172,7 @@ const METRIC_METADATA = {
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_volume',
-    dailyChartYAxisDataKey: 'daily_volume',
+    dailyChartYAxisDataKey: 'daily_cumulative_volume',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativePerpsVolume',
     summaryDataDailyKey: 'summaryDataDailyPerpsVolume',
@@ -186,14 +186,14 @@ const METRIC_METADATA = {
       return parseFloat(item.cumulative_volume);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_volume);
+      return parseFloat(item.daily_cumulative_volume);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
     }
   },
   'openInterest': {
-    key: 'openInterest',
+    lineKey: 'openInterest',
     dailyKey: 'dailyOpenInterest',
     hasDailyData: true,
     category: 'perps',
@@ -225,7 +225,7 @@ const METRIC_METADATA = {
     }
   },
   'uniqueTraders': {
-    key: 'uniqueTraders',
+    lineKey: 'cumulativeUniqueTraders',
     dailyKey: 'dailyUniqueTraders',
     hasDailyData: true,
     category: 'perps',
@@ -256,7 +256,7 @@ const METRIC_METADATA = {
     }
   },
   'exchangeFees': {
-    key: 'exchangeFees',
+    lineKey: 'cumulativeExchangeFees',
     dailyKey: 'dailyExchangeFees',
     hasDailyData: true,
     category: 'perps',
@@ -266,7 +266,7 @@ const METRIC_METADATA = {
     chartYValueSymbol: '$',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_exchange_fees',
-    dailyChartYAxisDataKey: 'daily_exchange_fees',
+    dailyChartYAxisDataKey: 'daily_cumulative_exchange_fees',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativeExchangeFees',
     summaryDataDailyKey: 'summaryDataDailyExchangeFees',
@@ -280,7 +280,7 @@ const METRIC_METADATA = {
       return parseFloat(item.cumulative_exchange_fees);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_exchange_fees);
+      return parseFloat(item.daily_cumulative_exchange_fees);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);

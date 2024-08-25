@@ -12,6 +12,7 @@ import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { abbreviateNumber } from "../../helpers";
 
 const ChartHeader = ({ 
+  network,
   metric,
   chartTitle, 
   timeFilter, 
@@ -29,11 +30,13 @@ const ChartHeader = ({
   });
 
   useEffect(() => {
-    if (metric) {
+    if (metric && network && state[METRIC_METADATA[metric]?.summaryDataKey]) {
       const summaryData = state[METRIC_METADATA[metric].summaryDataKey];
-      setSummaryData({...summaryData});
+      if (summaryData && summaryData[network]) {
+        setSummaryData({...summaryData[network]});
+      }
     }
-  }, [metric, state])
+  }, [metric, state, network]);
 
   const renderTimeFilter = chartTitle === 'APY'
     ? 'daily'

@@ -42,14 +42,15 @@ const RadialChart = ({
     symbolLocation,
     dataChainFilter,
     summaryDataKey,
+    lineKey
   } = metricMetadata;
 
-  const dataChainFiltered = dataChainFilter(state[metric], network);
+  const dataChainFiltered = dataChainFilter(state[lineKey], network);
 
   const startDate = new Date(
     dataStartDate
       ? dataStartDate 
-      : state[metric].length > 0 
+      : state[lineKey].length > 0 
         ? dataChainFiltered[0].ts
         : '2024-01-01' // default start date
   );
@@ -70,8 +71,8 @@ const RadialChart = ({
   const ath = Math.max(...data.map(d => d[chartYAxisDataKey]));
   const atl = Math.min(...data.map(d => d[chartYAxisDataKey]));
 
-  const ath_percentage = state[summaryDataKey].ath_percentage;
-  const atl_percentage = state[summaryDataKey].atl_percentage;
+  const ath_percentage = state[summaryDataKey][network].ath_percentage;
+  const atl_percentage = state[summaryDataKey][network].atl_percentage;
 
   const formattedData = [
     { name: 'Current', value: ((latestValue - atl) / (ath - atl)) * 100, fill: 'url(#gradientGreenCyan)' }
@@ -139,8 +140,8 @@ const RadialChart = ({
           <tspan className={styles.statValue} dx="5" letterSpacing="0.5">
             {displayValue}
           </tspan>
-          <tspan className={`${styles.statDelta} ${colorClass}`} dx="5">
-            {delta}
+          <tspan className={`${styles.statDelta} ${colorClass}`} dx="2">
+            {delta + ' '}
           </tspan>
         </text>
       </g>
@@ -183,7 +184,7 @@ const RadialChart = ({
             </p>
           </div>
           <RadialBarChart
-            width={320}
+            width={325}
             height={387.58}
             cx="55%"
             cy="40%"

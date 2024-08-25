@@ -25,7 +25,7 @@ const useInitialDataFetch = (appDispatch, setIsLoading, currentPath) => {
 
         const results = await Promise.all(fetchPromises);
         const newData = Object.fromEntries(routeMetrics.map((key, index) => [key, results[index]]));
-        
+
         // dispatch
         appDispatch({ type: 'SET_PAGE_DATA', payload: newData });
         await setCachedData({ ...cachedData, ...newData });
@@ -33,9 +33,8 @@ const useInitialDataFetch = (appDispatch, setIsLoading, currentPath) => {
         // fetch remainder of data
         const allMetrics = Object.keys(metricToFetchFunction);
         const remainingMetrics = allMetrics.filter(metric => !routeMetrics.includes(metric));
-        
         const remainingFetchPromises = remainingMetrics.map(metric => metricToFetchFunction[metric]());
-
+        
         // run and dispatch 
         Promise.all(remainingFetchPromises)
           .then(backgroundResults => {

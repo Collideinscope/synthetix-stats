@@ -1,61 +1,52 @@
 const metrics_by_key = {
   'uniqueStakers': [
-    'uniqueStakers',
+    'cumulativeUniqueStakers',
     'summaryDataUniqueStakers',
-    'dailyUniqueStakers',
-    'summaryDataDailyUniqueStakers'
+    'dailyUniqueStakers'
   ],
   'uniqueTraders': [
-    'uniqueTraders',
+    'cumulativeUniqueTraders',
     'summaryDataUniqueTraders',
-    'dailyUniqueTraders',
-    'summaryDataDailyUniqueTraders'
+    'dailyUniqueTraders'
   ],
   'perpsVolume': [
-    'perpsVolume',
+    'cumulativePerpsVolume',
     'summaryDataCumulativePerpsVolume',
-    'dailyPerpsVolume',
-    'summaryDataDailyPerpsVolume'
+    'dailyPerpsVolume'
   ],
   'openInterest': [
     'openInterest',
     'summaryDataOpenInterest',
-    'dailyOpenInterest'
+    'dailyChangeOpenInterest'
   ],
   'apy': [
-    'apy',
-    'dailyAPY',
+    'allAPY',
     'summaryDataAPY',
-    'summaryDataDailyAPY'
+    'dailyAPY'
   ],
   'tvl': [
-    'tvl',
-    'dailyTVL',
+    'latestTVL',
+    'cumulativeTVL',
     'summaryDataTVL',
-    'summaryDataDailyTVL'
+    'dailyTVL'
   ],
   'poolRewards': [
-    'poolRewards',
-    'dailyPoolRewards',
+    'latestPoolRewards',
+    'cumulativePoolRewards',
     'summaryDataPoolRewards',
-    'summaryDataDailyPoolRewards'
+    'dailyPoolRewards'
   ],
   'coreDelegations': [
-    'coreDelegations',
-    'dailyCoreDelegations',
+    'latestCoreDelegations',
+    'cumulativeCoreDelegations',
     'summaryDataCoreDelegations',
-    'summaryDataDailyCoreDelegations'
+    'dailyCoreDelegations'
   ],
   'exchangeFees': [
-    'exchangeFees',
-    'dailyExchangeFees',
+    'cumulativeExchangeFees',
     'summaryDataCumulativeExchangeFees',
-    'summaryDataDailyExchangeFees'
+    'dailyExchangeFees'
   ],
-  'perpStats': [
-    'allPerpStats',
-    'allPerpAccountStats'
-  ]
 };
 
 export default metrics_by_key;

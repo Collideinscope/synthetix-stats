@@ -40,13 +40,15 @@ const AreaChartCustom = ({
     symbolLocation,
     dataChainFilter,
     smoothData,
+    lineKey,
   } = metricMetadata;
-  const dataChainFiltered = dataChainFilter(state[metric], network);
+
+  const dataChainFiltered = dataChainFilter(state[lineKey], network);
 
   const startDate = new Date(
     dataStartDate
       ? dataStartDate 
-      : state[metric].length > 0 
+      : state[lineKey].length > 0 
         ? dataChainFiltered[0].ts
         : '2024-01-01' // default start date
   );
@@ -258,6 +260,7 @@ const AreaChartCustom = ({
       {renderExitFullScreen}
       <div className={`${styles.chartContent} ${isFullScreen ? styles.fullScreenContent : ''}`}>
         <ChartHeader 
+          network={network}
           metric={metric}
           chartTitle={chartTitle}
           timeFilter={timeFilter}
