@@ -25,6 +25,7 @@ const AreaChartCustom = ({
   isFullScreen,
   toggleFullScreen,
 }) => {
+  
   const [highlightValue, setHighlightValue] = useState(null);
   
   const { state } = useContext(GlobalContext);
