@@ -103,7 +103,7 @@ const METRIC_METADATA = {
     dailyKey: 'dailyCoreDelegations',
     hasDailyData: true,
     category: 'core',
-    chartTitle: 'Core Delegations',
+    chartTitle: 'Net Pool Flows',
     defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '$',
