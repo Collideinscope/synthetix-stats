@@ -12,8 +12,8 @@ const NAV_MENU = {
       route: '/core/tvl',
       metricKey: 'tvl'
     },
-    'Core Delegations': {
-      route: '/core/core-delegations',
+    'Net Pool Flows': {
+      route: '/core/net-pool-flows',
       metricKey: 'coreDelegations',
     },
     'Pool Rewards': {
