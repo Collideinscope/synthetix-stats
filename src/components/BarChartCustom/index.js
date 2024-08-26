@@ -300,8 +300,10 @@ const BarChartCustom = ({
 
     if (timeFilter === 'daily') {
       const legendText = metric === 'apy'
-        ? 'Avg % Δ':
-        'Max';
+        ? 'Avg % Δ'
+        : metric === 'openInterest'
+          ? 'Avg'
+          : 'Max';
 
       return (
         <div className={styles.legend}>

@@ -194,7 +194,7 @@ const METRIC_METADATA = {
   },
   'openInterest': {
     lineKey: 'openInterest',
-    dailyKey: 'dailyOpenInterest',
+    dailyKey: 'dailyChangeOpenInterest',
     hasDailyData: true,
     category: 'perps',
     chartTitle: 'Open Interest',
