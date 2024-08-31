@@ -28,7 +28,8 @@ const API = {
         ? '?' + entries.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&')
         : '';
 
-      const URL = `${BASE_URL}/${endpoint}${queryParamsString}`;
+      const URL = `${BASE_URL}${endpoint}${queryParamsString}`;
+      
       return fetchData(URL);
     } catch (error) {
       console.error(`Error fetching ${endpoint}:`, error);
@@ -43,22 +44,22 @@ const API = {
   fetchDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily', { chain: network, collateralType }),
 
   // TVL
-  fetchLatestTVL: async (network) => API.fetchGeneralData('tvl/latest', { chain: network }),
-  fetchCumulativeTVL: async (network) => API.fetchGeneralData('tvl/cumulative', { chain: network }),
-  fetchSummaryDataTVL: async (network) => API.fetchGeneralData('tvl/summary', { chain: network }),
-  fetchDailyTVL: async (network) => API.fetchGeneralData('tvl/daily', { chain: network }),
+  fetchLatestTVL: async (network, collateralType) => API.fetchGeneralData('tvl/latest', { chain: network, collateralType }),
+  fetchCumulativeTVL: async (network, collateralType) => API.fetchGeneralData('tvl/cumulative', { chain: network, collateralType }),
+  fetchSummaryDataTVL: async (network, collateralType) => API.fetchGeneralData('tvl/summary', { chain: network, collateralType }),
+  fetchDailyTVL: async (network, collateralType) => API.fetchGeneralData('tvl/daily', { chain: network, collateralType }),
 
   // Core Delegations
-  fetchLatestCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/latest', { chain: network }),
-  fetchAllCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/cumulative', { chain: network }),
-  fetchSummaryDataCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/summary', { chain: network }),
-  fetchDailyCoreDelegations: async (network) => API.fetchGeneralData('core-delegations/daily', { chain: network }),
+  fetchLatestCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/latest', { chain: network, collateralType }),
+  fetchAllCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/cumulative', { chain: network, collateralType }),
+  fetchSummaryDataCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/summary', { chain: network, collateralType }),
+  fetchDailyCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/daily', { chain: network, collateralType }),
 
   // Pool Rewards
-  fetchLatestPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/latest', { chain: network }),
-  fetchCumulativePoolRewards: async (network) => API.fetchGeneralData('pool-rewards/cumulative', { chain: network }),
-  fetchSummaryDataPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/summary', { chain: network }),
-  fetchDailyPoolRewards: async (network) => API.fetchGeneralData('pool-rewards/daily', { chain: network }),
+  fetchLatestPoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/latest', { chain: network, collateralType }),
+  fetchCumulativePoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/cumulative', { chain: network, collateralType }),
+  fetchSummaryDataPoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/summary', { chain: network, collateralType }),
+  fetchDailyPoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/daily', { chain: network, collateralType }),
 
   // Core Account Delegations (Unique Stakers)
   fetchCumulativeUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/stakers/cumulative', { chain: network, collateralType }),

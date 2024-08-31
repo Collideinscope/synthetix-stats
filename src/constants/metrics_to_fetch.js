@@ -1,53 +1,56 @@
 import API from '../fetch_functions/';
 
+const collateralType = '0xC74eA762cF06c9151cE074E6a569a5945b6302E7';
+const chain = 'base'; // Default chain
+
 const metricToFetchFunction = {
   // Unique Stakers
-  cumulativeUniqueStakers: () => API.fetchCumulativeUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
-  summaryDataUniqueStakers: () => API.fetchSummaryDataUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
-  dailyUniqueStakers: () => API.fetchDailyUniqueStakers('base', '0xC74eA762cF06c9151cE074E6a569a5945b6302E7'),
+  cumulativeUniqueStakers: () => API.fetchCumulativeUniqueStakers(chain, collateralType),
+  summaryDataUniqueStakers: () => API.fetchSummaryDataUniqueStakers(chain, collateralType),
+  dailyUniqueStakers: () => API.fetchDailyUniqueStakers(chain, collateralType),
 
   // Unique Traders
-  cumulativeUniqueTraders: () => API.fetchCumulativeUniqueTraders('base'),
-  summaryDataUniqueTraders: () => API.fetchSummaryDataCumulativeUniqueTraders('base'),
-  dailyUniqueTraders: () => API.fetchDailyUniqueTraders('base'),
+  cumulativeUniqueTraders: () => API.fetchCumulativeUniqueTraders(chain),
+  summaryDataUniqueTraders: () => API.fetchSummaryDataCumulativeUniqueTraders(chain),
+  dailyUniqueTraders: () => API.fetchDailyUniqueTraders(chain),
 
   // Perps Volume
-  cumulativePerpsVolume: () => API.fetchCumulativePerpsVolume('base'),
-  summaryDataCumulativePerpsVolume: () => API.fetchSummaryDataCumulativePerpsVolume('base'),
-  dailyPerpsVolume: () => API.fetchDailyPerpsVolume('base'),
+  cumulativePerpsVolume: () => API.fetchCumulativePerpsVolume(chain),
+  summaryDataCumulativePerpsVolume: () => API.fetchSummaryDataCumulativePerpsVolume(chain),
+  dailyPerpsVolume: () => API.fetchDailyPerpsVolume(chain),
 
   // Open Interest
-  openInterest: () => API.fetchOpenInterest('base'),
-  summaryDataOpenInterest: () => API.fetchSummaryDataOpenInterest('base'),
-  dailyChangeOpenInterest: () => API.fetchDailyChangeOpenInterest('base'),
+  openInterest: () => API.fetchOpenInterest(chain),
+  summaryDataOpenInterest: () => API.fetchSummaryDataOpenInterest(chain),
+  dailyChangeOpenInterest: () => API.fetchDailyChangeOpenInterest(chain),
 
   // APY
-  allAPY: () => API.fetchAllAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
-  summaryDataAPY: () => API.fetchSummaryDataAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
-  dailyAPY: () => API.fetchDailyAPY('base', '0xc74ea762cf06c9151ce074e6a569a5945b6302e7'),
+  allAPY: () => API.fetchAllAPY(chain, collateralType),
+  summaryDataAPY: () => API.fetchSummaryDataAPY(chain, collateralType),
+  dailyAPY: () => API.fetchDailyAPY(chain, collateralType),
 
   // TVL
-  latestTVL: () => API.fetchLatestTVL('base'),
-  cumulativeTVL: () => API.fetchCumulativeTVL('base'),
-  summaryDataTVL: () => API.fetchSummaryDataTVL('base'),
-  dailyTVL: () => API.fetchDailyTVL('base'),
+  latestTVL: () => API.fetchLatestTVL(chain, collateralType),
+  cumulativeTVL: () => API.fetchCumulativeTVL(chain, collateralType),
+  summaryDataTVL: () => API.fetchSummaryDataTVL(chain, collateralType),
+  dailyTVL: () => API.fetchDailyTVL(chain, collateralType),
 
   // Pool Rewards
-  latestPoolRewards: () => API.fetchLatestPoolRewards('base'),
-  cumulativePoolRewards: () => API.fetchCumulativePoolRewards('base'),
-  summaryDataPoolRewards: () => API.fetchSummaryDataPoolRewards('base'),
-  dailyPoolRewards: () => API.fetchDailyPoolRewards('base'),
+  latestPoolRewards: () => API.fetchLatestPoolRewards(chain, collateralType),
+  cumulativePoolRewards: () => API.fetchCumulativePoolRewards(chain, collateralType),
+  summaryDataPoolRewards: () => API.fetchSummaryDataPoolRewards(chain, collateralType),
+  dailyPoolRewards: () => API.fetchDailyPoolRewards(chain, collateralType),
 
   // Core Delegations
-  latestCoreDelegations: () => API.fetchLatestCoreDelegations('base'),
-  cumulativeCoreDelegations: () => API.fetchAllCoreDelegations('base'),
-  summaryDataCoreDelegations: () => API.fetchSummaryDataCoreDelegations('base'),
-  dailyCoreDelegations: () => API.fetchDailyCoreDelegations('base'),
+  latestCoreDelegations: () => API.fetchLatestCoreDelegations(chain, collateralType),
+  cumulativeCoreDelegations: () => API.fetchAllCoreDelegations(chain, collateralType),
+  summaryDataCoreDelegations: () => API.fetchSummaryDataCoreDelegations(chain, collateralType),
+  dailyCoreDelegations: () => API.fetchDailyCoreDelegations(chain, collateralType),
 
   // Exchange Fees
-  cumulativeExchangeFees: () => API.fetchCumulativeExchangeFees('base'),
-  summaryDataCumulativeExchangeFees: () => API.fetchSummaryDataCumulativeExchangeFees('base'),
-  dailyExchangeFees: () => API.fetchDailyExchangeFees('base'),
+  cumulativeExchangeFees: () => API.fetchCumulativeExchangeFees(chain),
+  summaryDataCumulativeExchangeFees: () => API.fetchSummaryDataCumulativeExchangeFees(chain),
+  dailyExchangeFees: () => API.fetchDailyExchangeFees(chain),
 };
 
 export default metricToFetchFunction;
