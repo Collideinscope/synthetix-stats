@@ -250,7 +250,8 @@ const BarChartCustom = ({
   const CustomTick = ({ x, y, payload }) => {
     const date = new Date(payload.value);
     const text = xAxisTickFormatter(date);
-
+    const [firstLine, secondLine] = text.split('\n');
+  
     return (
       <g transform={`translate(${x},${y})`}>
         <text 
@@ -259,14 +260,14 @@ const BarChartCustom = ({
           dy={16} 
           textAnchor="middle"
           fill="var(--charts-supporting-colour)"
-          transform="rotate(0)"
           className={styles.tickLabel}
         >
-          {text}
+          <tspan x={0} dy="8">{firstLine}</tspan>
+          {secondLine && <tspan x={0} dy="1.2em">{secondLine}</tspan>}
         </text>
       </g>
     );
-  };
+  };  
 
   const fullScreenClass = isFullScreen 
     ? 'fullScreen'

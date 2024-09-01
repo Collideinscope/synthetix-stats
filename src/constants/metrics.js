@@ -140,7 +140,7 @@ const METRIC_METADATA = {
     chartYValueSymbol: '',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_staker_count',
-    dailyChartYAxisDataKey: 'daily_new_unique_stakers',
+    dailyChartYAxisDataKey: 'daily_unique_stakers',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueStakers',
     summaryDataDailyKey: 'summaryDataDailyUniqueStakers',
@@ -235,7 +235,7 @@ const METRIC_METADATA = {
     chartYValueSymbol: '',
     dataStartDate: null,
     chartYAxisDataKey: 'cumulative_trader_count',
-    dailyChartYAxisDataKey: 'daily_new_unique_traders',
+    dailyChartYAxisDataKey: 'daily_unique_traders',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataUniqueTraders',
     summaryDataDailyKey: 'summaryDataDailyUniqueTraders',
@@ -249,7 +249,7 @@ const METRIC_METADATA = {
       return parseFloat(item.cumulative_trader_count);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_new_unique_traders);
+      return parseFloat(item.daily_unique_traders);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val, 0);
