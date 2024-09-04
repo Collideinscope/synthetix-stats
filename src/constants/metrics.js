@@ -154,7 +154,7 @@ const METRIC_METADATA = {
       return parseFloat(item.cumulative_staker_count);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_new_unique_stakers);
+      return parseFloat(item.daily_unique_stakers);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val, 0);

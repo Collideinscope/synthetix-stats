@@ -359,21 +359,13 @@ const BarChartCustom = ({
               barSize={timeFilter === 'daily' ? 5 : 25}
             >
               <defs>
-                <pattern id="patternStripePositive" width="4" height="4" patternUnits="userSpaceOnUse">
-                  <rect width="4" height="4" fill="var(--cyan-300)"/>
-                  <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-300)" strokeWidth={1}/>
-                </pattern>
-                <pattern id="patternStripeNegative" width="4" height="4" patternUnits="userSpaceOnUse">
-                  <rect width="4" height="4" fill="var(--cyan-300)"/>
-                  <path d="M0,0 L4,4 M4,0 L0,4" stroke="var(--cyan-900)" strokeWidth={1}/>
-                </pattern>
-                <linearGradient id="colorAPYPositive" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.4}/>
-                  <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={0.1}/>
+                <linearGradient id="colorPositive" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={1}/>
                 </linearGradient>
-                <linearGradient id="colorAPYNegative" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--cyan-900)" stopOpacity={0.4}/>
-                  <stop offset="95%" stopColor="var(--cyan-900)" stopOpacity={0.1}/>
+                <linearGradient id="colorNegative" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--cyan-800)" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="var(--cyan-800)" stopOpacity={1}/>
                 </linearGradient>
               </defs>
               <XAxis 
@@ -404,32 +396,30 @@ const BarChartCustom = ({
               />
               {timeFilter === 'monthly' ? (
                 <>
-                  <Bar dataKey="avg" fill="url(#patternStripePositive)" stackId="a">
+                  <Bar dataKey="avg" fill="url(#colorPositive)" stackId="a">
                     {chartData.map((entry, index) => (
                       <Cell 
-                        lineKey={`cell-${index}`} 
-                        fill={entry.avg >= 0 ? "url(#patternStripePositive)" : "url(#patternStripeNegative)"}
-                        fillOpacity={entry.avg >= 0 ? 1 : 0.8}
+                        key={`cell-${index}`} 
+                        fill={entry.avg >= 0 ? "url(#colorPositive)" : "url(#colorNegative)"}
                       />
                     ))}
                   </Bar>
-                  <Bar dataKey="max" fill="url(#colorAPYPositive)" fillOpacity={0.4} stackId="a">
+                  <Bar dataKey="max" fill="url(#colorPositive)" fillOpacity={0.4} stackId="a">
                     {chartData.map((entry, index) => (
                       <Cell 
-                        lineKey={`cell-${index}`} 
-                        fill={entry.max >= 0 ? "url(#colorAPYPositive)" : "url(#colorAPYNegative)"}
-                        fillOpacity={entry.max >= 0 ? 0.4 : 0.6}
+                        key={`cell-${index}`} 
+                        fill={entry.max >= 0 ? "url(#colorPositive)" : "url(#colorNegative)"}
+                        fillOpacity={0.4}
                       />
                     ))}
                   </Bar>
                 </>
               ) : (
-                <Bar dataKey="value" stroke="black" strokeWidth={1}>
+                <Bar dataKey="value">
                   {chartData.map((entry, index) => (
                     <Cell 
-                      lineKey={`cell-${index}`} 
-                      fill={entry.value >= 0 ? "url(#patternStripePositive)" : "url(#patternStripeNegative)"}
-                      fillOpacity={entry.value >= 0 ? 1 : 0.8}
+                      key={`cell-${index}`} 
+                      fill={entry.value >= 0 ? "url(#colorPositive)" : "url(#colorNegative)"}
                     />
                   ))}
                 </Bar>
