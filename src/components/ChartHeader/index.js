@@ -76,6 +76,15 @@ const ChartHeader = ({
     )
   }
 
+  const generateDateRender = () => {
+    if (!latestDate) { return ''; };
+
+    const date = latestDate && new Date(latestDate);
+    const isoDate = date.toISOString();
+  
+    return `${isoDate.substring(0, 10)} ${isoDate.substring(11, 16)}`;
+  }
+
   return (
     <div className={styles.chartHeader}>
       <div className={styles.titleContainer}>
@@ -91,7 +100,7 @@ const ChartHeader = ({
               {valueAndSymbol(highlightValue)}
             </p>
             <p className={styles.latestValueDate}>
-              {latestDate && format(new Date(latestDate), 'MMM d, yyyy, HH:mm')}
+              {generateDateRender()}
             </p>
           </div>
         </div>
