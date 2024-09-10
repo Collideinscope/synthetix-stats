@@ -30,19 +30,16 @@ const metricToFetchFunction = {
   dailyAPY: () => API.fetchDailyAPY(chain, collateralType),
 
   // TVL
-  latestTVL: () => API.fetchLatestTVL(chain, collateralType),
   cumulativeTVL: () => API.fetchCumulativeTVL(chain, collateralType),
   summaryDataTVL: () => API.fetchSummaryDataTVL(chain, collateralType),
   dailyTVL: () => API.fetchDailyTVL(chain, collateralType),
 
   // Pool Rewards
-  latestPoolRewards: () => API.fetchLatestPoolRewards(chain, collateralType),
   cumulativePoolRewards: () => API.fetchCumulativePoolRewards(chain, collateralType),
   summaryDataPoolRewards: () => API.fetchSummaryDataPoolRewards(chain, collateralType),
   dailyPoolRewards: () => API.fetchDailyPoolRewards(chain, collateralType),
 
   // Core Delegations
-  latestCoreDelegations: () => API.fetchLatestCoreDelegations(chain, collateralType),
   cumulativeCoreDelegations: () => API.fetchAllCoreDelegations(chain, collateralType),
   summaryDataCoreDelegations: () => API.fetchSummaryDataCoreDelegations(chain, collateralType),
   dailyCoreDelegations: () => API.fetchDailyCoreDelegations(chain, collateralType),
