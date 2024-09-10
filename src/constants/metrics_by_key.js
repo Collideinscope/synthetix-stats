@@ -25,19 +25,16 @@ const metrics_by_key = {
     'dailyAPY'
   ],
   'tvl': [
-    'latestTVL',
     'cumulativeTVL',
     'summaryDataTVL',
     'dailyTVL'
   ],
   'poolRewards': [
-    'latestPoolRewards',
     'cumulativePoolRewards',
     'summaryDataPoolRewards',
     'dailyPoolRewards'
   ],
   'coreDelegations': [
-    'latestCoreDelegations',
     'cumulativeCoreDelegations',
     'summaryDataCoreDelegations',
     'dailyCoreDelegations'
