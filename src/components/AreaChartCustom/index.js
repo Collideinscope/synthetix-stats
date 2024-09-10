@@ -68,7 +68,7 @@ const AreaChartCustom = ({
     : '';
 
   const latestValueDate = data && data.length > 0
-    ? format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy')
+    ? format(new Date(data[data.length - 1].timestamp), 'MMM d, yyyy, HH:mm')
     : '';
 
   useEffect(() => {

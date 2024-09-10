@@ -38,25 +38,21 @@ const API = {
   },
 
   // APY
-  fetchLatestAPY: async (network, collateralType) => API.fetchGeneralData('apy/latest', { chain: network, collateralType }),
   fetchAllAPY: async (network, collateralType) => API.fetchGeneralData('apy/all', { chain: network, collateralType }),
   fetchSummaryDataAPY: async (network, collateralType) => API.fetchGeneralData('apy/summary', { chain: network, collateralType }),
   fetchDailyAPY: async (network, collateralType) => API.fetchGeneralData('apy/daily', { chain: network, collateralType }),
 
   // TVL
-  fetchLatestTVL: async (network, collateralType) => API.fetchGeneralData('tvl/latest', { chain: network, collateralType }),
   fetchCumulativeTVL: async (network, collateralType) => API.fetchGeneralData('tvl/cumulative', { chain: network, collateralType }),
   fetchSummaryDataTVL: async (network, collateralType) => API.fetchGeneralData('tvl/summary', { chain: network, collateralType }),
   fetchDailyTVL: async (network, collateralType) => API.fetchGeneralData('tvl/daily', { chain: network, collateralType }),
 
   // Core Delegations
-  fetchLatestCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/latest', { chain: network, collateralType }),
   fetchAllCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/cumulative', { chain: network, collateralType }),
   fetchSummaryDataCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/summary', { chain: network, collateralType }),
   fetchDailyCoreDelegations: async (network, collateralType) => API.fetchGeneralData('core-delegations/daily', { chain: network, collateralType }),
 
   // Pool Rewards
-  fetchLatestPoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/latest', { chain: network, collateralType }),
   fetchCumulativePoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/cumulative', { chain: network, collateralType }),
   fetchSummaryDataPoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/summary', { chain: network, collateralType }),
   fetchDailyPoolRewards: async (network, collateralType) => API.fetchGeneralData('pool-rewards/daily', { chain: network, collateralType }),
@@ -67,7 +63,6 @@ const API = {
   fetchDailyUniqueStakers: async (network, collateralType) => API.fetchGeneralData('core-account-delegations/stakers/daily', { chain: network, collateralType }),
 
   // Perp Stats
-  fetchLatestPerpStats: async (network) => API.fetchGeneralData('perp-stats/latest', { chain: network }),
   fetchCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/volume/cumulative', { chain: network }),
   fetchSummaryDataCumulativePerpsVolume: async (network) => API.fetchGeneralData('perp-stats/volume/summary', { chain: network }),
   fetchDailyPerpsVolume: async (network) => API.fetchGeneralData('perp-stats/volume/daily', { chain: network }),
