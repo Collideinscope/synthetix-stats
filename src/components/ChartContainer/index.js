@@ -55,7 +55,11 @@ const ChartContainer = ({
         metric,
         settings: {
           chartType: newType,
-          timeFilter: newType === 'bar' ? 'daily' : 'cumulative'
+          timeFilter: newType === 'bar' 
+            ? 'daily' 
+            : metric === 'openInterest'
+              ? 'daily'
+              : 'cumulative'
         }
       }
     });
