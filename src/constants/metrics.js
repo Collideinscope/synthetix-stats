@@ -172,7 +172,7 @@ const METRIC_METADATA = {
     chartYValueSymbol: '$',
     dataStartDate: '2024-02-20',
     chartYAxisDataKey: 'cumulative_volume',
-    dailyChartYAxisDataKey: 'daily_cumulative_volume',
+    dailyChartYAxisDataKey: 'daily_volume',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativePerpsVolume',
     summaryDataDailyKey: 'summaryDataDailyPerpsVolume',
@@ -186,7 +186,7 @@ const METRIC_METADATA = {
       return parseFloat(item.cumulative_volume);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_cumulative_volume);
+      return parseFloat(item.daily_volume);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
@@ -266,7 +266,7 @@ const METRIC_METADATA = {
     chartYValueSymbol: '$',
     dataStartDate: '2024-02-20',
     chartYAxisDataKey: 'cumulative_exchange_fees',
-    dailyChartYAxisDataKey: 'daily_cumulative_exchange_fees',
+    dailyChartYAxisDataKey: 'daily_exchange_fees',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataCumulativeExchangeFees',
     summaryDataDailyKey: 'summaryDataDailyExchangeFees',
@@ -280,7 +280,7 @@ const METRIC_METADATA = {
       return parseFloat(item.cumulative_exchange_fees);
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_cumulative_exchange_fees);
+      return parseFloat(item.daily_exchange_fees);
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(val);
