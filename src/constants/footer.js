@@ -8,14 +8,6 @@ const FOOTER_MENU = {
       label: 'Perps',
       route: '/perps/overview'
     },
-    {
-      label: 'Stakers',
-      route: '/stakers/overview'
-    },
-    {
-      label: 'Traders',
-      route: '/traders/overview'
-    }
   ],
   'ABOUT': [
     {
