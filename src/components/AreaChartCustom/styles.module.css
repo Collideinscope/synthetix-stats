@@ -218,9 +218,6 @@
   background: var(--whiteAlpha-100);
 }
 
-.exitIcon {
-}
-
 .exit:hover {
   background: var(--whiteAlpha-200);
 }

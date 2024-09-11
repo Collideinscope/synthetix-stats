@@ -279,7 +279,9 @@ const BarChartCustom = ({
         className={`${styles.exitFullScreen} ${styles.chartIcon}`} 
         onClick={toggleFullScreen}
       >
-        <FontAwesomeIcon className={styles.exitIcon} icon={faXmark} />
+        <p className={styles.exit}>
+          <FontAwesomeIcon className={styles.exitIcon} icon={faXmark} />
+        </p>
       </div>
     ) : '';
 

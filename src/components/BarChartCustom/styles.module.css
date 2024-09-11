@@ -181,15 +181,23 @@
   display: flex;
   justify-content: flex-end;
   color: var(--supporting-text-colour);
-  font-size: 20px;
-  cursor: pointer;
+  font-size: 16px;
   z-index: 1001;
   padding-right: var(--block-padding-between);
   padding-top: var(--block-padding-internal);
 }
 
-.exitIcon:hover {
-  color: var(--title-colour);
+.exit {
+  cursor: pointer;
+  margin: 0;
+  border: 1px solid var(--border-and-line-colour);
+  padding: 6px 12px;
+  border-radius: 50%;
+  background: var(--whiteAlpha-100);
+}
+
+.exit:hover {
+  background: var(--whiteAlpha-200);
 }
 
 .chartWrapper {
