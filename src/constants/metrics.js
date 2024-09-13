@@ -168,7 +168,7 @@ const METRIC_METADATA = {
     chartTitle: 'Unique Stakers',
     chartType: 'area',
     chartYValueSymbol: '',
-    dataStartDate: null,
+    dataStartDate: '2024-03-25',
     chartYAxisDataKey: 'cumulative_staker_count',
     dailyChartYAxisDataKey: 'daily_unique_stakers',
     symbolLocation: 'left',
