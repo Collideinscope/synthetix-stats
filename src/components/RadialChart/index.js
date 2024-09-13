@@ -28,13 +28,13 @@ const RadialChart = ({
 }) => {
   const { state } = useContext(GlobalContext);
 
-  const [apyPeriod, setApyPeriod] = useState('28d');
-
   const metricMetadata = METRIC_METADATA[metric];
 
   const {
     chartTitle,
     chartYValueSymbol,
+    radialType,
+    radialKey,
     dataStartDate,
     chartYAxisDataKey,
     getYAxisDataPoint,
@@ -42,15 +42,17 @@ const RadialChart = ({
     symbolLocation,
     dataChainFilter,
     summaryDataKey,
-    lineKey
+    lineKey,
+    dailyChartYAxisDataKey,
+    getDailyChartYAxisDataPoint,
   } = metricMetadata;
 
-  const dataChainFiltered = dataChainFilter(state[lineKey], network);
+  const dataChainFiltered = dataChainFilter(state[radialKey], network);
 
   const startDate = new Date(
     dataStartDate
       ? dataStartDate 
-      : state[lineKey].length > 0 
+      : state[radialKey].length > 0 
         ? dataChainFiltered[0].ts
         : '2024-01-01' // default start date
   );
@@ -60,20 +62,28 @@ const RadialChart = ({
     .map(item => {
       return {
         timestamp: parseISO(item.ts),
-        [chartYAxisDataKey]: getYAxisDataPoint(item, apyPeriod),
+        [radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey]: radialType === 'daily' ? getDailyChartYAxisDataPoint(item) : getYAxisDataPoint(item),
       }
     });
 
   const latestValue = data.length > 0
-  ? data[data.length - 1][chartYAxisDataKey].toFixed(2) 
+  ? data[data.length - 1][radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey].toFixed(2) 
   : '';
 
-  const ath = Math.max(...data.map(d => d[chartYAxisDataKey]));
-  const atl = Math.min(...data.map(d => d[chartYAxisDataKey]));
+  const ath = Math.max(...data.map(d => d[radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey]));
+  const atl = radialType === 'daily'
+    ? 0
+    : Math.min(...data.map(d => d[radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey]));
 
-  const ath_percentage = state[summaryDataKey][network].ath_percentage;
-  const atl_percentage = state[summaryDataKey][network].atl_percentage;
+  const ath_percentage = radialType === 'daily'
+    ? -1 * (1 - latestValue / ath) * 100
+    : state[summaryDataKey][network].ath_percentage;
 
+  const atl_percentage = radialType === 'daily'
+    ? ''
+    : state[summaryDataKey][network].atl_percentage;
+
+  
   const formattedData = [
     { name: 'Current', value: ((latestValue - atl) / (ath - atl)) * 100, fill: 'url(#gradientGreenCyan)' }
   ];
@@ -84,35 +94,63 @@ const RadialChart = ({
   
     return `${icon}${abbreviateNumber(Math.abs(value))}%`;
   };
-  
+
   const CustomTick = ({ cx, cy, payload }) => {
     const value = payload.value;
     let displayLabel, displayValue, delta, x, y, anchor, lineX1, lineY1, lineX2, lineY2;
   
-    if (value === 100) {
-      displayLabel = 'ATH';
-      displayValue = `${valueAndSymbolSVG(ath)}`;
-      delta = renderDelta(ath_percentage); 
-      x = cx;
-      y = cy - 148;
-      anchor = "start";
-      lineX1 = cx;
-      lineY1 = cy - 138;
-      lineX2 = cx;
-      lineY2 = cy - 128;
-    } else if (value === 0) {
-      displayLabel = 'ATL';
-      displayValue = `${valueAndSymbolSVG(atl)}`;
-      delta = renderDelta(atl_percentage); 
-      x = cx;
-      y = cy + 146;
-      anchor = "start";
-      lineX1 = cx;
-      lineY1 = cy + 126;
-      lineX2 = cx;
-      lineY2 = cy + 136;
-    } else {
-      return null;
+    if (radialType === 'cumulative') {
+      if (value === 100) {
+        displayLabel = 'ATH';
+        displayValue = `${valueAndSymbolSVG(ath)}`;
+        delta = renderDelta(ath_percentage);
+        x = cx - 30;
+        y = cy - 148;
+        anchor = "start";
+        lineX1 = cx;
+        lineY1 = cy - 138;
+        lineX2 = cx;
+        lineY2 = cy - 128;
+      } else if (value === 0) {
+        displayLabel = 'ATL';
+        displayValue = `${valueAndSymbolSVG(atl)}`;
+        delta = renderDelta(atl_percentage);
+        x = cx - 30;
+        y = cy + 146;
+        anchor = "start";
+        lineX1 = cx;
+        lineY1 = cy + 126;
+        lineX2 = cx;
+        lineY2 = cy + 136;
+      } else {
+        return null;
+      }
+    } else { // daily
+      if (value === 100) {
+        displayLabel = 'Max Daily';
+        displayValue = `${valueAndSymbolSVG(ath)}`;
+        delta = renderDelta(ath_percentage);
+        x = cx - 30;
+        y = cy - 148;
+        anchor = "start";
+        lineX1 = cx;
+        lineY1 = cy - 138;
+        lineX2 = cx;
+        lineY2 = cy - 128;
+      } else if (value === 0) {
+        displayLabel = 'Min Daily';
+        displayValue = `${valueAndSymbolSVG(0)}`;
+        delta = '';
+        x = cx - 30;
+        y = cy + 146;
+        anchor = "start";
+        lineX1 = cx;
+        lineY1 = cy + 126;
+        lineX2 = cx;
+        lineY2 = cy + 136;
+      } else {
+        return null;
+      }
     }
   
     const isPositive = (value === 100 ? ath_percentage : atl_percentage) >= 0;

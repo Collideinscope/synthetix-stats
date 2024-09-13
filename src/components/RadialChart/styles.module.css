@@ -80,7 +80,8 @@
   font-size: var(--font-size-supporting);
   color: var(--supporting-text-colour);
   top: 55%;
-  right: 22%;
+  right: 0;
+  width: 100%;
 }
 
 .centerValue {

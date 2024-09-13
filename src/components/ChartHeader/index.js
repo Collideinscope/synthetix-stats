@@ -39,7 +39,7 @@ const ChartHeader = ({
   }, [metric, state, network]);
 
   const renderTimeFilter = chartTitle === 'APY'
-    ? 'daily'
+    ? 'all'
     : timeFilter;
 
   const renderDelta = (value, label) => {

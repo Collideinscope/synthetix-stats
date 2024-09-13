@@ -5,13 +5,15 @@ const METRIC_METADATA = {
   'apy': {
     lineKey: 'allAPY',
     dailyKey: 'dailyAPY',
+    radialType: 'cumulative',
+    radialKey: 'allAPY',
     hasDailyData: true,
     category: 'core',
     chartTitle: 'APY',
     defaultChartType: 'area',
     chartType: 'area',
     chartYValueSymbol: '%',
-    dataStartDate: '2024-05-01',
+    dataStartDate: '2024-05-03',
     chartYAxisDataKey: 'apy_28d',
     dailyChartYAxisDataKey: 'daily_apy_percentage_delta',
     symbolLocation: 'right',
@@ -19,6 +21,11 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataAPY',
     summaryDataType: '%',
     smoothData: true,
+    timeFilters: {
+      area: 'all',
+      bar: 'daily',
+      radial: 'all'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -37,6 +44,8 @@ const METRIC_METADATA = {
   'tvl': {
     lineKey: 'cumulativeTVL',
     dailyKey: 'dailyTVL',
+    radialType: 'cumulative',
+    radialKey: 'cumulativeTVL',
     hasDailyData: true,
     category: 'core',
     chartTitle: 'TVL',
@@ -51,6 +60,11 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyTVL',
     summaryDataType: 'num',
     smoothData: true,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'cumulative'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -69,6 +83,8 @@ const METRIC_METADATA = {
   'poolRewards': {
     lineKey: 'cumulativePoolRewards',
     dailyKey: 'dailyPoolRewards',
+    radialType: 'cumulative',
+    radialKey: 'cumulativePoolRewards',
     hasDailyData: true,
     category: 'core',
     chartTitle: 'Pool Rewards',
@@ -83,6 +99,11 @@ const METRIC_METADATA = {
     summaryDataDailyKey: 'summaryDataDailyPoolRewards',
     summaryDataType: 'num',
     smoothData: true,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'cumulative'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -101,6 +122,8 @@ const METRIC_METADATA = {
   'coreDelegations': {
     lineKey: 'cumulativeCoreDelegations',
     dailyKey: 'dailyCoreDelegations',
+    radialType: 'cumulative',
+    radialKey: 'cumulativeCoreDelegations',
     hasDailyData: true,
     category: 'core',
     chartTitle: 'Net Pool Flows',
@@ -114,6 +137,11 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataCoreDelegations',
     summaryDataDailyKey: 'summaryDataDailyCoreDelegations',
     smoothData: true,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'cumulative'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -132,6 +160,8 @@ const METRIC_METADATA = {
   'uniqueStakers': {
     lineKey: 'cumulativeUniqueStakers',
     dailyKey: 'dailyUniqueStakers',
+    radialType: 'daily',
+    radialKey: 'dailyUniqueStakers',
     hasDailyData: true,
     defaultChartType: 'bar',
     category: 'core',
@@ -145,6 +175,11 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataUniqueStakers',
     summaryDataDailyKey: 'summaryDataDailyUniqueStakers',
     smoothData: false,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'daily'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -163,7 +198,8 @@ const METRIC_METADATA = {
   'perpsVolume': {
     lineKey: 'cumulativePerpsVolume',
     dailyKey: 'dailyPerpsVolume',
-    // modify to timeFilter later
+    radialType: 'daily',
+    radialKey: 'dailyPerpsVolume',
     hasDailyData: true,
     category: 'perps',
     chartTitle: 'Perps Volume',
@@ -177,6 +213,11 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataCumulativePerpsVolume',
     summaryDataDailyKey: 'summaryDataDailyPerpsVolume',
     smoothData: false,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'daily'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -195,6 +236,8 @@ const METRIC_METADATA = {
   'openInterest': {
     lineKey: 'openInterest',
     dailyKey: 'dailyChangeOpenInterest',
+    radialType: 'cumulative',
+    radialKey: 'openInterest',
     hasDailyData: true,
     category: 'perps',
     chartTitle: 'Open Interest',
@@ -203,12 +246,16 @@ const METRIC_METADATA = {
     chartYValueSymbol: '$',
     dataStartDate: '2024-02-03',
     chartYAxisDataKey: 'daily_oi',
-    // include min, max already available
     dailyChartYAxisDataKey: 'daily_oi_change',
     symbolLocation: 'left',
     summaryDataKey: 'summaryDataOpenInterest',
     summaryDataDailyKey: 'summaryDataOpenInterest',
     smoothData: false,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'cumulative'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -227,6 +274,8 @@ const METRIC_METADATA = {
   'uniqueTraders': {
     lineKey: 'cumulativeUniqueTraders',
     dailyKey: 'dailyUniqueTraders',
+    radialType: 'daily',
+    radialKey: 'dailyUniqueTraders',
     hasDailyData: true,
     category: 'perps',
     chartTitle: 'Unique Traders',
@@ -240,6 +289,11 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataUniqueTraders',
     summaryDataDailyKey: 'summaryDataDailyUniqueTraders',
     smoothData: false,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'daily'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
         ? data[chain]
@@ -258,6 +312,8 @@ const METRIC_METADATA = {
   'exchangeFees': {
     lineKey: 'cumulativeExchangeFees',
     dailyKey: 'dailyExchangeFees',
+    radialType: 'daily',
+    radialKey: 'dailyExchangeFees',
     hasDailyData: true,
     category: 'perps',
     chartTitle: 'Exchange Fees',
@@ -271,6 +327,11 @@ const METRIC_METADATA = {
     summaryDataKey: 'summaryDataCumulativeExchangeFees',
     summaryDataDailyKey: 'summaryDataDailyExchangeFees',
     smoothData: false,
+    timeFilters: {
+      area: 'cumulative',
+      bar: 'daily',
+      radial: 'daily'
+    },
     dataChainFilter: (data, chain) => {
       return data && data[chain]
       ? data[chain]

@@ -5,7 +5,6 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { useChartPage } from '../../context/ChartPageContext';
 
-import SummaryStatsPanel from '../SummaryStatsPanel';
 import AreaChartCustom from '../AreaChartCustom';
 import RadialChart from '../RadialChart';
 import BarChartCustom from '../BarChartCustom'; 
@@ -28,13 +27,9 @@ const ChartContainer = ({
 
   const chartSettings = pageState.charts[metric] || {
     chartType: metricMetadata.defaultChartType || 'area',
-    timeFilter: metricMetadata.defaultChartType === 'bar' 
-      ? 'daily' 
-      : metric === 'openInterest'
-        ? 'daily'
-        : 'cumulative'
+    timeFilter: metricMetadata['timeFilters'][metricMetadata.defaultChartType],
   };
-
+console.log()
   useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current) {
@@ -55,11 +50,7 @@ const ChartContainer = ({
         metric,
         settings: {
           chartType: newType,
-          timeFilter: newType === 'bar' 
-            ? 'daily' 
-            : metric === 'openInterest'
-              ? 'daily'
-              : 'cumulative'
+          timeFilter: metricMetadata['timeFilters'][newType],
         }
       }
     });
@@ -72,7 +63,7 @@ const ChartContainer = ({
       type: 'UPDATE_CHART_SETTINGS',
       payload: {
         metric,
-        settings: { timeFilter: newTimeFilter }
+        settings: { timeFilter: metricMetadata['timeFilters'][chartSettings.chartType] }
       }
     });
   };
@@ -104,10 +95,6 @@ const ChartContainer = ({
     }
   };
 
-  const renderSummaryStatsPanel = (
-    <SummaryStatsPanel metric={metric} />
-  );
-  
   const containerClass = chartSettings.chartType === 'radial'
     ? 'radialContainer'
     : 'genericContainer';
