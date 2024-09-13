@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar, faExpand } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faCircleNotch, faChartBar, faExpand } from '@fortawesome/free-solid-svg-icons';
 
 const ChartFooter = ({ 
   onChartTypeChange, 
@@ -47,7 +47,7 @@ const ChartFooter = ({
           className={`${styles.chartIcon} ${activeChartType === 'radial' ? styles.active : ''}`}
           onClick={() => onChartTypeChange('radial')}
         >
-          <FontAwesomeIcon icon={faChartPie} />
+          <FontAwesomeIcon icon={faCircleNotch} />
         </div>
       </div>
     </div>

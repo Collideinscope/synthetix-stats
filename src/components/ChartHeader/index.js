@@ -81,7 +81,7 @@ const ChartHeader = ({
 
     const date = latestDate && new Date(latestDate);
     const isoDate = date.toISOString();
-  
+
     return `${isoDate.substring(0, 10)} ${isoDate.substring(11, 16)}`;
   }
 
