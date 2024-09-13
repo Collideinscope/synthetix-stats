@@ -3,7 +3,8 @@ import styles from './styles.module.css';
 import React, { useContext, useState, useEffect } from 'react';
 
 import { AreaChart, Area, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -46,7 +47,7 @@ const AreaChartCustom = ({
 
   const dataChainFiltered = dataChainFilter(state[lineKey], network);
 
-  const startDate = new Date(
+  const startDate = parseISO(
     dataStartDate
       ? dataStartDate 
       : state[lineKey].length > 0 
@@ -55,10 +56,11 @@ const AreaChartCustom = ({
   );
 
   const data = dataChainFiltered
-    .filter(item => new Date(item.ts) >= startDate) 
+    .filter(item => parseISO(item.ts).getTime() >= startDate.getTime()) 
     .map(item => {
+      const timestamp = parseISO(item.ts).getTime();
       return {
-        timestamp: parseISO(item.ts),
+        timestamp,
         [chartYAxisDataKey]: getYAxisDataPoint(item),
       }
     });
@@ -68,7 +70,7 @@ const AreaChartCustom = ({
     : '';
 
   const latestValueDate = data && data.length > 0
-    ? new Date(data[data.length - 1].timestamp)
+    ? data[data.length - 1].timestamp
     : '';
 
   useEffect(() => {
@@ -113,8 +115,8 @@ const AreaChartCustom = ({
         return;
       }
   
-      const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
-      const day = date.getDate();
+      const monthKey = `${date.getUTCFullYear()}-${date.getUTCMonth()}`;
+      const day = date.getUTCDate();
   
       if (!months.has(monthKey)) {
         ticks.push(item.timestamp);
@@ -136,7 +138,7 @@ const AreaChartCustom = ({
       const date = new Date(tick);
 
       // Check if this tick is the first tick of the year
-      const isFirstTickOfYear = index === 0 || (index > 0 && new Date(ticks[index - 1]).getFullYear() !== date.getFullYear());
+      const isFirstTickOfYear = index === 0 || (index > 0 && new Date(ticks[index - 1]).getUTCFullYear() !== date.getUTCFullYear());
   
       return {
         tick,
@@ -147,18 +149,21 @@ const AreaChartCustom = ({
     return formattedTicks;
   };
 
+  const xAxisTicks = getTicksToShow(smoothedData);
+  const formattedTicks = getFormattedTicks(xAxisTicks);
+
   const xAxisTickFormatter = (tickItem) => {
     const date = new Date(tickItem);
-  
+
     const isFirstTickOfYear = formattedTicks.find(
-      (obj) => new Date(obj.tick).getTime() === date.getTime() && obj.isFirstTickOfYear
+      (obj) => obj.tick === tickItem && obj.isFirstTickOfYear
     );    
-  
+
     if (isFirstTickOfYear) {
-      return `${format(date, 'MMM d')},\n${format(date, 'yyyy')}`;
+      return `${formatInTimeZone(date, 'UTC', 'MMM d')},\n${formatInTimeZone(date, 'UTC', 'yyyy')}`;
     }
-  
-    return format(date, 'MMM d');
+
+    return formatInTimeZone(date, 'UTC', 'MMM d');
   };
 
   const formatYAxis = (tickItem) => {
@@ -174,7 +179,7 @@ const AreaChartCustom = ({
 
       const dateLabel = !label 
         ? ''
-        : format(new Date(label), 'MMM dd, yyyy');
+        : formatInTimeZone(new Date(label), 'UTC', 'MMM d, yyyy');
 
       return (
         <div className={styles.tooltip}>
@@ -211,7 +216,7 @@ const AreaChartCustom = ({
 
   const CustomTick = ({ x, y, payload }) => {
     const date = new Date(payload.value);
-    const text = xAxisTickFormatter(date);
+    const text = xAxisTickFormatter(payload.value);
     const [firstLine, secondLine] = text.split('\n');
   
     return (
@@ -230,9 +235,6 @@ const AreaChartCustom = ({
       </g>
     );
   };  
-
-  const xAxisTicks = getTicksToShow(smoothedData);
-  const formattedTicks = getFormattedTicks(xAxisTicks);
 
   const valueAndSymbol = (val) => {
     const symbolLeft = symbolLocation === 'left' ? (<span className={styles.symbol}>{chartYValueSymbol}</span>) : '';
@@ -267,7 +269,7 @@ const AreaChartCustom = ({
           chartTitle={chartTitle}
           timeFilter={timeFilter}
           highlightValue={highlightValue}
-          latestDate={latestValueDate}
+          latestDate={new Date(latestValueDate)}
           valueAndSymbol={valueAndSymbol}
           CustomLegend={null}
         />
@@ -285,6 +287,9 @@ const AreaChartCustom = ({
               </defs>
               <XAxis 
                 dataKey="timestamp" 
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                scale="time"
                 tickFormatter={xAxisTickFormatter} 
                 stroke="var(--charts-supporting-colour)"
                 angle={-45}

@@ -3,7 +3,8 @@ import styles from './styles.module.css';
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 
 import { ReferenceLine, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
-import { format, parseISO, startOfMonth } from 'date-fns';
+import { parseISO, startOfMonth } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faChartPie, faChartBar, faCog, faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -45,13 +46,13 @@ const BarChartCustom = ({
     dailyKey,
     lineKey,
   } = metricMetadata;
-  // daily dailyData
+  // daily data
   const dataChainFiltered = dataChainFilter(state[dailyKey], network);
 
-  // cumulative dailyData
+  // cumulative data
   const cumulativeDataFiltered = dataChainFilter(state[lineKey], network);
 
-  const startDate = new Date(
+  const startDate = parseISO(
     dataStartDate
       ? dataStartDate 
       : state[metric] && state[metric].length > 0 
@@ -60,18 +61,19 @@ const BarChartCustom = ({
   );
 
   const dailyData = dataChainFiltered
-    .filter(item => new Date(item.ts) >= startDate) 
+    .filter(item => parseISO(item.ts).getTime() >= startDate.getTime()) 
     .map(item => ({
+      ts: item.ts,  // Keep the original timestamp string
       timestamp: parseISO(item.ts),
       [dailyChartYAxisDataKey]: getDailyChartYAxisDataPoint(item),
     }));
 
-    const latestValue = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
+  const latestValue = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
     ? getYAxisDataPoint(cumulativeDataFiltered[cumulativeDataFiltered.length - 1]).toFixed(2)
     : '';
 
   const latestDate = cumulativeDataFiltered && cumulativeDataFiltered.length > 0
-    ? new Date(cumulativeDataFiltered[cumulativeDataFiltered.length - 1].ts)
+    ? parseISO(cumulativeDataFiltered[cumulativeDataFiltered.length - 1].ts)
     : new Date();
 
   useEffect(() => {
@@ -87,7 +89,7 @@ const BarChartCustom = ({
 
   const getDailyData = () => {
     return dailyData.map(item => ({
-      date: item.timestamp,
+      date: item.timestamp.getTime(), // Use milliseconds since epoch
       value: item[metricMetadata.dailyChartYAxisDataKey],
     }));
   };
@@ -97,7 +99,7 @@ const BarChartCustom = ({
     
     dailyData.forEach(item => {
       const monthStart = startOfMonth(item.timestamp);
-      const monthKey = format(monthStart, 'yyyy-MM');
+      const monthKey = formatInTimeZone(monthStart, 'UTC', 'yyyy-MM');
   
       if (!monthlyData[monthKey]) {
         monthlyData[monthKey] = {
@@ -110,7 +112,7 @@ const BarChartCustom = ({
     });
   
     return Object.values(monthlyData).map(({ month, values }) => ({
-      date: month,
+      date: month.getTime(), // Use milliseconds since epoch
       avg: values.reduce((sum, val) => sum + val, 0) / values.length,
       max: Math.max(...values),
     }));
@@ -151,8 +153,8 @@ const BarChartCustom = ({
         return;
       }
 
-      const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
-      const day = date.getDate();
+      const monthKey = `${date.getUTCFullYear()}-${date.getUTCMonth()}`;
+      const day = date.getUTCDate();
 
       // Include the first dailyData point of the month
       if (!months.has(monthKey)) {
@@ -176,7 +178,7 @@ const BarChartCustom = ({
       const date = new Date(tick);
 
       // Check if this tick is the first tick of the year
-      const isFirstTickOfYear = index === 0 || (index > 0 && new Date(ticks[index - 1]).getFullYear() !== date.getFullYear());
+      const isFirstTickOfYear = index === 0 || (index > 0 && new Date(ticks[index - 1]).getUTCFullYear() !== date.getUTCFullYear());
   
       return {
         tick,
@@ -202,14 +204,14 @@ const BarChartCustom = ({
     }
 
     if (active && payload && payload.length) {
-      const date = payload[0].payload.date;
+      const date = new Date(payload[0].payload.date);
       if (timeFilter === 'monthly') {
         const avgValue = payload.find(p => p.dataKey === 'avg')?.value.toFixed(2);
         const maxValue = payload.find(p => p.dataKey === 'max')?.value.toFixed(2);
 
         return (
           <div className={styles.tooltip}>
-            <p className={styles.tooltipDate}>{format(date, 'MMMM yyyy')}</p>
+            <p className={styles.tooltipDate}>{formatInTimeZone(date, 'UTC', 'MMMM yyyy')}</p>
             <p className={styles.tooltipValue}>
               <span className={styles.tooltipValueType}>Avg:</span> 
               {valueAndSymbol(avgValue)}
@@ -226,7 +228,7 @@ const BarChartCustom = ({
 
         return (
           <div className={styles.tooltip}>
-            <p className={styles.tooltipDate}>{format(date, 'MMMM d, yyyy')}</p>
+            <p className={styles.tooltipDate}>{formatInTimeZone(date, 'UTC', 'MMMM d, yyyy')}</p>
             <p className={`${styles.tooltipValue} ${styles[negativeClass]}`}>
               <span className={styles.tooltipValueType}>Max:</span> 
               <span className={`${styles.tooltipFigure} ${styles[negativeClass]}`}>
@@ -249,7 +251,7 @@ const BarChartCustom = ({
 
   const CustomTick = ({ x, y, payload }) => {
     const date = new Date(payload.value);
-    const text = xAxisTickFormatter(date);
+    const text = xAxisTickFormatter(payload.value);
     const [firstLine, secondLine] = text.split('\n');
   
     return (
@@ -328,15 +330,15 @@ const BarChartCustom = ({
 
     const isFirstTickOfYear = formattedTicks.find(
       (obj) => {
-        return new Date(obj.tick).getTime() === new Date(tickItem).getTime() && obj.isFirstTickOfYear;
+        return obj.tick === tickItem && obj.isFirstTickOfYear;
       }
     );    
-  
+
     if (isFirstTickOfYear) {
-      return `${format(date, 'MMM d')},\n${format(date, 'yyyy')}`;
+      return `${formatInTimeZone(date, 'UTC', 'MMM d')},\n${formatInTimeZone(date, 'UTC', 'yyyy')}`;
     }
-  
-    return format(date, 'MMM d');
+
+    return formatInTimeZone(date, 'UTC', 'MMM d');
   };
 
   return (
@@ -362,16 +364,19 @@ const BarChartCustom = ({
             >
               <defs>
                 <linearGradient id="colorPositive" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={0.8}/>
+                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={1}/>
                   <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={1}/>
                 </linearGradient>
                 <linearGradient id="colorNegative" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--cyan-800)" stopOpacity={0.8}/>
+                  <stop offset="5%" stopColor="var(--cyan-800)" stopOpacity={1}/>
                   <stop offset="95%" stopColor="var(--cyan-800)" stopOpacity={1}/>
                 </linearGradient>
               </defs>
               <XAxis 
                 dataKey="date" 
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                scale="time"
                 tickFormatter={xAxisTickFormatter} 
                 stroke="var(--charts-supporting-colour)"
                 angle={-45}
