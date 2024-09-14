@@ -361,15 +361,17 @@ const BarChartCustom = ({
               data={chartData} 
               margin={{ top: 20, right: 30, left: 20, bottom: -10 }}
               barSize={timeFilter === 'daily' ? 5 : 25}
+              barGap={1}
+              barCategoryGap={1}
             >
               <defs>
-                <linearGradient id="colorPositive" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--cyan-300)" stopOpacity={1}/>
-                  <stop offset="95%" stopColor="var(--cyan-300)" stopOpacity={1}/>
+                <linearGradient id="colorPositive" x1="0" y1="0" x2="0" y2="0">
+                  <stop offset="0%" stopColor="var(--cyan-300)" />
+                  <stop offset="100%" stopColor="var(--cyan-300)" />
                 </linearGradient>
-                <linearGradient id="colorNegative" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--cyan-800)" stopOpacity={1}/>
-                  <stop offset="95%" stopColor="var(--cyan-800)" stopOpacity={1}/>
+                <linearGradient id="colorNegative" x1="0" y1="0" x2="0" y2="0">
+                  <stop offset="0%" stopColor="var(--cyan-800)" />
+                  <stop offset="100%" stopColor="var(--cyan-800)" />
                 </linearGradient>
               </defs>
               <XAxis 
@@ -401,32 +403,32 @@ const BarChartCustom = ({
                 content={<CustomTooltip />}
                 cursor={<CustomCursor />}
               />
+
               {timeFilter === 'monthly' ? (
                 <>
-                  <Bar dataKey="avg" fill="url(#colorPositive)" stackId="a">
+                  <Bar dataKey="avg" barSize={timeFilter === 'daily' ? 5 : 25}>
                     {chartData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={entry.avg >= 0 ? "url(#colorPositive)" : "url(#colorNegative)"}
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.avg >= 0 ? 'url(#colorPositive)' : 'url(#colorNegative)'}
                       />
                     ))}
                   </Bar>
-                  <Bar dataKey="max" fill="url(#colorPositive)" fillOpacity={0.4} stackId="a">
+                  <Bar dataKey="max" barSize={timeFilter === 'daily' ? 5 : 25}>
                     {chartData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={entry.max >= 0 ? "url(#colorPositive)" : "url(#colorNegative)"}
-                        fillOpacity={0.4}
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.max >= 0 ? 'url(#colorPositive)' : 'url(#colorNegative)'}
                       />
                     ))}
                   </Bar>
                 </>
               ) : (
-                <Bar dataKey="value">
+                <Bar dataKey="value" minPointSize={2} barSize={timeFilter === 'daily' ? 5 : 25}>
                   {chartData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={entry.value >= 0 ? "url(#colorPositive)" : "url(#colorNegative)"}
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.value >= 0 ? 'url(#colorPositive)' : 'url(#colorNegative)'}
                     />
                   ))}
                 </Bar>

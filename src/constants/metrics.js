@@ -282,7 +282,7 @@ const METRIC_METADATA = {
     defaultChartType: 'bar',
     chartType: 'area',
     chartYValueSymbol: '',
-    dataStartDate: null,
+    dataStartDate: '2024-02-03',
     chartYAxisDataKey: 'cumulative_trader_count',
     dailyChartYAxisDataKey: 'daily_unique_traders',
     symbolLocation: 'left',
