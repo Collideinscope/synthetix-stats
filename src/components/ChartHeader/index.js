@@ -38,10 +38,6 @@ const ChartHeader = ({
     }
   }, [metric, state, network]);
 
-  const renderTimeFilter = chartTitle === 'APY'
-    ? 'all'
-    : timeFilter;
-
   const renderDelta = (value, label) => {
     const isPositive = value >= 0;
     const icon = isPositive ? faCaretUp : faCaretDown;
@@ -89,7 +85,7 @@ const ChartHeader = ({
     <div className={styles.chartHeader}>
       <div className={styles.titleContainer}>
         <h3 className={styles.chartTitle}>{chartTitle}</h3>
-        {timeFilter && <p className={styles.timeFilter}>{renderTimeFilter}</p>}
+        {timeFilter && <p className={styles.timeFilter}>{timeFilter}</p>}
         {CustomLegend && <CustomLegend />}
       </div>
       {highlightValue &&
