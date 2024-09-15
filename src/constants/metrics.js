@@ -13,7 +13,7 @@ const METRIC_METADATA = {
     defaultChartType: 'area',
     chartType: 'area',
     chartYValueSymbol: '%',
-    dataStartDate: '2024-05-04',
+    dataStartDate: '2024-05-05',
     chartYAxisDataKey: 'apy_28d',
     dailyChartYAxisDataKey: 'daily_apy_value_delta',
     symbolLocation: 'right',

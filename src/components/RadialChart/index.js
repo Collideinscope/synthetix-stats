@@ -67,8 +67,8 @@ const RadialChart = ({
     });
 
   const latestValue = data.length > 0
-  ? data[data.length - 1][radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey].toFixed(2) 
-  : '';
+    ? data[data.length - 1][radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey].toFixed(2) 
+    : '';
 
   const ath = Math.max(...data.map(d => d[radialType === 'daily' ? dailyChartYAxisDataKey : chartYAxisDataKey]));
   const atl = radialType === 'daily'
