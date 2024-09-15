@@ -13,9 +13,9 @@ const METRIC_METADATA = {
     defaultChartType: 'area',
     chartType: 'area',
     chartYValueSymbol: '%',
-    dataStartDate: '2024-05-03',
+    dataStartDate: '2024-05-04',
     chartYAxisDataKey: 'apy_28d',
-    dailyChartYAxisDataKey: 'daily_apy_percentage_delta',
+    dailyChartYAxisDataKey: 'daily_apy_value_delta',
     symbolLocation: 'right',
     summaryDataKey: 'summaryDataAPY',
     summaryDataDailyKey: 'summaryDataAPY',
@@ -35,7 +35,7 @@ const METRIC_METADATA = {
       return item.apys['apy_28d'].year * 100;
     },
     getDailyChartYAxisDataPoint: (item) => {
-      return parseFloat(item.daily_apy_percentage_delta) * 100;
+      return parseFloat(item.daily_apy_value_delta) * 100;
     },
     yValueFormatter: (val) => {
       return abbreviateNumber(parseFloat(val));

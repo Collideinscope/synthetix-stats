@@ -2,11 +2,11 @@ import styles from './styles.module.css';
 
 import React, { useContext, useState, useEffect, useMemo } from 'react';
 
-import { ReferenceLine, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
+import { Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { parseISO, startOfMonth } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faChartPie, faChartBar, faCog, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import ChartHeader from '../ChartHeader';
 import ChartFooter from '../ChartFooter';
@@ -304,9 +304,7 @@ const BarChartCustom = ({
     }
 
     if (timeFilter === 'daily') {
-      const legendText = metric === 'apy'
-        ? 'Avg % Δ'
-        : metric === 'openInterest'
+      const legendText = metric === 'openInterest' || metric === 'apy'
           ? 'Avg'
           : 'Max';
 
